@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.params=frame\ duration
+comment0.target=Frame(java.awt.image.BufferedImage,\ int)
+comment1.params=
+comment1.target=java.awt.image.BufferedImage\ getFrame()
+comment2.params=frame
+comment2.target=void\ setFrame(java.awt.image.BufferedImage)
+comment3.params=
+comment3.target=int\ getDuration()
+comment4.params=duration
+comment4.target=void\ setDuration(int)
+numComments=5
