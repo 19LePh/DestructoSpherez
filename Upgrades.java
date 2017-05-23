@@ -1,33 +1,26 @@
-
-/**
- * Write a description of class Upgrades here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
-public class Upgrades
+public abstract class Upgrades
 {
-    // instance variables - replace the example below with your own
-    private int x;
+    private double mass;
+    private boolean isPurchased;
+    private boolean isEquipped;
+    private double cost;
+    private int tier; //1 is the lowest, 4 is the highest
+    private int path; //Either path 1 or 2 
+    private boolean isUsable; //For boosters and helis, which run out of fuel after a while
 
-    /**
-     * Constructor for objects of class Upgrades
-     */
-    public Upgrades()
+    public Upgrades(double mass, double cost, int tier, int path)
     {
-        // initialise instance variables
-        x = 0;
+        this.mass = mass;
+        isPurchased = false;
+        isEquipped = false;
+        this.cost = cost;
+        this.tier = tier;
+        this.path = path;
+        isUsable = true;
     }
-
-    /**
-     * An example of a method - replace this comment with your own
-     * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
-     */
-    public int sampleMethod(int y)
+    
+    public boolean getisUsable()
     {
-        // put your code here
-        return x + y;
+        return isUsable;
     }
 }

@@ -1,5 +1,8 @@
 #BlueJ class context
-comment0.params=a\ numPowerups
-comment0.target=Terrain(Planet,\ int)
-comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ Terrain\r\n
-numComments=1
+comment0.params=world\ numPowerups\ walls
+comment0.target=Terrain(Planet,\ int,\ Wall[])
+comment1.params=newPlanet
+comment1.target=void\ setPlanet(Planet)
+comment2.params=
+comment2.target=boolean\ checkWalls()
+numComments=3

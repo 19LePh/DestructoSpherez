@@ -1,33 +1,29 @@
-
-/**
- * Write a description of class Shop here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
+import java.util.ArrayList;
 public class Shop
 {
-    // instance variables - replace the example below with your own
-    private int x;
+    private double balance;
+    private ArrayList<Upgrades> upgrades; //In case we add more upgrades in the future
 
-    /**
-     * Constructor for objects of class Shop
-     */
-    public Shop()
+    public Shop(ArrayList<Upgrades> upgrades)
     {
-        // initialise instance variables
-        x = 0;
+        balance = 0.01;
+        this.upgrades = upgrades;
     }
-
-    /**
-     * An example of a method - replace this comment with your own
-     * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
-     */
-    public int sampleMethod(int y)
+    
+    public void buy(Upgrades up)
     {
-        // put your code here
-        return x + y;
+        //will check if the player can buy the upgrade (enough money and not purchased),
+        //invoke a method that will change isPurchased to true, and subtract from balance
+    }
+    
+    public double getBalance()
+    {
+        return balance;
+    }
+    
+    //Must be private so that the player cannot give himself money somehow
+    private void setBalance(double amount)
+    {
+        balance += amount;
     }
 }

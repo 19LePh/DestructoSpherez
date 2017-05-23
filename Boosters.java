@@ -1,33 +1,29 @@
-
-/**
- * Write a description of class Boosters here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
-public class Boosters
+public class Boosters extends Upgrades
 {
-    // instance variables - replace the example below with your own
-    private int x;
+    private double boostPower;
+    private double boostDuration;
+    private int numUses;
 
-    /**
-     * Constructor for objects of class Boosters
-     */
-    public Boosters()
+    public Boosters(double mass, double cost, int tier, int path, double bp, double bd, int numUses)
     {
-        // initialise instance variables
-        x = 0;
+        super(mass, cost, tier, path);
+        boostPower = bp;
+        boostDuration = bd;
+        this.numUses = numUses;
     }
 
-    /**
-     * An example of a method - replace this comment with your own
-     * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
-     */
-    public int sampleMethod(int y)
+    public double getBoostPower()
     {
-        // put your code here
-        return x + y;
+        return boostPower;
+    }
+    
+    public double getboostDuration()
+    {
+        return boostDuration;
+    }
+    
+    public int getnumUses()
+    {
+        return numUses;
     }
 }
