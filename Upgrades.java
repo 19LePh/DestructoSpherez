@@ -23,4 +23,6 @@ public abstract class Upgrades
     {
         return isUsable;
     }
+    
+    public abstract void use(double duration);
 }

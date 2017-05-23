@@ -1,8 +1,6 @@
 #BlueJ class context
-comment0.params=
-comment0.target=Enhancements()
-comment0.text=\r\n\ Constructor\ for\ objects\ of\ class\ Enhancements\r\n
-comment1.params=y
-comment1.target=int\ sampleMethod(int)
-comment1.text=\r\n\ An\ example\ of\ a\ method\ -\ replace\ this\ comment\ with\ your\ own\r\n\ \r\n\ @param\ \ y\ \ \ a\ sample\ parameter\ for\ a\ method\r\n\ @return\ \ \ \ \ the\ sum\ of\ x\ and\ y\ \r\n
+comment0.params=mass\ cost\ tier\ path\ pierceFactor
+comment0.target=Enhancements(double,\ double,\ int,\ int,\ double)
+comment1.params=duration
+comment1.target=void\ use(double)
 numComments=2

@@ -7,4 +7,6 @@ comment2.params=
 comment2.target=double\ getboostDuration()
 comment3.params=
 comment3.target=int\ getnumUses()
-numComments=4
+comment4.params=duration
+comment4.target=void\ use(double)
+numComments=5
