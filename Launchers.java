@@ -5,29 +5,21 @@
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Launchers
+public class Launchers extends Upgrades
 {
-    // instance variables - replace the example below with your own
-    private int x;
+    private double launchAngle;
+    private double launchPower;
 
-    /**
-     * Constructor for objects of class Launchers
-     */
-    public Launchers()
+    public Launchers(double mass, double cost, int tier, int path, double launchAngle, double launchPower)
     {
-        // initialise instance variables
-        x = 0;
+        super(mass, cost, tier, path);
+        this.launchAngle = launchAngle;
+        this.launchPower = launchPower;
     }
 
-    /**
-     * An example of a method - replace this comment with your own
-     * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
-     */
-    public int sampleMethod(int y)
+    @Override
+    public void use()
     {
-        // put your code here
-        return x + y;
+        System.out.println(""); //
     }
 }

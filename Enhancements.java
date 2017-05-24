@@ -1,33 +1,16 @@
-
-/**
- * Write a description of class Enhancements here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
-public class Enhancements
+public class Enhancements extends Upgrades
 {
-    // instance variables - replace the example below with your own
-    private int x;
+    private double pierceFactor; //Higher value = more likely to pierce wall
 
-    /**
-     * Constructor for objects of class Enhancements
-     */
-    public Enhancements()
+    public Enhancements(double mass, double cost, int tier, int path, double pierceFactor)
     {
-        // initialise instance variables
-        x = 0;
+        super(mass, cost, tier, path);
+        this.pierceFactor = pierceFactor;
     }
 
-    /**
-     * An example of a method - replace this comment with your own
-     * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
-     */
-    public int sampleMethod(int y)
+    @Override
+    public void use()
     {
-        // put your code here
-        return x + y;
+        System.out.println(""); //
     }
 }

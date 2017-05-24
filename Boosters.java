@@ -26,4 +26,10 @@ public class Boosters extends Upgrades
     {
         return numUses;
     }
+    
+    @Override
+    public void use()
+    {
+        System.out.println(""); //
+    }
 }
