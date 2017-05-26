@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.params=mass\ cost\ tier\ path\ launchAngle\ launchPower
 comment0.target=Launchers(double,\ double,\ int,\ int,\ double,\ double)
-comment1.params=duration
-comment1.target=void\ use(double)
+comment1.params=
+comment1.target=void\ use()
 numComments=2

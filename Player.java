@@ -1,33 +1,28 @@
-
-/**
- * Write a description of class Player here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
 public class Player
 {
-    // instance variables - replace the example below with your own
-    private int x;
+    private String color;
+    private double mass; //Unsure of units
+    private double initialSpeed;
+    private Boosters boosters;
+    private Launchers launchers;
+    private Mounts mounts;
+    private Enhancements enhancements;
 
-    /**
-     * Constructor for objects of class Player
-     */
     public Player()
     {
-        // initialise instance variables
-        x = 0;
+        color = "Red";
+        mass = 20.0; //Can change based on whatever units we use
+        initialSpeed = 5.0; //Can change
+        //Everything below could be changed if we decide to add in default/"already brought" upgrades
+        boosters = null;
+        launchers = null;
+        mounts = null;
+        enhancements = null;
     }
-
-    /**
-     * An example of a method - replace this comment with your own
-     * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
-     */
-    public int sampleMethod(int y)
+    
+    //color must be a single word in ALL CAPS
+    public void setColor(String color)
     {
-        // put your code here
-        return x + y;
+        this.color = color;
     }
 }

@@ -9,8 +9,8 @@ public class Enhancements extends Upgrades
     }
 
     @Override
-    public void use(double duration)
+    public void use()
     {
-        System.out.println("");
+        System.out.println(""); //
     }
 }

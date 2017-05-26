@@ -1,33 +1,30 @@
-
-/**
- * Write a description of class Score here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
+/*The purpose of this class is to keep track of high scores and cumultive and individual acheivements
+ * It can also be used to calculate the score after each run and convert to money */
 public class Score
 {
-    // instance variables - replace the example below with your own
-    private int x;
-
-    /**
-     * Constructor for objects of class Score
-     */
-    public Score()
+    private static double highScore = 0.0;
+    private static boolean[] isAchievedP = {false, false, false, false}; //Num of booleans = num walls, P stands for plural
+    private Wall[] walls;
+    private boolean[] isAchievedI; //For individual launches, I stands for individual
+    
+    public Score(Wall[] walls)
     {
-        // initialise instance variables
-        x = 0;
+        this.walls = walls;
+        isAchievedI = new boolean[]{false, false, false, false};
     }
-
-    /**
-     * An example of a method - replace this comment with your own
-     * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
-     */
-    public int sampleMethod(int y)
+    
+    public static double calculateScore(double maxHeight, double airTime, double distance, double maxVelocity)
     {
-        // put your code here
-        return x + y;
+        double total = 0.0;
+        if(total > highScore)
+        {
+            highScore = total;
+        }
+        return 0.0; //Depends on units, will implement later
+    }
+    
+    public double gethighScore()
+    {
+        return highScore;
     }
 }

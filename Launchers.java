@@ -1,7 +1,14 @@
+
+/**
+ * Write a description of class Launchers here.
+ * 
+ * @author (your name) 
+ * @version (a version number or a date)
+ */
 public class Launchers extends Upgrades
 {
     private double launchAngle;
-    private double launchPower; //Also known as initial velocity?
+    private double launchPower;
 
     public Launchers(double mass, double cost, int tier, int path, double launchAngle, double launchPower)
     {
@@ -11,8 +18,8 @@ public class Launchers extends Upgrades
     }
 
     @Override
-    public void use(double duration)
+    public void use()
     {
-        System.out.println("");
+        System.out.println(""); //
     }
 }
