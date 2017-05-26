@@ -5,4 +5,6 @@ comment1.params=amount
 comment1.target=void\ setCurrentSpeed(double)
 comment2.params=
 comment2.target=double\ getCurrentSpeed()
-numComments=3
+comment3.params=
+comment3.target=void\ calculateMass()
+numComments=4

@@ -25,4 +25,9 @@ public abstract class Upgrades
     }
     
     public abstract void use();
+    
+    public double getMass()
+    {
+        return mass;
+    }
 }

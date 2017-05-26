@@ -10,9 +10,9 @@ public class Launchers extends Upgrades
     private double launchAngle;
     private double launchPower;
 
-    public Launchers(double mass, double cost, int tier, int path, double launchAngle, double launchPower)
+    public Launchers(double cost, int tier, int path, double launchAngle, double launchPower)
     {
-        super(mass, cost, tier, path);
+        super(0.0, cost, tier, path); //Mass of launchers have no impact on the game
         this.launchAngle = launchAngle;
         this.launchPower = launchPower;
     }
