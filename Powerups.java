@@ -1,28 +1,37 @@
 public abstract class Powerups
 {
-    private final double spawnDuration = 5.0; //Amount of time a powerup stays on screen
-    private boolean isSpawned;
+    private final static double spawnDuration = 5.0; //Amount of time a powerup stays on screen
+    private int posX;
+    private int posY;
+    private Sprite sprite;
 
-    public Powerups()
+    public Powerups(int posX, int posY, Sprite sprite)
     {
-        isSpawned = false;
+        this.posX = posX;
+        this.posY = posY;
+        this.sprite = sprite;
     }
 
-    public void countdown()
+    public final static boolean countdown()
     {
         double duration = spawnDuration;
         while(duration >= 0.001)
         {
-            duration -= 0.1;
-            //Add a delay time here
+            duration -= 1;
+            try {
+                Thread.sleep(1000);
+            } catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
         }
-        isSpawned = false;
+        return false;
     }
     
-    //Will later be able to spawn a powerup at a certain location on screen
-    public void spawn()
+    public int[] getCoordinates()
     {
-        isSpawned = true;
-        countdown();
+        return new int[]{posX, posY};
     }
+    
+    //Always returns a numerical value for things like velocity, money, etc.
+    public abstract void use();
 }

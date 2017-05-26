@@ -1,10 +1,3 @@
-
-/**
- * Write a description of class Wall here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
 public class Wall
 {
     // instance variables - replace the example below with your own

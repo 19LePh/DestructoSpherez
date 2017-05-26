@@ -2,7 +2,7 @@
 comment0.params=walls
 comment0.target=Score(Wall[])
 comment1.params=maxHeight\ airTime\ distance\ maxVelocity
-comment1.target=double\ calculateScore(double,\ double,\ double,\ double)
+comment1.target=void\ calculateScore(double,\ double,\ double,\ double)
 comment2.params=
 comment2.target=double\ gethighScore()
 numComments=3

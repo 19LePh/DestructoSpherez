@@ -2,5 +2,5 @@
 comment0.params=
 comment0.target=Player()
 comment1.params=color
-comment1.target=void\ setColor(java.lang.String)
+comment1.target=void\ setColor(Sprite)
 numComments=2

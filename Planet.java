@@ -1,33 +1,14 @@
-
-/**
- * Write a description of class Planet here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
 public class Planet
 {
-    // instance variables - replace the example below with your own
-    private int x;
+    private Sprite map;
+    private double gravity;
+    private boolean hasAirFriction;
+    //Add wind in the near future?
 
-    /**
-     * Constructor for objects of class Planet
-     */
-    public Planet()
+    public Planet(Sprite map, double gravity, boolean airFriction)
     {
-        // initialise instance variables
-        x = 0;
-    }
-
-    /**
-     * An example of a method - replace this comment with your own
-     * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
-     */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
+        this.map = map;
+        this.gravity = gravity;
+        this.hasAirFriction = airFriction;
     }
 }

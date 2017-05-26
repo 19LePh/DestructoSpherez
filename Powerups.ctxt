@@ -1,8 +1,10 @@
 #BlueJ class context
-comment0.params=
-comment0.target=Powerups()
+comment0.params=posX\ posY\ sprite
+comment0.target=Powerups(int,\ int,\ Sprite)
 comment1.params=
-comment1.target=void\ countdown()
+comment1.target=boolean\ countdown()
 comment2.params=
-comment2.target=void\ spawn()
-numComments=3
+comment2.target=int[]\ getCoordinates()
+comment3.params=
+comment3.target=void\ use()
+numComments=4

@@ -28,6 +28,7 @@ public class Terrain
         planet = newPlanet;
     }
     
+    //Below: do we even need this method?
     public boolean checkWalls()
     {
         return true; //Will eventually invoke a walls method to see if it is destroyed or not

@@ -1,8 +1,7 @@
 public class Player
 {
-    private String color;
+    private Sprite color;
     private double mass; //Unsure of units
-    private double initialSpeed;
     private Boosters boosters;
     private Launchers launchers;
     private Mounts mounts;
@@ -10,9 +9,8 @@ public class Player
 
     public Player()
     {
-        color = "Red";
+        color = null;
         mass = 20.0; //Can change based on whatever units we use
-        initialSpeed = 5.0; //Can change
         //Everything below could be changed if we decide to add in default/"already brought" upgrades
         boosters = null;
         launchers = null;
@@ -20,8 +18,7 @@ public class Player
         enhancements = null;
     }
     
-    //color must be a single word in ALL CAPS
-    public void setColor(String color)
+    public void setColor(Sprite color)
     {
         this.color = color;
     }

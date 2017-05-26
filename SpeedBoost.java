@@ -1,33 +1,28 @@
-
-/**
- * Write a description of class SpeedBoost here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
-public class SpeedBoost
+public class SpeedBoost extends Powerups
 {
-    // instance variables - replace the example below with your own
-    private int x;
-
-    /**
-     * Constructor for objects of class SpeedBoost
-     */
-    public SpeedBoost()
+    private double speedIncrease; //Speed that will be added to the player's
+    private final static Sprite sprite = null; //Will eventually be a pic of a speed boost
+    
+    public SpeedBoost(int posX, int posY, double speedIncrease)
     {
-        // initialise instance variables
-        x = 0;
+        super(posX, posY, sprite);
+        this.speedIncrease = speedIncrease;
     }
-
-    /**
-     * An example of a method - replace this comment with your own
-     * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
-     */
-    public int sampleMethod(int y)
+    
+    //Only use for the player
+    @Override
+    public void use()
     {
-        // put your code here
-        return x + y;
+        double initial = Main.getCurrentSpeed();
+        Main.setCurrentSpeed(speedIncrease);
+        while((initial + speedIncrease >= initial))
+        {
+            Main.setCurrentSpeed(-1 * (speedIncrease / 50.0)); //May need to be adjusted
+            try {
+                Thread.sleep(100);
+            } catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+        }
     }
 }

@@ -1,33 +1,18 @@
-
-/**
- * Write a description of class MoneyRing here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
-public class MoneyRing
+public class MoneyRing extends Powerups
 {
-    // instance variables - replace the example below with your own
-    private int x;
+    private double cashBonus;
+    private final static Sprite sprite = null; //Will eventually be a pic of a golden ring
 
-    /**
-     * Constructor for objects of class MoneyRing
-     */
-    public MoneyRing()
+    public MoneyRing(int posX, int posY, double cashBonus)
     {
-        // initialise instance variables
-        x = 0;
+        super(posX, posY, sprite);
+        this.cashBonus = cashBonus;
     }
-
-    /**
-     * An example of a method - replace this comment with your own
-     * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
-     */
-    public int sampleMethod(int y)
+    
+    //Only use for shop
+    @Override
+    public void use()
     {
-        // put your code here
-        return x + y;
+        Shop.setBalance(this.cashBonus);
     }
 }
