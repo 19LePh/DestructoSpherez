@@ -16,9 +16,9 @@ public class Terrain
             int random = (int)(Math.random() * 2 + 1);
             if(random == 1)
             {
-                powerups.add(null); //Will add a certain type of powerup
+                powerups.add(new MoneyRing(500)); //Value not finalized
             } else {
-                powerups.add(null); //Will add another type of powerup instead
+                powerups.add(new SpeedBoost(20)); //Value not finalized
             }
         }
     }

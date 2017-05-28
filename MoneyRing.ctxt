@@ -1,6 +1,6 @@
 #BlueJ class context
-comment0.params=posX\ posY\ cashBonus
-comment0.target=MoneyRing(int,\ int,\ double)
+comment0.params=cashBonus
+comment0.target=MoneyRing(double)
 comment1.params=
 comment1.target=void\ use()
 numComments=2

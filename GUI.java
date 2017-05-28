@@ -18,7 +18,8 @@ public class GUI extends Application
     {
         launch(args);
     }
-   @Override
+
+    @Override
     public void start(Stage primaryStage) 
     {
         primaryStage.setTitle("Destructo Spherez!");
@@ -27,16 +28,16 @@ public class GUI extends Application
         shop.setText("Shop");
         start.setText("Start");
         start.setOnAction(new EventHandler<ActionEvent>()
-        { 
-            @Override
-            public void handle(ActionEvent event) 
-            {
-                System.out.println("Destructo Spherez");
-            }
-        });
+            { 
+                @Override
+                public void handle(ActionEvent event) 
+                {
+                    System.out.println("Destructo Spherez");
+                }
+            });
         StackPane root = new StackPane();
         root.getChildren().add(start);
-        primaryStage.setScene(new Scene(root, 300, 250));
+        primaryStage.setScene(new Scene(root, 1500, 1500));
         primaryStage.show();
     }
 }

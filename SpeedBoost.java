@@ -3,9 +3,9 @@ public class SpeedBoost extends Powerups
     private double speedIncrease; //Speed that will be added to the player's
     private final static Sprite sprite = null; //Will eventually be a pic of a speed boost
     
-    public SpeedBoost(int posX, int posY, double speedIncrease)
+    public SpeedBoost(double speedIncrease)
     {
-        super(posX, posY, sprite);
+        super(0, 0, sprite);
         this.speedIncrease = speedIncrease;
     }
     

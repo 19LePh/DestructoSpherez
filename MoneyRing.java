@@ -3,9 +3,9 @@ public class MoneyRing extends Powerups
     private double cashBonus;
     private final static Sprite sprite = null; //Will eventually be a pic of a golden ring
 
-    public MoneyRing(int posX, int posY, double cashBonus)
+    public MoneyRing(double cashBonus)
     {
-        super(posX, posY, sprite);
+        super(0, 0, sprite);
         this.cashBonus = cashBonus;
     }
     

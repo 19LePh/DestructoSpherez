@@ -1,18 +1,13 @@
+//The purpose of this class is to set up a launch
 public class Main
 {
-    private Terrain terrain;
-    private Player player = new Player();
-    private Wall[] walls;
-    private static double initialSpeed;
-    private static double currentSpeed;
-    private double playerMass; //Unsure of units
+    public static long initialSpeed, currentSpeed, playerAngle, playerMass;
     
-    //Player must choose what planet they want to be on with a button
-    public void init(Planet world)
+    //Precondition: Player must choose what planet they want to be on with a button
+    //This begins the launch
+    public void init(Planet world, Player player)
     {
-        walls = new Wall[]{new Wall(), new Wall(), new Wall(), new Wall()}; //Needs Update
-        terrain = new Terrain(world, 10, walls);
-        this.calculateMass();
+        calculateMass(player);
         //Code that calculates initial speed based on mass and launcher's power
     }
     
@@ -27,7 +22,7 @@ public class Main
         return currentSpeed;
     }
     
-    public void calculateMass()
+    public void calculateMass(Player player)
     {
         double mass = 20.0; //This is the mass of the player without upgrades
         mass += player.getBoosters().getMass() + player.getMount().getMass() + player.getEnhancement().getMass();
