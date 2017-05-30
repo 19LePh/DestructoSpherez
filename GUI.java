@@ -7,6 +7,8 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.Screen;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.image.Image;
 /**
  * The Graphical User Interface for Destructo-Spherez.
  * 
@@ -23,13 +25,15 @@ public class GUI extends Application
     @Override
     public void start(Stage primaryStage) 
     {
+        //Below makes primaryStage fullscreen
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
-
         primaryStage.setX(bounds.getMinX());
         primaryStage.setY(bounds.getMinY());
         primaryStage.setWidth(bounds.getWidth());
         primaryStage.setHeight(bounds.getHeight());
+        
+        BackgroundImage image = new BackgroundImage(new Image("http://cdn.pcwallart.com/images/pixel-landscape-background-wallpaper-1.jpg"), null, null, null, null);
         primaryStage.setTitle("Destructo Spherez!");
         Button start = new Button();
         Button shop = new Button();
@@ -46,6 +50,7 @@ public class GUI extends Application
         StackPane root = new StackPane();
         root.getChildren().add(start);
         primaryStage.setScene(new Scene(root, bounds.getWidth(), bounds.getHeight()));
+        root.setFill(image);
         primaryStage.show();
     }
 }
