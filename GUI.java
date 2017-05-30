@@ -5,7 +5,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-
+import javafx.stage.Screen;
+import javafx.geometry.Rectangle2D;
 /**
  * The Graphical User Interface for Destructo-Spherez.
  * 
@@ -22,6 +23,13 @@ public class GUI extends Application
     @Override
     public void start(Stage primaryStage) 
     {
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+
+        primaryStage.setX(bounds.getMinX());
+        primaryStage.setY(bounds.getMinY());
+        primaryStage.setWidth(bounds.getWidth());
+        primaryStage.setHeight(bounds.getHeight());
         primaryStage.setTitle("Destructo Spherez!");
         Button start = new Button();
         Button shop = new Button();
@@ -37,7 +45,7 @@ public class GUI extends Application
             });
         StackPane root = new StackPane();
         root.getChildren().add(start);
-        primaryStage.setScene(new Scene(root, 1500, 1500));
+        primaryStage.setScene(new Scene(root, bounds.getWidth(), bounds.getHeight()));
         primaryStage.show();
     }
 }
