@@ -2,7 +2,7 @@
 comment0.params=posX\ posY\ sprite
 comment0.target=Powerups(int,\ int,\ Sprite)
 comment1.params=
-comment1.target=boolean\ countdown()
+comment1.target=void\ countdown()
 comment2.params=
 comment2.target=int[]\ getCoordinates()
 comment3.params=

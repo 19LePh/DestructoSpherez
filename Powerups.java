@@ -12,7 +12,7 @@ public abstract class Powerups
         this.sprite = sprite;
     }
 
-    public final boolean countdown()
+    public final void countdown()
     {
         double duration = spawnDuration;
         while(duration >= 0.0)
@@ -24,7 +24,6 @@ public abstract class Powerups
                 Thread.currentThread().interrupt();
             }
         }
-        return false;
     }
     
     public int[] getCoordinates()
