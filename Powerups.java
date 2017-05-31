@@ -15,9 +15,9 @@ public abstract class Powerups
     public final boolean countdown()
     {
         double duration = spawnDuration;
-        while(duration >= 0.001)
+        while(duration >= 0.0)
         {
-            duration -= 1;
+            duration -= 1.0;
             try {
                 Thread.sleep(1000);
             } catch(InterruptedException ex) {
