@@ -12,7 +12,7 @@ public abstract class Powerups
         this.sprite = sprite;
     }
 
-    public final static boolean countdown()
+    public final boolean countdown()
     {
         double duration = spawnDuration;
         while(duration >= 0.001)
