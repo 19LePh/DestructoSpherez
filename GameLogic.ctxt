@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.params=speed\ angle\ accelerationX\ startHeight\ startDistance\ gravityA
+comment0.target=GameLogic(double,\ double,\ double,\ double,\ double,\ double)
+comment1.params=world\ player
+comment1.target=void\ init(Planet,\ Player)
+comment2.params=
+comment2.target=javafx.geometry.Point2D\ getPoint()
+comment3.params=amount
+comment3.target=void\ increaseAccelX(double)
+comment4.params=
+comment4.target=double\ getAccelX()
+comment5.params=player
+comment5.target=void\ calculateMass(Player)
+comment6.params=args
+comment6.target=void\ main(java.lang.String[])
+numComments=7
