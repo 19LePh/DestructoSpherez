@@ -7,8 +7,14 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.Screen;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.layout.BackgroundImage;
+import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.Pane;
 /**
  * The Graphical User Interface for Destructo-Spherez.
  * 
@@ -25,6 +31,7 @@ public class GUI extends Application
     @Override
     public void start(Stage primaryStage) 
     {
+        primaryStage.setTitle("Destructo Spherez!");
         //Below makes primaryStage fullscreen
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
@@ -32,9 +39,8 @@ public class GUI extends Application
         primaryStage.setY(bounds.getMinY());
         primaryStage.setWidth(bounds.getWidth());
         primaryStage.setHeight(bounds.getHeight());
-        
-        BackgroundImage image = new BackgroundImage(new Image("http://cdn.pcwallart.com/images/pixel-landscape-background-wallpaper-1.jpg"), null, null, null, null);
-        primaryStage.setTitle("Destructo Spherez!");
+
+        //Buttons!
         Button start = new Button();
         Button shop = new Button();
         shop.setText("Shop");
@@ -47,10 +53,15 @@ public class GUI extends Application
                     System.out.println("Destructo Spherez");
                 }
             });
+        //Creates a background object
+        Image img = new Image("landscape.jpg");
+        BackgroundImage bgimg = new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(bounds.getWidth(), bounds.getHeight(), false, false, false, false));
+        Background back = new Background(bgimg);
+        //Sets the stage
         StackPane root = new StackPane();
         root.getChildren().add(start);
+        root.setBackground(back);
         primaryStage.setScene(new Scene(root, bounds.getWidth(), bounds.getHeight()));
-        root.setFill(image);
         primaryStage.show();
     }
 }
