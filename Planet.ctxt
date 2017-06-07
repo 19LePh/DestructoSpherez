@@ -1,4 +1,6 @@
 #BlueJ class context
-comment0.params=map\ gravity\ airFriction
+comment0.params=map\ gravity\ airDrag
 comment0.target=Planet(Sprite,\ double,\ boolean)
-numComments=1
+comment1.params=
+comment1.target=boolean\ getHasAirDrag()
+numComments=2

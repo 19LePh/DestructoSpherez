@@ -1,6 +1,6 @@
 #BlueJ class context
-comment0.params=speed\ angle\ accelerationX\ startHeight\ startDistance\ gravityA
-comment0.target=GameLogic(double,\ double,\ double,\ double,\ double,\ double)
+comment0.params=speed\ angle\ accelerationX\ startHeight\ startDistance\ gravityA\ hasAirDrag
+comment0.target=GameLogic(double,\ double,\ double,\ double,\ double,\ double,\ boolean)
 comment1.params=world\ player
 comment1.target=void\ init(Planet,\ Player)
 comment2.params=
@@ -10,7 +10,7 @@ comment3.target=void\ increaseAccelX(double)
 comment4.params=
 comment4.target=double\ getAccelX()
 comment5.params=player
-comment5.target=void\ calculateMass(Player)
+comment5.target=double\ calculateMass(Player)
 comment6.params=angle
 comment6.target=void\ setAngle(double)
 comment7.params=args

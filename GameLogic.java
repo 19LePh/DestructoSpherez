@@ -4,7 +4,7 @@ public class GameLogic
 {
     public static double time, deltaTime, endTime, x, y, speed, angle, ay, ax, vx, vy;
 
-    public GameLogic(double speed, double angle, double accelerationX, double startHeight, double startDistance, double gravityA)
+    public GameLogic(double speed, double angle, double accelerationX, double startHeight, double startDistance, double gravityA, boolean hasAirDrag)
     {
         time = 0.0;
         deltaTime = 0.0001;
@@ -15,6 +15,11 @@ public class GameLogic
         this.angle = angle;
         ay = gravityA;
         ax = accelerationX;
+        //Below is for planets with air drag
+        if(hasAirDrag)
+        {
+            //drag equation
+        }
         this.vx = this.speed*Math.cos(this.angle*(Math.PI/180.0));
         this.vy = this.speed*Math.sin(this.angle*(Math.PI/180.0));
     }
@@ -37,6 +42,7 @@ public class GameLogic
     }
 
     //Could be expoited if public, but crucial to the SpeedBoost class
+    //Input must be an acceleration
     public static void increaseAccelX(double amount)
     {
         ax += amount;
@@ -47,10 +53,10 @@ public class GameLogic
         return ax;
     }
 
-    public static void calculateMass(Player player)
+    public static double calculateMass(Player player)
     {
-        double mass = 20.0; //This is the mass of the player without upgrades
-        mass += player.getBoosters().getMass() + player.getMount().getMass() + player.getEnhancement().getMass();
+        double mass = 10.0; //Mass of player in (kg)
+        return mass + player.getBoosters().getMass() + player.getMount().getMass() + player.getEnhancement().getMass();
     }
     
     public void setAngle(double angle)
@@ -61,7 +67,9 @@ public class GameLogic
     
 
     public static void main(String[] args) {
-        GameLogic logic = new GameLogic(60.0, 45.0, 0.0, 10, 1.0, -9.8);
+        double playerMass = GameLogic.calculateMass(new Player());
+        double acceleration = /*Launcher force*/1 / playerMass; //F = ma
+        GameLogic logic = new GameLogic(60.0, 45.0, acceleration, 10, 1.0, -9.8, false); //replace boolean with (planet object).getHasAirDrag()
         while(!(y <= 0.0))
         {
             System.out.println(logic.getPoint().getX() + " " + logic.getPoint().getY());
