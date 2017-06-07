@@ -20,7 +20,7 @@ public class GameLogic
     }
     //Precondition: Player must choose what planet they want to be on with a button
     //This begins the launch
-    public void init(Planet world, Player player)
+    public static void init(Planet world, Player player)
     {
         calculateMass(player);
         //Code that calculates initial speed based on mass and launcher's power
@@ -47,11 +47,18 @@ public class GameLogic
         return ax;
     }
 
-    public void calculateMass(Player player)
+    public static void calculateMass(Player player)
     {
         double mass = 20.0; //This is the mass of the player without upgrades
         mass += player.getBoosters().getMass() + player.getMount().getMass() + player.getEnhancement().getMass();
     }
+    
+    public void setAngle(double angle)
+    {
+        this.angle += angle;
+    }
+    
+    
 
     public static void main(String[] args) {
         GameLogic logic = new GameLogic(60.0, 45.0, 0.0, 10, 1.0, -9.8);
