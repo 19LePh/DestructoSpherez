@@ -1,14 +1,16 @@
 #BlueJ class context
 comment0.params=
 comment0.target=Player()
-comment1.params=color
-comment1.target=void\ setColor(Sprite)
-comment2.params=
-comment2.target=Boosters\ getBoosters()
+comment1.params=player
+comment1.target=double\ calculateMass(Player)
+comment2.params=color
+comment2.target=void\ setColor(Sprite)
 comment3.params=
-comment3.target=Launchers\ getLauncher()
+comment3.target=Boosters\ getBoosters()
 comment4.params=
-comment4.target=Mounts\ getMount()
+comment4.target=Launchers\ getLauncher()
 comment5.params=
-comment5.target=Enhancements\ getEnhancement()
-numComments=6
+comment5.target=Mounts\ getMount()
+comment6.params=
+comment6.target=Enhancements\ getEnhancement()
+numComments=7

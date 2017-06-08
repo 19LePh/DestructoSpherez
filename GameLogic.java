@@ -2,6 +2,8 @@
 import javafx.geometry.Point2D;
 public class GameLogic
 {
+    //Speeds are in m/s. Accelerations are in m/s2.
+    //ay and ax are related to vertical and horizontal accelerations. vx and vy are related to vertical and horizontal velocities
     public static double time, deltaTime, endTime, x, y, speed, angle, ay, ax, vx, vy;
 
     public GameLogic(double speed, double angle, double accelerationX, double startHeight, double startDistance, double gravityA, boolean hasAirDrag)
@@ -27,8 +29,8 @@ public class GameLogic
     //This begins the launch
     public static void init(Planet world, Player player)
     {
-        calculateMass(player);
-        //Code that calculates initial speed based on mass and launcher's power
+        double playerMass = (new Player()).calculateMass();
+        double acceleration = /*Launcher force*/1 / playerMass; //F = ma
     }
 
     public Point2D getPoint()
@@ -53,21 +55,14 @@ public class GameLogic
         return ax;
     }
 
-    public static double calculateMass(Player player)
-    {
-        double mass = 10.0; //Mass of player in (kg)
-        return mass + player.getBoosters().getMass() + player.getMount().getMass() + player.getEnhancement().getMass();
-    }
-    
     public void setAngle(double angle)
     {
         this.angle += angle;
     }
-    
-    
+
 
     public static void main(String[] args) {
-        double playerMass = GameLogic.calculateMass(new Player());
+        double playerMass = (new Player()).calculateMass();
         double acceleration = /*Launcher force*/1 / playerMass; //F = ma
         GameLogic logic = new GameLogic(60.0, 45.0, acceleration, 10, 1.0, -9.8, false); //replace boolean with (planet object).getHasAirDrag()
         while(!(y <= 0.0))
