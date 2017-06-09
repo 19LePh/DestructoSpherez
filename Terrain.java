@@ -1,14 +1,15 @@
 import java.util.ArrayList;
+import javafx.scene.image.Image;
 public class Terrain
 {
     // instance variables
-    private Planet planet;
+    private Image background;
+    public final static double gravity = 9.80665;
     private ArrayList<Powerups> powerups; //There can be a lot of powerups at a time or a few
     private Wall[] walls; //Always a set number of walls
 
-    public Terrain(Planet world, int numPowerups, Wall[] walls)
+    public Terrain(int numPowerups, Wall[] walls)
     {
-        planet = world;
         this.walls = walls;
         //Below will add random Powerups to the powerups list
         for(int i = 0; i < numPowerups; i++)
@@ -21,11 +22,6 @@ public class Terrain
                 powerups.add(new SpeedBoost(20)); //Value not finalized
             }
         }
-    }
-    
-    public void setPlanet(Planet newPlanet)
-    {
-        planet = newPlanet;
     }
     
     //Below: do we even need this method?

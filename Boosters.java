@@ -3,6 +3,17 @@ public class Boosters extends Upgrades
     private double boostPower;
     private double boostDuration;
     private int numUses;
+    
+    //Higher tier = higher value
+    public static Boosters TIER_1_PATH_1;
+    public static Boosters TIER_2_PATH_1;
+    public static Boosters TIER_3_PATH_1;
+    public static Boosters TIER_4_PATH_1;
+    public static Boosters TIER_1_PATH_2;
+    public static Boosters TIER_2_PATH_2;
+    public static Boosters TIER_3_PATH_2;
+    public static Boosters TIER_4_PATH_2;
+    
 
     public Boosters(double mass, double cost, int tier, int path, double bp, double bd, int numUses)
     {

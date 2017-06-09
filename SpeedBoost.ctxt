@@ -1,5 +1,5 @@
 #BlueJ class context
-comment0.params=accelIncrease
+comment0.params=boostForce
 comment0.target=SpeedBoost(double)
 comment1.params=
 comment1.target=void\ use()

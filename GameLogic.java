@@ -7,9 +7,8 @@ public class GameLogic
     //x and y are in meters
     //Player mass is in grams
     public static double time, deltaTime, endTime, x, y, speed, angle, ay, ax, vx, vy, playerMass, playerCrossSectionalArea;
-    public static boolean hasAirDrag;
 
-    public GameLogic(double speed, double angle, double accelerationX, double startHeight, double startDistance, double gravityA, boolean hasAirDrag,  double playerMass, double playerCrossSectionalArea)
+    public GameLogic(double speed, double angle, double accelerationX, double startHeight, double startDistance, double gravityA, double playerMass, double playerCrossSectionalArea)
     {
         time = 0.0;
         deltaTime = 0.0001;
@@ -20,7 +19,6 @@ public class GameLogic
         this.angle = angle;
         ay = gravityA;
         ax = accelerationX;
-        this.hasAirDrag = hasAirDrag;
         this.playerMass = playerMass;
         this.playerCrossSectionalArea = playerCrossSectionalArea;
         this.vx = this.speed*Math.cos(this.angle*(Math.PI/180.0));
@@ -28,24 +26,26 @@ public class GameLogic
     }
     //Precondition: Player must choose what planet they want to be on with a button
     //This begins the launch
-    public static void init(Planet world, Player player)
+    public static void init(Terrain terrain, Player player)
     {
-        double playerMass = (new Player()).calculateMass();
-        double acceleration = /*Launcher force*/1 / playerMass; //F = ma
+        double playerMass = player.calculateMass(); //test
+        double playerCrossSectionalArea = player.getCrossSectionalArea();
+        double initialSpeed = 60.0;
+        GameLogic logic = new GameLogic(initialSpeed, player.getLauncher().getAngle(), 0.0, 10, 1.0, -Terrain.gravity, playerMass, playerCrossSectionalArea);
+        while(!(y <= 0.0))
+        {
+            System.out.println(logic.getPoint().getX() + " " + logic.getPoint().getY());
+        }
     }
 
     public Point2D getPoint()
     {
-        if(hasAirDrag)
-        {
-            //Calculations for air density
-            double pressure = 101.325 * Math.pow(1 - (0.0065 * y / 288.15), (9.80665 * 0.0289644) / (8.31447 * 0.0065)); //See Density of Air wiki
-            double density = (pressure * 0.0289644) / (8.31447 * 288.15);
-            //Calculations for air resistance
-            double airResistance = density * 0.47 * this.playerCrossSectionalArea * 0.5 * Math.pow(vx, 2.0); //In newtons
-            //F = ma
-            ax = -1.0 * airResistance * (this.playerMass / 1000.0);
-        }
+        //Calculations below account for air drag
+        double pressure = 101.325 * Math.pow(1 - (0.0065 * y / 288.15), (Terrain.gravity * 0.0289644) / (8.31447 * 0.0065)); //See Density of Air wiki
+        double density = (pressure * 0.0289644) / (8.31447 * 288.15);
+        double airResistance = density * 0.47 * this.playerCrossSectionalArea * 0.5 * Math.pow(vx, 2.0); //In newtons
+        ax = -1.0 * airResistance * (this.playerMass / 1000.0); //F = ma
+        
         time += this.deltaTime;
         this.x += this.vx*this.deltaTime;
         this.y += this.vy*this.deltaTime;
@@ -54,11 +54,10 @@ public class GameLogic
         return new Point2D(x, y);
     }
 
-    //Could be expoited if public, but crucial to the SpeedBoost class
-    //Input must be an acceleration
-    public static void increaseAccelX(double amount)
+    //Input must be in newtons
+    public static void boost(double amount)
     {
-        ax += amount;
+        ax += amount / playerMass;
     }
 
     public static double getAccelX()
@@ -76,7 +75,7 @@ public class GameLogic
         double playerMass = player.calculateMass(); //test
         double playerCrossSectionalArea = player.getCrossSectionalArea();
         double initialSpeed = 60.0;
-        GameLogic logic = new GameLogic(initialSpeed, player.getLauncher().getAngle(), 0.0, 10, 1.0, -9.80665, false, playerMass, playerCrossSectionalArea); //replace boolean with (planet object).getHasAirDrag()
+        GameLogic logic = new GameLogic(initialSpeed, player.getLauncher().getAngle(), 0.0, 10, 1.0, -Terrain.gravity, playerMass, playerCrossSectionalArea);
         while(!(y <= 0.0))
         {
             System.out.println(logic.getPoint().getX() + " " + logic.getPoint().getY());

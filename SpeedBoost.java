@@ -1,23 +1,23 @@
 public class SpeedBoost extends Powerups
 {
-    private double accelIncrease; //Acceleration that will be added to the player's
+    private double boostForce; //In newtons
     private final static Sprite sprite = null; //Will eventually be a pic of a speed boost
     
-    public SpeedBoost(double accelIncrease)
+    public SpeedBoost(double boostForce)
     {
         super(0, 0, sprite);
-        this.accelIncrease = accelIncrease;
+        this.boostForce = boostForce;
     }
     
-    //Only use for the player
     @Override
     public void use()
     {
-        double initial = GameLogic.getAccelX();
-        GameLogic.increaseAccelX(accelIncrease);
-        while((initial + accelIncrease >= initial))
+        double temp = boostForce;
+        GameLogic.boost(boostForce);
+        while(temp >= 0.0)
         {
-            GameLogic.increaseAccelX(-1 * (accelIncrease / 50.0)); //May need to be adjusted
+            GameLogic.boost(-1 * (boostForce / 50.0)); //every .1 seconds it removes 1/50th of boostForce
+            temp -= -1 * boostForce / 50.0;
             try {
                 Thread.sleep(100);
             } catch(InterruptedException ex) {
