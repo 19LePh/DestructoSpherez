@@ -1,6 +1,6 @@
 #BlueJ class context
-comment0.params=speed\ angle\ accelerationX\ startHeight\ startDistance\ gravityA\ hasAirDrag
-comment0.target=GameLogic(double,\ double,\ double,\ double,\ double,\ double,\ boolean)
+comment0.params=speed\ angle\ accelerationX\ startHeight\ startDistance\ gravityA\ hasAirDrag\ playerMass\ playerCrossSectionalArea
+comment0.target=GameLogic(double,\ double,\ double,\ double,\ double,\ double,\ boolean,\ double,\ double)
 comment1.params=world\ player
 comment1.target=void\ init(Planet,\ Player)
 comment2.params=

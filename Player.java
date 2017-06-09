@@ -6,14 +6,12 @@ public class Player
     private Mounts mount;
     private Enhancements enhancement;
     private double mass; //Default is 10.0 kg
-    private double diameter; //Default is 2 meters, or the length of a piano
-    private double crossSectionalArea; //Important for air drag. For spheres, this is pi*r^2. R is in meters
+    private final double crossSectionalArea = Math.PI * Math.pow(1.0, 2.0); //Important for air drag. For spheres, this is pi*r^2. Radius is 1.0 by default
 
     public Player()
     {
         color = null;
         mass = 10.0;
-        crossSectionalArea = Math.PI * Math.pow((diameter / 2.0), 2.0);
         //Everything below could be changed if we decide to add in default/"already brought" upgrades
         boosters = null;
         launcher = null;
@@ -28,10 +26,6 @@ public class Player
         {
             mass += this.getBoosters().getMass();
         }
-        if(this.getLauncher() != null)
-        {
-            mass += this.getLauncher().getMass();
-        }
         if(this.getMount() != null)
         {
             mass += this.getMount().getMass();
@@ -41,6 +35,11 @@ public class Player
             mass += this.getEnhancement().getMass();
         }
         return totalMass;
+    }
+    
+    public double getCrossSectionalArea()
+    {
+        return crossSectionalArea;
     }
     
     public void setColor(Sprite color)
