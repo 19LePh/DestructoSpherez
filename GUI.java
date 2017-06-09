@@ -32,6 +32,7 @@ public class GUI extends Application
     @Override
     public void start(Stage primaryStage) 
     {
+        Player player = new Player();
         primaryStage.setTitle("Destructo Spherez!");
         //Below makes primaryStage fullscreen
         Screen screen = Screen.getPrimary();
@@ -53,11 +54,15 @@ public class GUI extends Application
                 @Override
                 public void handle(ActionEvent event) 
                 {
-                    System.out.println("Destructo Spherez");
+                    Terrain t = new Terrain(10, null);
+                    //Switch scene
+                    GameLogic.init(t, player);
+                    //End
+                    Terrain.updateBackground();
                 }
             });
         //Creates a background object
-        Image img = new Image("landscape.jpg");
+        Image img = Terrain.background;
         BackgroundImage bgimg = new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(bounds.getWidth(), bounds.getHeight(), false, false, false, false));
         Background back = new Background(bgimg);
         //Sets the stage

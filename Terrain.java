@@ -2,8 +2,8 @@ import java.util.ArrayList;
 import javafx.scene.image.Image;
 public class Terrain
 {
-    // instance variables
-    private Image background;
+    public static Image background = new Image("Dawn.png");
+    public static int time = 1; //Numbers 1 - 4, 1 is Dawn, 2 is day, 3 is dusk, 4 is night
     public final static double gravity = 9.80665;
     private ArrayList<Powerups> powerups; //There can be a lot of powerups at a time or a few
     private Wall[] walls; //Always a set number of walls
@@ -23,10 +23,37 @@ public class Terrain
             }
         }
     }
-    
+
     //Below: do we even need this method?
     public boolean checkWalls()
     {
         return true; //Will eventually invoke a walls method to see if it is destroyed or not
     }
-}
+
+    public static void updateBackground()
+    {
+        if(time == 1)
+        {
+            time ++;
+            background = new Image("Day.png");
+        }
+        
+        if(time == 2)
+        {
+            time ++;
+            background = new Image("Sunset.png");
+        }
+        
+        if(time == 3)
+        {
+            time ++;
+            background = new Image("DNight.png");
+        }
+        
+        if(time == 4)
+        {
+            time = 1;
+            background = new Image("Dawn.png");
+        }
+    }
+    }
