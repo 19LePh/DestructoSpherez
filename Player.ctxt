@@ -1,8 +1,8 @@
 #BlueJ class context
 comment0.params=
 comment0.target=Player()
-comment1.params=player
-comment1.target=double\ calculateMass(Player)
+comment1.params=
+comment1.target=double\ calculateMass()
 comment2.params=color
 comment2.target=void\ setColor(Sprite)
 comment3.params=

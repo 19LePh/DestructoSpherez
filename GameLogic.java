@@ -62,7 +62,7 @@ public class GameLogic
 
 
     public static void main(String[] args) {
-        double playerMass = (new Player()).calculateMass();
+        double playerMass = (new Player()).calculateMass(); //test
         double acceleration = /*Launcher force*/1 / playerMass; //F = ma
         GameLogic logic = new GameLogic(60.0, 45.0, acceleration, 10, 1.0, -9.8, false); //replace boolean with (planet object).getHasAirDrag()
         while(!(y <= 0.0))

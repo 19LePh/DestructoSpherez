@@ -21,24 +21,24 @@ public class Player
         enhancement = null;
     }
     
-        public double calculateMass(Player player)
+        public double calculateMass()
     {
         double totalMass = this.mass;
-        if(player.getBoosters() != null)
+        if(this.getBoosters() != null)
         {
-            mass += player.getBoosters().getMass();
+            mass += this.getBoosters().getMass();
         }
-        if(player.getLauncher() != null)
+        if(this.getLauncher() != null)
         {
-            mass += player.getLauncher().getMass();
+            mass += this.getLauncher().getMass();
         }
-        if(player.getMount() != null)
+        if(this.getMount() != null)
         {
-            mass += player.getMount().getMass();
+            mass += this.getMount().getMass();
         }
-        if(player.getEnhancement() != null)
+        if(this.getEnhancement() != null)
         {
-            mass += player.getEnhancement().getMass();
+            mass += this.getEnhancement().getMass();
         }
         return totalMass;
     }

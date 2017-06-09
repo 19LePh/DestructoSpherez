@@ -14,7 +14,8 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundSize;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.VBox;
+import javafx.geometry.Pos;
 /**
  * The Graphical User Interface for Destructo-Spherez.
  * 
@@ -43,6 +44,8 @@ public class GUI extends Application
         //Buttons!
         Button start = new Button();
         Button shop = new Button();
+        start.setStyle("-fx-font: 30 arial");
+        shop.setStyle("-fx-font: 30 arial");
         shop.setText("Shop");
         start.setText("Start");
         start.setOnAction(new EventHandler<ActionEvent>()
@@ -58,8 +61,11 @@ public class GUI extends Application
         BackgroundImage bgimg = new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(bounds.getWidth(), bounds.getHeight(), false, false, false, false));
         Background back = new Background(bgimg);
         //Sets the stage
+        VBox vbox = new VBox(5); // 5 is the spacing between elements in the VBox
+        vbox.getChildren().addAll(start, shop);
         StackPane root = new StackPane();
-        root.getChildren().add(start);
+        root.getChildren().add(vbox);
+        vbox.setAlignment(Pos.CENTER);
         root.setBackground(back);
         primaryStage.setScene(new Scene(root, bounds.getWidth(), bounds.getHeight()));
         primaryStage.show();
