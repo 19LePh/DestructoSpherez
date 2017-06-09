@@ -2,5 +2,9 @@
 comment0.params=cost\ tier\ path\ launchAngle\ launchPower
 comment0.target=Launchers(double,\ int,\ int,\ double,\ double)
 comment1.params=
-comment1.target=void\ use()
-numComments=2
+comment1.target=double\ getAngle()
+comment2.params=
+comment2.target=double\ getPower()
+comment3.params=
+comment3.target=void\ use()
+numComments=4

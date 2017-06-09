@@ -62,9 +62,16 @@ public class GameLogic
 
 
     public static void main(String[] args) {
-        double playerMass = (new Player()).calculateMass(); //test
-        double acceleration = /*Launcher force*/1 / playerMass; //F = ma
-        GameLogic logic = new GameLogic(60.0, 45.0, acceleration, 10, 1.0, -9.8, false); //replace boolean with (planet object).getHasAirDrag()
+        Player player = new Player();
+        double playerMass = player.calculateMass(); //test
+        double acceleration = 0.0;
+        double angle = 0.0;
+        if(player.getLauncher() != null)
+        {
+            acceleration = (player.getLauncher().getPower()) / playerMass; //F = ma
+            angle = (player.getLauncher().getAngle());
+        }
+        GameLogic logic = new GameLogic(60.0, angle, acceleration, 10, 1.0, -9.8, false); //replace boolean with (planet object).getHasAirDrag()
         while(!(y <= 0.0))
         {
             System.out.println(logic.getPoint().getX() + " " + logic.getPoint().getY());
