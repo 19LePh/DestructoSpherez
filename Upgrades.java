@@ -1,22 +1,20 @@
 public abstract class Upgrades
 {
-    private double mass;
+    private double mass; //kg
     private boolean isPurchased;
     private boolean isEquipped;
     private double cost;
-    private int tier; //1 is the lowest, 4 is the highest
-    private int path; //Either path 1 or 2 
     private boolean isUsable; //For boosters and helis, which run out of fuel after a while
+    private Animation animation;
 
-    public Upgrades(double mass, double cost, int tier, int path)
+    public Upgrades(double mass, double cost, Animation animation)
     {
         this.mass = mass;
         isPurchased = false;
         isEquipped = false;
         this.cost = cost;
-        this.tier = tier;
-        this.path = path;
         isUsable = true;
+        this.animation = animation;
     }
     
     public boolean getisUsable()

@@ -3,15 +3,15 @@ public class Player
     private Sprite color;
     private Boosters boosters;
     private Launchers launcher;
-    private Mounts mount;
+    private Mount mount;
     private Enhancements enhancement;
-    private double mass; //Default is 10.0 kg
+    private double mass; //Default is 30.0 kg; an average human is 70 kg
     private final double crossSectionalArea = Math.PI * Math.pow(1.0, 2.0); //Important for air drag. For spheres, this is pi*r^2. Radius is 1.0 by default
 
     public Player()
     {
         color = null;
-        mass = 10.0;
+        mass = 30.0;
         //Everything below could be changed if we decide to add in default/"already brought" upgrades
         boosters = null;
         launcher = null;
@@ -57,7 +57,7 @@ public class Player
         return launcher;
     }
     
-    public Mounts getMount()
+    public Mount getMount()
     {
         return mount;
     }

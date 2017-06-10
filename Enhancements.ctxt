@@ -1,6 +1,6 @@
 #BlueJ class context
-comment0.params=mass\ cost\ tier\ path\ pierceFactor
-comment0.target=Enhancements(double,\ double,\ int,\ int,\ double)
+comment0.params=mass\ cost\ pierceFactor\ animation
+comment0.target=Enhancements(double,\ double,\ double,\ Animation)
 comment1.params=
 comment1.target=void\ use()
 numComments=2

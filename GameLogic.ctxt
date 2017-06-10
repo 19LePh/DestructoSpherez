@@ -1,5 +1,5 @@
 #BlueJ class context
-comment0.params=speed\ angle\ accelerationX\ startHeight\ startDistance\ gravityA\ playerMass\ playerCrossSectionalArea
+comment0.params=speed\ angle\ accelerationX\ startHeight\ startDistance\ accelerationY\ playerMass\ playerCrossSectionalArea
 comment0.target=GameLogic(double,\ double,\ double,\ double,\ double,\ double,\ double,\ double)
 comment1.params=terrain\ player
 comment1.target=void\ init(Terrain,\ Player)

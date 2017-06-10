@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.params=mass\ cost\ lift\ fuel\ thrust\ animation
+comment0.target=Mount(double,\ double,\ double,\ double,\ double,\ Animation)
+comment1.params=
+comment1.target=double\ getLift()
+comment2.params=
+comment2.target=double\ getThrust()
+comment3.params=
+comment3.target=void\ use()
+numComments=4

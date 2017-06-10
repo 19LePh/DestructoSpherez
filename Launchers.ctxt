@@ -1,6 +1,6 @@
 #BlueJ class context
-comment0.params=cost\ tier\ path\ launchAngle\ launchPower
-comment0.target=Launchers(double,\ int,\ int,\ double,\ double)
+comment0.params=cost\ launchAngle\ launchPower\ animation
+comment0.target=Launchers(double,\ double,\ double,\ Animation)
 comment1.params=
 comment1.target=double\ getAngle()
 comment2.params=

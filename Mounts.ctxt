@@ -1,6 +1,0 @@
-#BlueJ class context
-comment0.params=mass\ cost\ tier\ path\ gliding\ duration\ speedIncrease
-comment0.target=Mounts(double,\ double,\ int,\ int,\ double,\ double,\ double)
-comment1.params=
-comment1.target=void\ use()
-numComments=2
