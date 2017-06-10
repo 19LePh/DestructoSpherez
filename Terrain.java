@@ -3,6 +3,7 @@ import javafx.scene.image.Image;
 public class Terrain
 {
     public static Image background = new Image("Dawn.png");
+    public static final Image space = new Image("Space.png");
     public static int time = 1; //Numbers 1 - 4, 1 is Dawn, 2 is day, 3 is dusk, 4 is night
     public final static double gravity = 9.80665;
     private ArrayList<Powerups> powerups; //There can be a lot of powerups at a time or a few
@@ -36,24 +37,18 @@ public class Terrain
         {
             time ++;
             background = new Image("Day.png");
-        }
-        
-        if(time == 2)
+        } else if(time == 2)
         {
             time ++;
             background = new Image("Sunset.png");
-        }
-        
-        if(time == 3)
+        } else if(time == 3)
         {
             time ++;
-            background = new Image("DNight.png");
-        }
-        
-        if(time == 4)
+            background = new Image("Night.png");
+        } else if(time == 4)
         {
             time = 1;
             background = new Image("Dawn.png");
         }
     }
-    }
+}
