@@ -10,13 +10,13 @@ public class SpeedBoost extends Powerups
     }
     
     @Override
-    public void use()
+    public void use(GameLogic logic)
     {
         double temp = boostForce;
-        GameLogic.boost(boostForce);
+        logic.boost(boostForce);
         while(temp >= 0.0)
         {
-            GameLogic.boost(-1 * (boostForce / 50.0)); //every .1 seconds it removes 1/50th of boostForce
+            logic.boost(-1 * (boostForce / 50.0)); //every .1 seconds it removes 1/50th of boostForce
             temp -= -1 * boostForce / 50.0;
             try {
                 Thread.sleep(100);

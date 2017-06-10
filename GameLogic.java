@@ -6,7 +6,7 @@ public class GameLogic
     //ay and ax are related to vertical and horizontal accelerations. vx and vy are related to vertical and horizontal velocities
     //x and y are in meters
     //Player mass is in kg
-    public static double time, deltaTime, endTime, x, y, speed, angle, ay, ax, vx, vy, playerMass, playerCrossSectionalArea;
+    public double time, deltaTime, endTime, x, y, speed, angle, ay, ax, vx, vy, playerMass, playerCrossSectionalArea;
 
     public GameLogic(double speed, double angle, double accelerationX, double startHeight, double startDistance, double accelerationY, double playerMass, double playerCrossSectionalArea)
     {
@@ -33,7 +33,7 @@ public class GameLogic
         double initialSpeed = 60.0;
         double accelerationY = -Terrain.gravity + (player.getMount().getLift() / playerMass);
         GameLogic logic = new GameLogic(initialSpeed, player.getLauncher().getAngle(), 0.0, 10, 1.0, -Terrain.gravity, playerMass, playerCrossSectionalArea);
-        while(!(y <= 0.0))
+        while(!(logic.y <= 0.0))
         {
             System.out.println(logic.getPoint().getX() + " " + logic.getPoint().getY());
         }
@@ -56,21 +56,38 @@ public class GameLogic
     }
 
     //Input must be in newtons
-    public static void boost(double amount)
+    public void boost(double amount)
     {
         ax += amount / playerMass;
     }
 
-    public static double getAccelX()
+    public double get_ax()
     {
         return ax;
+    }
+    
+    public double get_vx()
+    {
+        return vx;
+    }
+    
+    //In m/s, DOES NOT ADD AMOUNT TO TOTAL, IT ONLY CHANGES IT
+    public void set_vx(double amount)
+    {
+        vx = amount;
     }
 
     public void setAngle(double angle)
     {
         this.angle += angle;
     }
-
+    
+    public double getPlayerMass()
+    {
+        return playerMass;
+    }
+    
+    //For testing purposes
     public static void main(String[] args) {
         Player player = new Player();
         double playerMass = player.calculateMass(); //test
@@ -78,7 +95,7 @@ public class GameLogic
         double initialSpeed = 60.0;
         double accelerationY = -Terrain.gravity + (player.getMount().getLift() / playerMass);
         GameLogic logic = new GameLogic(initialSpeed, player.getLauncher().getAngle(), 0.0, 10, 1.0, -Terrain.gravity, playerMass, playerCrossSectionalArea);
-        while(!(y <= 0.0))
+        while(!(logic.y <= 0.0))
         {
             System.out.println(logic.getPoint().getX() + " " + logic.getPoint().getY());
         }

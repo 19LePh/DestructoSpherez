@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.params=cashBonus
 comment0.target=MoneyRing(double)
-comment1.params=
-comment1.target=void\ use()
+comment1.params=logic
+comment1.target=void\ use(GameLogic)
 numComments=2

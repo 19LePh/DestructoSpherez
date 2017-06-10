@@ -30,9 +30,9 @@ public class Player
         {
             mass += this.getMount().getMass();
         }
-        if(this.getEnhancement() != null)
+        if(this.getEnhancements() != null)
         {
-            mass += this.getEnhancement().getMass();
+            mass += this.getEnhancements().getMass();
         }
         return totalMass;
     }
@@ -62,7 +62,7 @@ public class Player
         return mount;
     }
     
-    public Enhancements getEnhancement()
+    public Enhancements getEnhancements()
     {
         return enhancement;
     }

@@ -14,5 +14,5 @@ comment5.target=Launchers\ getLauncher()
 comment6.params=
 comment6.target=Mount\ getMount()
 comment7.params=
-comment7.target=Enhancements\ getEnhancement()
+comment7.target=Enhancements\ getEnhancements()
 numComments=8

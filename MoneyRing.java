@@ -11,7 +11,7 @@ public class MoneyRing extends Powerups
     
     //Only use for shop
     @Override
-    public void use()
+    public void use(GameLogic logic)
     {
         Shop.setBalance(this.cashBonus);
     }

@@ -48,7 +48,7 @@ public class Mount extends Upgrades
     
     //Only Applicable to Helis (Path 2)
     @Override
-    public void use()
+    public void use(GameLogic logic)
     {
         System.out.println(""); //
     }

@@ -32,5 +32,5 @@ public abstract class Powerups
     }
     
     //Always returns a numerical value for things like velocity, money, etc.
-    public abstract void use();
+    public abstract void use(GameLogic logic);
 }

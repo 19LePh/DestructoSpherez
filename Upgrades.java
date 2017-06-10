@@ -22,7 +22,7 @@ public abstract class Upgrades
         return isUsable;
     }
     
-    public abstract void use();
+    public abstract void use(GameLogic logic);
     
     public double getMass()
     {

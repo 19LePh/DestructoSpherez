@@ -53,7 +53,7 @@ public class Launchers extends Upgrades
     }
 
     @Override
-    public void use()
+    public void use(GameLogic logic)
     {
         System.out.println(""); //
     }

@@ -2,5 +2,7 @@
 comment0.params=mass\ cost\ pierceFactor\ animation
 comment0.target=Enhancements(double,\ double,\ double,\ Animation)
 comment1.params=
-comment1.target=void\ use()
-numComments=2
+comment1.target=double\ getPierceFactor()
+comment2.params=logic
+comment2.target=void\ use(GameLogic)
+numComments=3

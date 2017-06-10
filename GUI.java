@@ -16,6 +16,11 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.VBox;
 import javafx.geometry.Pos;
+import javafx.scene.text.Text;
+import javafx.scene.paint.Color;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Font;
+import javafx.scene.effect.DropShadow;
 /**
  * The Graphical User Interface for Destructo-Spherez.
  * 
@@ -42,14 +47,36 @@ public class GUI extends Application
         primaryStage.setWidth(bounds.getWidth());
         primaryStage.setHeight(bounds.getHeight());
 
-        //Buttons!
-        Button start = new Button();
-        Button shop = new Button();
-        start.setStyle("-fx-font: 30 arial");
-        shop.setStyle("-fx-font: 30 arial");
-        shop.setText("Shop");
-        start.setText("Start");
-        start.setOnAction(new EventHandler<ActionEvent>()
+        //Creates Title Text
+        DropShadow ds = new DropShadow();
+        ds.setOffsetY(3.0f);
+        ds.setColor(Color.ORANGE);
+        Text t = new Text("Destructo - Spherez!");
+        t.setFill(Color.GOLD);
+        t.setFont(Font.font("Helvetica", FontWeight.BOLD, 200));
+
+        //Creates buttons
+        Button launch = new Button("Launch!");
+        Button shop = new Button("Shop");
+        Button equip = new Button("Equip");
+        Button records = new Button("Records");
+        Button credits = new Button("Credits");
+
+        //Sets the font
+        launch.setStyle("-fx-font: 30 Helvetica");
+        shop.setStyle("-fx-font: 30 Helvetica");
+        records.setStyle("-fx-font: 30 Helvetica");
+        credits.setStyle("-fx-font: 30 Helvetica");
+        equip.setStyle("-fx-font: 30 Helvetica");
+
+        //Sets the buttons sizes
+        launch.setMinWidth(300);
+        shop.setMinWidth(300);
+        records.setMinWidth(300);
+        credits.setMinWidth(300);
+        equip.setMinWidth(300);
+
+        launch.setOnAction(new EventHandler<ActionEvent>()
             { 
                 @Override
                 public void handle(ActionEvent event) 
@@ -61,13 +88,13 @@ public class GUI extends Application
                     Terrain.updateBackground();
                 }
             });
-        //Creates a background object
+        //Creates the background
         Image img = Terrain.background;
         BackgroundImage bgimg = new BackgroundImage(img, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(bounds.getWidth(), bounds.getHeight(), false, false, false, false));
         Background back = new Background(bgimg);
         //Sets the stage
-        VBox vbox = new VBox(5); // 5 is the spacing between elements in the VBox
-        vbox.getChildren().addAll(start, shop);
+        VBox vbox = new VBox(50); // 5 is the spacing between elements in the VBox
+        vbox.getChildren().addAll(t, launch, shop, equip, records, credits);
         StackPane root = new StackPane();
         root.getChildren().add(vbox);
         vbox.setAlignment(Pos.CENTER);
