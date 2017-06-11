@@ -37,7 +37,7 @@ public class Score
             total += walls[0].getRewardMoney() * 100.0; //Convert money to score
             rewardMoney = walls[0].getRewardMoney();
         }
-        if(tempAchievements[01])
+        if(tempAchievements[1])
         {
             permAchievements[1] = true;
             total += walls[1].getRewardMoney() * 100.0; //Convert money to score
@@ -104,6 +104,11 @@ public class Score
             }
         }
     }
+    
+    public double getAirTime()
+    {
+        return airTime;
+    }
 
     public double getMaxHeight()
     {
@@ -130,7 +135,7 @@ public class Score
         return tempAchievements;
     }
 
-    public static double gethighScore()
+    public static double getHighScore()
     {
         return highScore;
     }
@@ -138,5 +143,77 @@ public class Score
     public static boolean[] getPermAchievements()
     {
         return permAchievements;
+    }
+
+    public static double getTopDistance()
+    {
+        return topDistance;
+    }
+
+    public static double getTopHeight()
+    {
+        return topHeight;
+    }
+
+    public static double getTopVelocity()
+    {
+        return topVelocity;
+    }
+
+    public static double getTopAirTime()
+    {
+        return topAirTime;
+    }
+
+    public static String permAchToString()
+    {
+        String text = "Walls Destroyed: ";
+        if(permAchievements[0])
+        {
+            text += "1!";
+        }
+        if(permAchievements[1])
+        {
+            text += ", 2!";
+        }
+        if(permAchievements[2])
+        {
+            text += ", 3!";
+        }
+        if(permAchievements[3])
+        {
+            text += ", 4!";
+        }
+        if(text.equals("Walls Destroyed: "))
+        {
+            text = "Walls Destroyed: None -_-";
+        }
+        return text;
+    }
+
+    public String tempAchToString()
+    {
+        String text = "Walls Destroyed: ";
+        if(this.tempAchievements[0])
+        {
+            text += "1!";
+        }
+        if(this.tempAchievements[1])
+        {
+            text += ", 2!";
+        }
+        if(this.tempAchievements[2])
+        {
+            text += ", 3!";
+        }
+        if(this.tempAchievements[3])
+        {
+            text += ", 4!";
+        }
+        if(text.equals("Walls Destroyed: "))
+        {
+            text = "Walls Destroyed: None -_-";
+        }
+        return text;
     }
 }

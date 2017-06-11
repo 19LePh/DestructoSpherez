@@ -1,10 +1,11 @@
 import java.util.ArrayList;
 import javafx.scene.image.Image;
+import java.util.concurrent.ThreadLocalRandom;
+import javafx.scene.image.ImageView;
 public class Terrain
 {
-    public static Image background = new Image("Dawn.png");
-    public static final Image space = new Image("Space.png");
-    public static int time = 1; //Numbers 1 - 4, 1 is Dawn, 2 is day, 3 is dusk, 4 is night
+    public static ImageView space;
+    public static ImageView currImage;
     public final static double gravity = 9.80665;
     private ArrayList<Powerups> powerups; //There can be a lot of powerups at a time or a few
     private Wall[] walls;
@@ -20,25 +21,16 @@ public class Terrain
     {
         return true; //Will eventually invoke a walls method to see if it is destroyed or not
     }
-
-    public static void updateBackground()
+    
+    //For Title Screen, Launch Screen (Ground)
+    public static void getTime()
     {
-        if(time == 1)
-        {
-            time ++;
-            background = new Image("Day.png");
-        } else if(time == 2)
-        {
-            time ++;
-            background = new Image("Sunset.png");
-        } else if(time == 3)
-        {
-            time ++;
-            background = new Image("Night.png");
-        } else if(time == 4)
-        {
-            time = 1;
-            background = new Image("Dawn.png");
+        int randomNum = ThreadLocalRandom.current().nextInt(1, 4 + 1);
+        switch(randomNum) {
+            case 1: currImage = new ImageView(new Image("Day.png")); break;
+            case 2: currImage = new ImageView(new Image("Sunset.png")); break;
+            case 3: currImage = new ImageView(new Image("Night.png")); break;
+            case 4: currImage = new ImageView(new Image("Dawn.png")); break;
         }
     }
     
@@ -56,5 +48,15 @@ public class Terrain
                 powerups.add(new SpeedBoost(20)); //Value not finalized
             }
         }
+    }
+    
+    public static void setSpace()
+    {
+        space = new ImageView(new Image("Space.png"));
+    }
+    
+    public static ImageView getSpace()
+    {
+        return space;
     }
 }

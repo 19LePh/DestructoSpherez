@@ -23,6 +23,23 @@ public class GameLogic
         this.vx = this.speed*Math.cos(this.angle*(Math.PI/180.0));
         this.vy = this.speed*Math.sin(this.angle*(Math.PI/180.0));
     }
+    
+    public GameLogic()
+    {
+        time = 0.0;
+        deltaTime= 0.0001;
+        endTime = 10.0;
+        x = 0.0;
+        y = 0.0;
+        speed = 0.0;
+        angle = 0.0;
+        ay = 0.0;
+        ax = 0.0;
+        playerMass = 0.0;
+        playerCrossSectionalArea = 0.0;
+        vx = 0.0;
+        vy = 0.0;
+    }
     //Precondition: Player must choose what planet they want to be on with a button
     //This begins the launch
     public void init(Score score)
@@ -31,7 +48,6 @@ public class GameLogic
         this.getPoint().getY();
         score.updateStats(y, time, x, vx);
         score.calculateScore();
-        GUI.updateLaunchLabels(this, score);
     }
 
     public Point2D getPoint()
