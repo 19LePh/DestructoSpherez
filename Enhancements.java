@@ -32,7 +32,7 @@ public class Enhancements extends Upgrades
         super(mass, cost, animation);
         this.pierceFactor = pierceFactor;
     }
-    
+
     public double getPierceFactor()
     {
         return pierceFactor;
@@ -42,5 +42,19 @@ public class Enhancements extends Upgrades
     public void use(GameLogic logic)
     {
         System.out.println(""); //
+    }
+
+    @Override
+    public void equip(Player player)
+    {
+        player.setEnhancements(this);
+        this.setIsEquipped(true);
+    }
+
+    @Override
+    public String getSpecs()
+    {
+        return "***ENHANCEMENTS*** Cost: $" + this.getCost() + ", Mass: " + this.getMass() + "kg, Pierce Factor: " +
+        pierceFactor;
     }
 }

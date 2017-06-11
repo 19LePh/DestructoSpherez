@@ -1,18 +1,23 @@
-import java.util.ArrayList;
 public class Shop
 {
     private static double balance = 0.01;
-    private ArrayList<Upgrades> upgrades; //In case we add more upgrades in the future
-
-    public Shop(ArrayList<Upgrades> upgrades)
-    {
-        this.upgrades = upgrades;
-    }
+    public static final Upgrades[][] upgrades = {{Launchers.TIER_1_PATH_1, Launchers.TIER_2_PATH_1, Launchers.TIER_3_PATH_1, Launchers.TIER_4_PATH_1},
+    {Launchers.TIER_1_PATH_2, Launchers.TIER_2_PATH_2, Launchers.TIER_3_PATH_2, Launchers.TIER_4_PATH_2}, {Enhancements.TIER_1_PATH_1, Enhancements.TIER_2_PATH_1, Enhancements.TIER_3_PATH_1, Enhancements.TIER_4_PATH_1},
+    {Enhancements.TIER_1_PATH_2, Enhancements.TIER_2_PATH_2, Enhancements.TIER_3_PATH_2, Enhancements.TIER_4_PATH_2}, {Boosters.TIER_1_PATH_1, Boosters.TIER_2_PATH_1, Boosters.TIER_3_PATH_1, Boosters.TIER_4_PATH_1},
+    {Boosters.TIER_1_PATH_2, Boosters.TIER_2_PATH_2, Boosters.TIER_3_PATH_2, Boosters.TIER_4_PATH_2}, {Mount.TIER_1_PATH_1, Mount.TIER_2_PATH_1, Mount.TIER_3_PATH_1, Mount.TIER_4_PATH_1},
+    {Mount.TIER_1_PATH_2, Mount.TIER_2_PATH_2, Mount.TIER_3_PATH_2, Mount.TIER_4_PATH_2}};
     
-    public static void buy(Upgrades up)
+    //Buys the upgrade. Returns false if the purchase is unsuccessful
+    public static boolean buy(Upgrades u)
     {
-        //will check if the player can buy the upgrade (enough money and not purchased),
-        //invoke a method that will change isPurchased to true, and subtract from balance
+        if((u.getCost() <= balance) && !u.getIsPurchased())
+        {
+            balance -= u.getCost();
+            u.setIsPurchased(true);
+            return true;
+        } else {
+            return false;
+        }
     }
     
     public static double getBalance()

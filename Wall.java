@@ -28,6 +28,11 @@ public class Wall
         this.mass = mass;
         this.thickness = thickness;
     }
+    
+    public double getRewardMoney()
+    {
+        return rewardMoney;
+    }
 
     //Checks if the player is touching the wall
     public boolean checkCollision()

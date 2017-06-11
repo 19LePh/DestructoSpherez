@@ -1,10 +1,8 @@
 #BlueJ class context
-comment0.params=upgrades
-comment0.target=Shop(java.util.ArrayList)
-comment1.params=up
-comment1.target=void\ buy(Upgrades)
-comment2.params=
-comment2.target=double\ getBalance()
-comment3.params=amount
-comment3.target=void\ setBalance(double)
-numComments=4
+comment0.params=u
+comment0.target=boolean\ buy(Upgrades)
+comment1.params=
+comment1.target=double\ getBalance()
+comment2.params=amount
+comment2.target=void\ setBalance(double)
+numComments=3

@@ -1,8 +1,10 @@
 #BlueJ class context
-comment0.params=numPowerups\ walls
-comment0.target=Terrain(int,\ Wall[])
+comment0.params=powerups\ walls
+comment0.target=Terrain(java.util.ArrayList,\ Wall[])
 comment1.params=
 comment1.target=boolean\ checkWalls()
 comment2.params=
 comment2.target=void\ updateBackground()
-numComments=3
+comment3.params=amount
+comment3.target=void\ randomPowerups(int)
+numComments=4

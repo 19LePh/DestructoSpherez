@@ -17,12 +17,41 @@ public abstract class Upgrades
         this.animation = animation;
     }
     
+    public void setIsPurchased(boolean brought)
+    {
+        isPurchased = brought;
+    }
+    
+    public boolean getIsPurchased()
+    {
+        return isPurchased;
+    }
+    
+    public boolean getIsEquipped()
+    {
+        return isEquipped;
+    }
+    
+    protected void setIsEquipped(boolean isEquipped)
+    {
+        this.isEquipped = isEquipped;
+    }
+    
     public boolean getisUsable()
     {
         return isUsable;
     }
     
+    public double getCost()
+    {
+        return cost;
+    }
+    
+    public abstract void equip(Player player);
+    
     public abstract void use(GameLogic logic);
+    
+    public abstract String getSpecs();
     
     public double getMass()
     {

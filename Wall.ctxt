@@ -2,7 +2,9 @@
 comment0.params=breakingPoint\ mass\ thickness\ money\ animation
 comment0.target=Wall(double,\ double,\ double,\ double,\ Animation)
 comment1.params=
-comment1.target=boolean\ checkCollision()
-comment2.params=logic\ player
-comment2.target=void\ update(GameLogic,\ Player)
-numComments=3
+comment1.target=double\ getRewardMoney()
+comment2.params=
+comment2.target=boolean\ checkCollision()
+comment3.params=logic\ player
+comment3.target=void\ update(GameLogic,\ Player)
+numComments=4

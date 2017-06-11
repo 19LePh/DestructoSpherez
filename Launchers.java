@@ -57,4 +57,18 @@ public class Launchers extends Upgrades
     {
         System.out.println(""); //
     }
+
+    @Override
+    public void equip(Player player)
+    {
+        player.setLauncher(this);
+        this.setIsEquipped(true);
+    }
+
+    @Override
+    public String getSpecs()
+    {
+        return "***LAUNCHER*** Cost: $" + this.getCost() + ", Launch Angle: " + launchAngle + " degrees, Launch Power: " +
+        launchPower + " N";
+    }
 }

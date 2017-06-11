@@ -1,0 +1,38 @@
+                        StringPropertyBase a = new StringPropertyBase("You are currently shopping"); labels[0].textProperty().bind(a); shoppingMode = labels[0];
+        StringPropertyBase b = new StringPropertyBase("You are currently equipping"); labels[1].textProperty().bind(b); equippingMode = labels[1];
+        StringPropertyBase c = new StringPropertyBase("SOLD OUT"); labels[2].textProperty().bind(c); soldOut = labels[2];
+        StringPropertyBase d = new StringPropertyBase("INSUFFICIENT FUNDS"); labels[3].textProperty().bind(d); insufficientFunds = labels[3];
+        StringPropertyBase e = new StringPropertyBase("Balance: $" + Shop.getBalance()); labels[4].textProperty().bind(e); balance = labels[4];
+        StringPropertyBase f = new StringPropertyBase("Equipped!"); labels[5].textProperty().bind(f); equipped = labels[5];
+        StringPropertyBase g = new StringPropertyBase("You do not own this item"); labels[6].textProperty().bind(g); notOwned = labels[6];
+        StringPropertyBase h = new StringPropertyBase(""); labels[7].textProperty().bind(h); specs = labels[7];
+        StringPropertyBase i = new StringPropertyBase("Distance: "); labels[8].textProperty().bind(i); xPos = labels[8];
+        StringPropertyBase j = new StringPropertyBase("Height: "); labels[9].textProperty().bind(j); yPos = labels[9];
+        StringPropertyBase k = new StringPropertyBase("Air Time: "); labels[10].textProperty().bind(k); airTime = labels[10];
+        StringPropertyBase l = new StringPropertyBase("Speed: "); labels[11].textProperty().bind(l); velocity = labels[11];
+        StringPropertyBase m = new StringPropertyBase("Max Height: "); labels[12].textProperty().bind(m); maxHeight = labels[12];
+        StringPropertyBase n = new StringPropertyBase("Distance: "); labels[13].textProperty().bind(n); maxDistance = labels[13];
+        StringPropertyBase o = new StringPropertyBase("Max Speed: "); labels[14].textProperty().bind(o); maxVelocity = labels[14];
+        StringPropertyBase p = new StringPropertyBase("Total Score: "); labels[15].textProperty().bind(p); totalScore = labels[15];
+        StringPropertyBase q = new StringPropertyBase("Reward Money: "); labels[16].textProperty().bind(q); rewardMoney = labels[16];
+        StringPropertyBase r = new StringPropertyBase("Air Time: "); labels[17].textProperty().bind(r); finalAirTime = labels[17];
+
+
+        shoppingMode = labels[0]; a = new SimpleStringProperty("You are currently shopping"); shoppingMode.textProperty().bind(a);
+        equippingMode = labels[1]; b = new SimpleStringProperty("You are currently equipping"); equippingMode.textProperty().bind(b);
+        soldOut = labels[2]; c = new SimpleStringProperty("SOLD OUT"); soldOut.textProperty().bind(c);
+        insufficientFunds = labels[3]; d = new SimpleStringProperty("INSUFFICIENT FUNDS"); insufficientFunds.textProperty().bind(d);
+        balance = labels[4]; e = new SimpleStringProperty("Balance: $" + Shop.getBalance()); balance.textProperty().bind(e);
+        equipped = labels[5]; f = new SimpleStringProperty("Equipped!"); equipped.textProperty().bind(f);
+        notOwned = labels[6]; g = new SimpleStringProperty("You do not own this item"); notOwned.textProperty().bind(g);
+        specs = labels[7]; h = new SimpleStringProperty(""); specs.textProperty().bind(h);
+        xPos = labels[8]; i = new SimpleStringProperty("Distance: "); xPos.textProperty().bind(i);
+        yPos = labels[9]; j = new SimpleStringProperty("Height: "); yPos.textProperty().bind(j);
+        airTime = labels[10]; k = new SimpleStringProperty("Air Time: "); airTime.textProperty().bind(k);
+        velocity = labels[11]; l = new SimpleStringProperty("Speed: "); velocity.textProperty().bind(l);
+        maxHeight = labels[12]; m = new SimpleStringProperty("Max Height: "); maxHeight.textProperty().bind(m);
+        maxDistance = labels[13]; n = new SimpleStringProperty("Distance: "); maxDistance.textProperty().bind(n);
+        maxVelocity = labels[14]; o = new SimpleStringProperty("Max Speed: "); maxVelocity.textProperty().bind(o);
+        totalScore = labels[15]; p = new SimpleStringProperty("Total Score: "); totalScore.textProperty().bind(p);
+        rewardMoney = labels[16]; q = new SimpleStringProperty("Reward Money: "); rewardMoney.textProperty().bind(q);
+        finalAirTime = labels[17]; r = new SimpleStringProperty("Air Time: "); finalAirTime.textProperty().bind(r);

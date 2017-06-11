@@ -3,7 +3,7 @@ public class Mount extends Upgrades
     private double lift; //In newtons, opposes gravity. NOTE: THE NUMBERS NEED TWEAKING
     private double fuel; //Specific to Helis (Path 2) in seconds
     private double thrust; //In newtons, opposes drag
-    
+
     //Umbrella
     //Code for creating animation
     public static final Mount TIER_1_PATH_1 = new Mount(0.3, 30.0, 12.0, 0.0, 0.0, null);
@@ -35,21 +35,35 @@ public class Mount extends Upgrades
         this.fuel = fuel;
         this.thrust = thrust;
     }
-    
+
     public double getLift()
     {
         return lift;
     }
-    
+
     public double getThrust()
     {
         return thrust;
     }
-    
+
     //Only Applicable to Helis (Path 2)
     @Override
     public void use(GameLogic logic)
     {
         System.out.println(""); //
+    }
+
+    @Override
+    public void equip(Player player)
+    {
+        player.setMount(this);
+        this.setIsEquipped(true);
+    }
+
+    @Override
+    public String getSpecs()
+    {
+        return "***MOUNT*** Cost: $" + this.getCost() + ", Mass: " + this.getMass() + "kg, Lift Force: " + lift + " N," +
+        " Thrust Force: " + thrust + "N, Duration: " + fuel + "s";
     }
 }
