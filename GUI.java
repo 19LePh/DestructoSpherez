@@ -1,3 +1,4 @@
+//Some imports are not used; may need to be removed
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -46,16 +47,6 @@ import javafx.scene.input.MouseEvent;
  */
 public class GUI extends Application
 {
-    //Graphical Elements
-    private static Scene titleScene, launchScene, catalogScene, recordsScene, creditsScene, scoreScene;
-
-    private static Background Time_Background; //Backgrounds based on time
-    private static Background Pos_Background; //Backgrounds based on player's position and Time_Background
-
-    private static Label shoppingMode, equippingMode;
-    private static Label soldOut, insufficientFunds, balance; //only shows if label shoppingMode is visible
-    private static Label equipped, notOwned; //only shows if label equipping is visible
-
     //Player Elements
     private static final Player player = new Player();
 
@@ -694,98 +685,28 @@ public class GUI extends Application
                     stage.setScene(equipmentScene);
                 }
             });
-        //Creates Labels
-        Label[] labels = new Label[5];
-        for(int i = 0; i < 5; i++)
-        {
-            DropShadow ds = new DropShadow();
-            ds.setOffsetY(3.0f);
-            ds.setColor(Color.ORANGE);
-            Label l = new Label("text");
-            l.setMinWidth(300.0);
-            l.setTextFill(Color.GOLD);
-            l.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
-            labels[i] = l;
-        }
-        //Labels must be binded in order to constantly update their text
-        labels[0].setText("SOLD OUT");
-        labels[1].setText("INSUFFICIENT FUNDS");
-        labels[2].setText("Equipped!");
-        labels[3].setText("You do not own this item");
-        labels[4].setText("Purchased");
 
-        //Creates Layouts
+        //Create title Scene
         VBox Layout_Title = new VBox(50);
-        VBox Layout_Catalog_Args = new VBox(50);
-        VBox Layout_Equipment = new VBox(50);
 
-        VBox Layout_Credits = new VBox(50);
-
-        VBox Layout_Records = new VBox(50);
-
-        //Wall of Buttons
-        VBox Layout_Back_Catalog = new VBox(50);
-        VBox Layout_Back_Equipment = new VBox(50);
-        VBox Layout_Back_Records = new VBox(50);
-        VBox Layout_Back_Credits = new VBox(50);
-        VBox Layout_Back_Score = new VBox(50);
         //Adds Buttons, Text; aligns layout
         Layout_Title.getChildren().addAll(titles[0], buttons[0], buttons[1], buttons[39], buttons[2], buttons[3], buttons[45]);
         Layout_Title.setAlignment(Pos.CENTER);
-
-        Layout_Credits.getChildren().addAll(titles[3]);
-        Layout_Credits.setAlignment(Pos.TOP_CENTER);
-
-        Layout_Records.getChildren().addAll(titles[2]);
-        Layout_Records.setAlignment(Pos.TOP_CENTER);
-
-        //Back Buttons
-        Layout_Back_Catalog.getChildren().addAll(buttons[40]);
-        Layout_Back_Catalog.setAlignment(Pos.BOTTOM_LEFT);
-        Layout_Back_Equipment.getChildren().addAll(buttons[41]);
-        Layout_Back_Equipment.setAlignment(Pos.BOTTOM_LEFT);
-        Layout_Back_Records.getChildren().addAll(buttons[42]);
-        Layout_Back_Records.setAlignment(Pos.BOTTOM_LEFT);
-        Layout_Back_Credits.getChildren().addAll(buttons[43]);
-        Layout_Back_Credits.setAlignment(Pos.BOTTOM_LEFT);
-        Layout_Back_Score.getChildren().addAll(buttons[44]);
-        Layout_Back_Score.setAlignment(Pos.BOTTOM_LEFT);
 
         //Creates StackPanes
         Pane title1 = new StackPane();
         title1.getChildren().addAll(Layout_Title);
 
-        Pane credits1 = new StackPane();
-        credits1.getChildren().addAll(Layout_Credits, Layout_Back_Credits);
-
-        Pane records1 = new StackPane();
-        records1.getChildren().addAll(Layout_Records, Layout_Back_Records);
-
         //Creates PaneBuilder objects
         TitlePane titlePane = new TitlePane();
         Pane title2 = titlePane.getView();
-
-        CreditsPane creditsPane = new CreditsPane();
-        Pane credits2 = creditsPane.getView();
-
-        RecordsPane recordsPane = new RecordsPane();
-        Pane records2 = recordsPane.getView();
 
         //Stacks the panes
         TitlePane masterTitle = new TitlePane();
         masterTitle.getView().getChildren().addAll(title2, title1);
 
-        StackPane masterCredits = new StackPane();
-        masterCredits.getChildren().addAll(credits2, credits1);
-
-        StackPane masterRecords = new StackPane();
-        masterRecords.getChildren().addAll(records2, records1);
-
         //Creates Scenes
-        titleScene = new Scene(masterTitle.getView(), width, height);
-        creditsScene = new Scene(masterCredits, width, height);
-        recordsScene = new Scene(masterRecords, width, height);
-
+        Scene titleScene = new Scene(masterTitle.getView(), width, height);
         stage.setScene(titleScene);
         stage.show();
     }

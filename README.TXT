@@ -1,12 +1,12 @@
-------------------------------------------------------------------------
-This is the project README file. Here, you should describe your project.
-Tell the reader (someone who does not know anything about this project)
-all he/she needs to know. The comments should usually include at least:
-------------------------------------------------------------------------
-
 PROJECT TITLE: Destructo - Spherez
-PURPOSE OF PROJECT: 
-VERSION or DATE:
-HOW TO START THIS PROJECT:
-AUTHORS:
-USER INSTRUCTIONS:
+PURPOSE OF PROJECT: This is our final project for AP Computer Sciene
+VERSION or DATE: June 13, 2017
+HOW TO START THIS PROJECT: Run the main method in GUI
+AUTHORS: Phillip Le & Matt Carosielli
+USER INSTRUCTIONS: After going to the launch screen, press Enter to start the launch.
+THINGS TO DO:
+- Update stats at the launch sceen continuosly
+- Animate the player and their upgrades
+- Balance game physics, upgrades
+- Add powerups
+- Thorougly test everything!!!
