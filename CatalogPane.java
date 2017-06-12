@@ -78,35 +78,61 @@ public class CatalogPane extends PaneBuilder
                 b.setTextFill(Color.GOLD);
                 b.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
                 Layout_Catalog_Balance.getChildren().add(b);
+            } else {
+                Label f = new Label("Not Purchased");
+                f.setMinWidth(300.0);
+                f.setTextFill(Color.GOLD);
+                f.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
+                Layout_Catalog_Balance.getChildren().add(f);
             }
+            //Add_Labels to VBox and align
+            labels[0].setText("Balance: $" + Shop.getBalance());
+            Layout_Catalog_Balance.getChildren().addAll(labels[0]);
+            Layout_Catalog_Balance.setAlignment(Pos.TOP_LEFT);
+
+            Layout_Catalog_Specs.getChildren().addAll(labels[1]);
+            Layout_Catalog_Specs.setAlignment(Pos.TOP_RIGHT);
+
+            view.getChildren().addAll(Terrain.space, Layout_Catalog_Balance, Layout_Catalog_Specs);
         } else {
             Text x = new Text("Equipment");
             x.setFill(Color.GOLD);
             x.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
             Layout_Catalog_Balance.getChildren().add(x);
-            if(u.setIsEquipped(player))
+            if(clicked)
+            {
+                player.equip(u);
+            }
+
+            if(player.checkIsEquipped(u))
             {
                 Label c = new Label("Equipped!");
                 c.setMinWidth(300.0);
                 c.setTextFill(Color.GOLD);
                 c.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
                 Layout_Catalog_Balance.getChildren().add(c);
-            } else {
+            } else if(!(u.getIsPurchased())){
                 Label d = new Label("You do not own this item");
                 d.setMinWidth(300.0);
                 d.setTextFill(Color.GOLD);
                 d.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
                 Layout_Catalog_Balance.getChildren().add(d);
+            } else {
+                Label e = new Label("Not Equipped");
+                e.setMinWidth(300.0);
+                e.setTextFill(Color.GOLD);
+                e.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
+                Layout_Catalog_Balance.getChildren().add(e);
             }
+
+            //Add_Labels to VBox and align
+            Layout_Catalog_Balance.getChildren().addAll(labels[0]);
+            Layout_Catalog_Balance.setAlignment(Pos.TOP_LEFT);
+
+            Layout_Catalog_Specs.getChildren().addAll(labels[1]);
+            Layout_Catalog_Specs.setAlignment(Pos.TOP_RIGHT);
+
+            view.getChildren().addAll(Terrain.space, Layout_Catalog_Balance, Layout_Catalog_Specs);
         }
-
-        //Add_Labels to VBox and align
-        Layout_Catalog_Balance.getChildren().addAll(labels[0]);
-        Layout_Catalog_Balance.setAlignment(Pos.TOP_LEFT);
-
-        Layout_Catalog_Specs.getChildren().addAll(labels[1]);
-        Layout_Catalog_Specs.setAlignment(Pos.TOP_RIGHT);
-
-        view.getChildren().addAll(Terrain.space, Layout_Catalog_Balance, Layout_Catalog_Specs);
     }
 }

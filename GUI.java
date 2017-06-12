@@ -37,6 +37,7 @@ import javafx.application.Platform;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.geometry.Insets;
+import javafx.scene.input.MouseEvent;
 /**
  * The Graphical User Interface for Destructo-Spherez.
  * 
@@ -123,8 +124,8 @@ public class GUI extends Application
         titles[5].setText("Equipment");
 
         //Creates Buttons
-        Button[] buttons = new Button[78];
-        for(int i = 0; i < 78; i++)
+        Button[] buttons = new Button[80];
+        for(int i = 0; i < 80; i++)
         {
             Button b = new Button("");
             b.setStyle("-fx-font: 30 Helvetica");
@@ -213,6 +214,9 @@ public class GUI extends Application
         buttons[75].setText("Prototype H");
         buttons[76].setText("The Chopper");
         buttons[77].setText("Mini UFO");
+
+        buttons[78].setText("Purchase");
+        buttons[79].setText("Equip");
 
         //Action events for title buttons
         buttons[0].setOnAction(new EventHandler<ActionEvent>()
@@ -318,6 +322,7 @@ public class GUI extends Application
                         Layout_Catalog.getChildren().add(buttons[i]);
                     }
 
+                    Layout_Catalog.getChildren().add(buttons[78]);
                     Pane catalog1 = new StackPane();
                     catalog1.getChildren().addAll(Layout_Catalog);
 
@@ -391,16 +396,17 @@ public class GUI extends Application
                     Terrain.getSpace().setFitWidth(width);
                     Terrain.getSpace().setFitHeight(height);
 
-                    HBox Layout_Equipement = new HBox(1);
-                    Layout_Equipement.setAlignment(Pos.CENTER);
-                    Layout_Equipement.getChildren().add(buttons[41]);
-                    for(int i = 5; i < 37; i++)
+                    HBox Layout_Equipment = new HBox(1);
+                    Layout_Equipment.setAlignment(Pos.CENTER);
+                    Layout_Equipment.getChildren().add(buttons[41]);
+                    for(int i = 46; i < 78; i++)
                     {
-                        Layout_Equipement.getChildren().add(buttons[i]);
+                        Layout_Equipment.getChildren().add(buttons[i]);
                     }
 
+                    Layout_Equipment.getChildren().add(buttons[79]);
                     Pane equipment1 = new StackPane();
-                    equipment1.getChildren().addAll(Layout_Equipement);
+                    equipment1.getChildren().addAll(Layout_Equipment);
 
                     CatalogPane equipmentPane = new CatalogPane(player, player.getLauncher(), false, false); //Arbitrary Upgrade; will be changed on button click
                     Pane equipment2 = equipmentPane.getView();
@@ -449,10 +455,13 @@ public class GUI extends Application
             buttons[40].setStyle("-fx-font: 15 Helvetica");
             buttons[40].setMinWidth(100);
             buttons[40].setMinHeight(30);
-            buttons[i].setOnAction(new EventHandler<ActionEvent>()
+            buttons[78].setStyle("-fx-font: 15 Helvetica");
+            buttons[78].setMinWidth(100);
+            buttons[78].setMinHeight(30);
+            buttons[i].setOnMouseClicked(new EventHandler<MouseEvent>()
                 { 
                     @Override
-                    public void handle(ActionEvent event) 
+                    public void handle(MouseEvent t) 
                     {
                         int num = temp - 5;
                         int row = num / 4;
@@ -470,10 +479,46 @@ public class GUI extends Application
                             Layout_Catalog.getChildren().add(buttons[i]);
                         }
 
+                        buttons[78].setOnMouseClicked(new EventHandler<MouseEvent>
+                            () {
+
+                                @Override
+                                public void handle(MouseEvent t) {
+                                    int num = temp - 5;
+                                    int row = num / 4;
+                                    int col = num % 4;
+                                    Upgrades u = Shop.upgrades[row][col];
+
+                                    Terrain.setSpace();
+                                    Terrain.getSpace().setFitWidth(width);
+                                    Terrain.getSpace().setFitHeight(height);
+
+                                    HBox Layout_Catalog = new HBox(1);
+                                    Layout_Catalog.setAlignment(Pos.CENTER);
+                                    Layout_Catalog.getChildren().add(buttons[41]);
+                                    for(int i = 5; i < 37; i++)
+                                    {
+                                        Layout_Catalog.getChildren().add(buttons[i]);
+                                    }
+                                    Layout_Catalog.getChildren().add(buttons[78]);
+                                    Pane catalog1 = new StackPane();
+                                    catalog1.getChildren().addAll(Layout_Catalog);
+
+                                    CatalogPane catalogPane = new CatalogPane(player, u, true, true); //Arbitrary Upgrade; will be changed on button click
+                                    Pane catalog2 = catalogPane.getView();
+
+                                    StackPane masterCatalog = new StackPane();
+                                    masterCatalog.getChildren().addAll(catalog2, catalog1);
+
+                                    Scene catalogScene = new Scene(masterCatalog, width, height);
+                                    stage.setScene(catalogScene);
+                                }
+                            });
+                        Layout_Catalog.getChildren().add(buttons[78]);
                         Pane catalog1 = new StackPane();
                         catalog1.getChildren().addAll(Layout_Catalog);
 
-                        CatalogPane catalogPane = new CatalogPane(player, u, true, true); //Arbitrary Upgrade; will be changed on button click
+                        CatalogPane catalogPane = new CatalogPane(player, u, true, false); //Arbitrary Upgrade; will be changed on button click
                         Pane catalog2 = catalogPane.getView();
 
                         StackPane masterCatalog = new StackPane();
@@ -481,9 +526,9 @@ public class GUI extends Application
 
                         Scene catalogScene = new Scene(masterCatalog, width, height);
                         stage.setScene(catalogScene);
-
                     }
                 });
+
         }
 
         //Action events for all equipment equips
@@ -493,15 +538,18 @@ public class GUI extends Application
             buttons[i].setStyle("-fx-font: 15 Helvetica");
             buttons[i].setMinWidth(100);
             buttons[i].setMinHeight(500);
-            buttons[40].setStyle("-fx-font: 15 Helvetica");
-            buttons[40].setMinWidth(100);
-            buttons[40].setMinHeight(30);
-            buttons[i].setOnAction(new EventHandler<ActionEvent>()
+            buttons[41].setStyle("-fx-font: 15 Helvetica");
+            buttons[41].setMinWidth(100);
+            buttons[41].setMinHeight(30);
+            buttons[79].setStyle("-fx-font: 15 Helvetica");
+            buttons[79].setMinWidth(100);
+            buttons[79].setMinHeight(30);
+            buttons[i].setOnMouseClicked(new EventHandler<MouseEvent>()
                 { 
                     @Override
-                    public void handle(ActionEvent event) 
+                    public void handle(MouseEvent t) 
                     {
-                        int num = temp - 5;
+                        int num = temp - 46;
                         int row = num / 4;
                         int col = num % 4;
                         Upgrades u = Shop.upgrades[row][col];
@@ -510,18 +558,54 @@ public class GUI extends Application
                         Terrain.getSpace().setFitWidth(width);
                         Terrain.getSpace().setFitHeight(height);
 
-                        HBox Layout_Equipement = new HBox(1);
-                        Layout_Equipement.setAlignment(Pos.CENTER);
-                        Layout_Equipement.getChildren().add(buttons[41]);
-                        for(int i = 5; i < 37; i++)
+                        HBox Layout_Equipment = new HBox(1);
+                        Layout_Equipment.setAlignment(Pos.CENTER);
+                        Layout_Equipment.getChildren().add(buttons[41]);
+                        for(int i = 46; i < 78; i++)
                         {
-                            Layout_Equipement.getChildren().add(buttons[i]);
+                            Layout_Equipment.getChildren().add(buttons[i]);
                         }
+                        buttons[79].setOnMouseClicked(new EventHandler<MouseEvent>
+                            () {
 
+                                @Override
+                                public void handle(MouseEvent t) {
+                                    int num = temp - 46;
+                                    int row = num / 4;
+                                    int col = num % 4;
+                                    Upgrades u = Shop.upgrades[row][col];
+
+                                    Terrain.setSpace();
+                                    Terrain.getSpace().setFitWidth(width);
+                                    Terrain.getSpace().setFitHeight(height);
+
+                                    HBox Layout_Equipment = new HBox(1);
+                                    Layout_Equipment.setAlignment(Pos.CENTER);
+                                    Layout_Equipment.getChildren().add(buttons[41]);
+                                    for(int i = 46; i < 78; i++)
+                                    {
+                                        Layout_Equipment.getChildren().add(buttons[i]);
+                                    }
+
+                                    Layout_Equipment.getChildren().add(buttons[79]);
+                                    Pane equipment1 = new StackPane();
+                                    equipment1.getChildren().addAll(Layout_Equipment);
+
+                                    CatalogPane equipmentPane = new CatalogPane(player, u, false, true);
+                                    Pane equipment2 = equipmentPane.getView();
+
+                                    StackPane masterEquipment = new StackPane();
+                                    masterEquipment.getChildren().addAll(equipment2, equipment1);
+
+                                    Scene equipmentScene = new Scene(masterEquipment, width, height);
+                                    stage.setScene(equipmentScene);
+                                }
+                            });
+                        Layout_Equipment.getChildren().add(buttons[79]);
                         Pane equipment1 = new StackPane();
-                        equipment1.getChildren().addAll(Layout_Equipement);
+                        equipment1.getChildren().addAll(Layout_Equipment);
 
-                        CatalogPane equipmentPane = new CatalogPane(player, u, false, true); //Arbitrary Upgrade; will be changed on button click
+                        CatalogPane equipmentPane = new CatalogPane(player, u, false, false);
                         Pane equipment2 = equipmentPane.getView();
 
                         StackPane masterEquipment = new StackPane();
@@ -542,6 +626,74 @@ public class GUI extends Application
                 }
             });
 
+        buttons[78].setStyle("-fx-font: 15 Helvetica");
+        buttons[78].setMinWidth(100);
+        buttons[78].setMinHeight(30);
+        buttons[78].setOnMouseClicked(new EventHandler<MouseEvent>
+            () {
+
+                @Override
+                public void handle(MouseEvent t) {
+                    Terrain.setSpace();
+                    Terrain.getSpace().setFitWidth(width);
+                    Terrain.getSpace().setFitHeight(height);
+
+                    HBox Layout_Catalog = new HBox(1);
+                    Layout_Catalog.setAlignment(Pos.CENTER);
+                    Layout_Catalog.getChildren().add(buttons[41]);
+                    for(int i = 5; i < 37; i++)
+                    {
+                        Layout_Catalog.getChildren().add(buttons[i]);
+                    }
+
+                    Layout_Catalog.getChildren().add(buttons[78]);
+                    Pane catalog1 = new StackPane();
+                    catalog1.getChildren().addAll(Layout_Catalog);
+
+                    CatalogPane catalogPane = new CatalogPane(player, player.getLauncher(), true, true); //Arbitrary Upgrade; will be changed on button click
+                    Pane catalog2 = catalogPane.getView();
+
+                    StackPane masterCatalog = new StackPane();
+                    masterCatalog.getChildren().addAll(catalog2, catalog1);
+
+                    Scene catalogScene = new Scene(masterCatalog, width, height);
+                    stage.setScene(catalogScene);
+                }
+            });
+        buttons[79].setStyle("-fx-font: 15 Helvetica");
+        buttons[79].setMinWidth(100);
+        buttons[79].setMinHeight(30);
+        buttons[79].setOnMouseClicked(new EventHandler<MouseEvent>
+            () {
+
+                @Override
+                public void handle(MouseEvent t) {
+                    Terrain.setSpace();
+                    Terrain.getSpace().setFitWidth(width);
+                    Terrain.getSpace().setFitHeight(height);
+
+                    HBox Layout_Equipment = new HBox(1);
+                    Layout_Equipment.setAlignment(Pos.CENTER);
+                    Layout_Equipment.getChildren().add(buttons[41]);
+                    for(int i = 46; i < 78; i++)
+                    {
+                        Layout_Equipment.getChildren().add(buttons[i]);
+                    }
+
+                    Layout_Equipment.getChildren().add(buttons[79]);
+                    Pane equipment1 = new StackPane();
+                    equipment1.getChildren().addAll(Layout_Equipment);
+
+                    CatalogPane equipmentPane = new CatalogPane(player, player.getLauncher(), false, true); //Arbitrary Upgrade; will be changed on button click
+                    Pane equipment2 = equipmentPane.getView();
+
+                    StackPane masterEquipment = new StackPane();
+                    masterEquipment.getChildren().addAll(equipment2, equipment1);
+
+                    Scene equipmentScene = new Scene(masterEquipment, width, height);
+                    stage.setScene(equipmentScene);
+                }
+            });
         //Creates Labels
         Label[] labels = new Label[5];
         for(int i = 0; i < 5; i++)

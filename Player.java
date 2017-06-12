@@ -36,7 +36,7 @@ public class Player
         }
         return totalMass;
     }
-    
+
     //below is bad practice
     public boolean equip(Upgrades u)
     {
@@ -65,6 +65,44 @@ public class Player
             return true;
         }
         return false;
+    }
+
+    //below is bad practice
+    public boolean checkIsEquipped(Upgrades u)
+    {
+        if(!u.getIsPurchased())
+        {
+            return false;
+        }
+        if(u instanceof Boosters)
+        {
+            if(boosters != (Boosters)u)
+            {
+                return false;
+            }
+        }
+        if(u instanceof Launchers)
+        {
+            if(launcher != (Launchers)u)
+            {
+                return false;
+            }
+        }
+        if(u instanceof Mount)
+        {
+            if(mount != (Mount)u)
+            {
+                return false;
+            }
+        }
+        if(u instanceof Enhancements)
+        {
+            if(enhancements != (Enhancements)u)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     public double getCrossSectionalArea()

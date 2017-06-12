@@ -17,6 +17,11 @@ public abstract class Upgrades
         this.animation = animation;
     }
     
+    public boolean getIsEquipped()
+    {
+        return isEquipped;
+    }
+    
     public void setIsPurchased(boolean brought)
     {
         isPurchased = brought;
