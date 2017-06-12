@@ -27,14 +27,10 @@ public abstract class Upgrades
         return isPurchased;
     }
     
-    public boolean getIsEquipped()
+    public boolean setIsEquipped(Player player)
     {
+        isEquipped = player.equip(this);
         return isEquipped;
-    }
-    
-    protected void setIsEquipped(boolean isEquipped)
-    {
-        this.isEquipped = isEquipped;
     }
     
     public boolean getisUsable()
@@ -46,8 +42,6 @@ public abstract class Upgrades
     {
         return cost;
     }
-    
-    public abstract void equip(Player player);
     
     public abstract void use(GameLogic logic);
     

@@ -112,26 +112,4 @@ public class GameLogic
     {
         return time;
     }
-
-    //For testing purposes
-    public static void main(String[] args) {
-        Player player = new Player();
-        Shop.buy(Shop.upgrades[0][0]);
-        Shop.upgrades[0][0].equip(player);
-        double playerMass = player.calculateMass(); //test
-        double playerCrossSectionalArea = player.getCrossSectionalArea();
-        double initialSpeed = player.getLauncher().getPower(); //NEEDS REWORK, NEWTONS != m/s
-        double lift = 0.0;
-        if(player.getMount() != null)
-        {
-            lift = player.getMount().getLift();
-        }
-        double accelerationY = -Terrain.gravity + (lift / playerMass);
-        double angle = player.getLauncher().getAngle();
-        GameLogic logic = new GameLogic(initialSpeed, angle, 0.0, 10.0, 1.0, accelerationY, playerMass, playerCrossSectionalArea);
-        while(!(logic.y <= 0.0))
-        {
-            System.out.println(logic.getPoint().getX() + " " + logic.getPoint().getY());
-        }
-    }
 }

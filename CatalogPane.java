@@ -28,7 +28,7 @@ import javafx.scene.image.ImageView;
 public class CatalogPane extends PaneBuilder
 {
     //if isBuying is true, the title will be Catalog. if false, title will be Equipment
-    public CatalogPane(Upgrades u, boolean isBuying)
+    public CatalogPane(Player player, Upgrades u, boolean isBuying, boolean clicked)
     {
         super();
         VBox Layout_Catalog_Balance = new VBox(50);
@@ -56,15 +56,48 @@ public class CatalogPane extends PaneBuilder
         ds.setColor(Color.ORANGE);
         if(isBuying)
         {
+            if(clicked)
+            {
+                Shop.buy(u);
+            }
             Text t = new Text("Catalog");
             t.setFill(Color.GOLD);
             t.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
             Layout_Catalog_Balance.getChildren().add(t);
+            if(u.getIsPurchased())
+            {
+                Label a = new Label("SOLD OUT");
+                a.setMinWidth(300.0);
+                a.setTextFill(Color.GOLD);
+                a.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
+                Layout_Catalog_Balance.getChildren().add(a);
+            } else if(u.getCost() > Shop.getBalance())
+            {
+                Label b = new Label("INSUFFICIENT FUNDS");
+                b.setMinWidth(300.0);
+                b.setTextFill(Color.GOLD);
+                b.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
+                Layout_Catalog_Balance.getChildren().add(b);
+            }
         } else {
-            Text t = new Text("Equipment");
-            t.setFill(Color.GOLD);
-            t.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
-            Layout_Catalog_Balance.getChildren().add(t);
+            Text x = new Text("Equipment");
+            x.setFill(Color.GOLD);
+            x.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
+            Layout_Catalog_Balance.getChildren().add(x);
+            if(u.setIsEquipped(player))
+            {
+                Label c = new Label("Equipped!");
+                c.setMinWidth(300.0);
+                c.setTextFill(Color.GOLD);
+                c.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
+                Layout_Catalog_Balance.getChildren().add(c);
+            } else {
+                Label d = new Label("You do not own this item");
+                d.setMinWidth(300.0);
+                d.setTextFill(Color.GOLD);
+                d.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
+                Layout_Catalog_Balance.getChildren().add(d);
+            }
         }
 
         //Add_Labels to VBox and align

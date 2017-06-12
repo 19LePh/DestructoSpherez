@@ -54,13 +54,6 @@ public class Mount extends Upgrades
     }
 
     @Override
-    public void equip(Player player)
-    {
-        player.setMount(this);
-        this.setIsEquipped(true);
-    }
-
-    @Override
     public String getSpecs()
     {
         return "***MOUNT*** Cost: $" + this.getCost() + ", Mass: " + this.getMass() + "kg, Lift Force: " + lift + " N," +

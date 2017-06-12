@@ -61,13 +61,6 @@ public class Boosters extends Upgrades
     }
     
     @Override
-    public void equip(Player player)
-    {
-        player.setBoosters(this);
-        this.setIsEquipped(true);
-    }
-    
-    @Override
     public String getSpecs()
     {
         return "***BOOSTERS*** Cost: $" + this.getCost() + ", Mass: " + this.getMass() + " kg, Boost Power: " + boostPower + " N," +

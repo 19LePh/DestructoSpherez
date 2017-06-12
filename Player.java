@@ -36,6 +36,36 @@ public class Player
         }
         return totalMass;
     }
+    
+    //below is bad practice
+    public boolean equip(Upgrades u)
+    {
+        if(!u.getIsPurchased())
+        {
+            return false;
+        }
+        if(u instanceof Boosters)
+        {
+            boosters = (Boosters)u;
+            return true;
+        }
+        if(u instanceof Launchers)
+        {
+            launcher = (Launchers)u;
+            return true;
+        }
+        if(u instanceof Mount)
+        {
+            mount = (Mount)u;
+            return true;
+        }
+        if(u instanceof Enhancements)
+        {
+            enhancements = (Enhancements)u;
+            return true;
+        }
+        return false;
+    }
 
     public double getCrossSectionalArea()
     {
