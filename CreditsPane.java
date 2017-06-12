@@ -27,9 +27,9 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.ImageView;
 public class CreditsPane extends PaneBuilder
 {
-    public CreditsPane()
+    public CreditsPane(double height, double width)
     {
-        super();
+        super(height, width);
         VBox Layout_Credits = new VBox(50);
 
         //Create Labels and bind them to certain strings
@@ -40,9 +40,9 @@ public class CreditsPane extends PaneBuilder
             ds.setOffsetY(3.0f);
             ds.setColor(Color.ORANGE);
             Label l = new Label("text");
-            l.setMinWidth(300.0);
+            l.setMinWidth(height / 240.0);
             l.setTextFill(Color.GOLD);
-            l.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
+            l.setFont(Font.font("Helvetica", FontWeight.BOLD, height / 40.0));
             labels[i] = l;
         }
         labels[0].setText("APCS Final Project 2017");

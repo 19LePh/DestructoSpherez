@@ -28,9 +28,9 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.ImageView;
 public class RecordsPane extends PaneBuilder
 {
-    public RecordsPane()
+    public RecordsPane(double height, double width)
     {
-        super();
+        super(height, width);
         VBox Layout_Records = new VBox(50);
 
         //Create Labels and bind them to certain strings
@@ -43,7 +43,7 @@ public class RecordsPane extends PaneBuilder
             Label l = new Label("text");
             l.setMinWidth(300.0);
             l.setTextFill(Color.GOLD);
-            l.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
+            l.setFont(Font.font("Helvetica", FontWeight.BOLD, height / 40.0));
             labels[i] = l;
         }
         labels[0].textProperty().bind(new SimpleStringProperty("Top Distance: " + (int)(Score.getTopDistance()) + " m"));

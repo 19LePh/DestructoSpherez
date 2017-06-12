@@ -6,8 +6,9 @@ public abstract class Upgrades
     private double cost;
     private boolean isUsable; //For boosters and helis, which run out of fuel after a while
     private Animation animation;
+    protected String name;
 
-    public Upgrades(double mass, double cost, Animation animation)
+    public Upgrades(String name, double mass, double cost, Animation animation)
     {
         this.mass = mass;
         isPurchased = false;
@@ -15,6 +16,7 @@ public abstract class Upgrades
         this.cost = cost;
         isUsable = true;
         this.animation = animation;
+        this.name = name;
     }
     
     public boolean getIsEquipped()

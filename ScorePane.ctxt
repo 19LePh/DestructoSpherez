@@ -1,4 +1,4 @@
 #BlueJ class context
-comment0.params=score
-comment0.target=ScorePane(Score)
+comment0.params=height\ width\ score
+comment0.target=ScorePane(double,\ double,\ Score)
 numComments=1

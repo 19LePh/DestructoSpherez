@@ -8,7 +8,7 @@ public abstract class PaneBuilder
 {
     protected Pane view;
 
-    public PaneBuilder()
+    public PaneBuilder(double height, double width)
     {
         view = new StackPane();
     }

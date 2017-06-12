@@ -28,9 +28,9 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.ImageView;
 public class TitlePane extends PaneBuilder
 {
-    public TitlePane()
+    public TitlePane(double height, double width)
     {
-        super();
+        super(height, width);
         ImageView img = Terrain.currImage;
         view.getChildren().add(img);
     }

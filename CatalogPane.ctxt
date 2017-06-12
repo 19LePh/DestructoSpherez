@@ -1,4 +1,4 @@
 #BlueJ class context
-comment0.params=player\ u\ isBuying\ clicked
-comment0.target=CatalogPane(Player,\ Upgrades,\ boolean,\ boolean)
+comment0.params=height\ width\ player\ u\ isBuying\ clicked
+comment0.target=CatalogPane(double,\ double,\ Player,\ Upgrades,\ boolean,\ boolean)
 numComments=1

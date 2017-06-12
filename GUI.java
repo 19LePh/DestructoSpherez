@@ -97,6 +97,7 @@ public class GUI extends Application
 
         //Creates Titles
         Text[] titles = new Text[6];
+
         for(int i = 0; i < 6; i++)
         {
             DropShadow ds = new DropShadow();
@@ -104,7 +105,7 @@ public class GUI extends Application
             ds.setColor(Color.ORANGE);
             Text t = new Text("");
             t.setFill(Color.GOLD);
-            t.setFont(Font.font("Helvetica", FontWeight.BOLD, 200));
+            t.setFont(Font.font("Helvetica", FontWeight.BOLD, height / 10.0));
             titles[i] = t;
         }
         titles[0].setText("Destructo - Spherez!");
@@ -119,7 +120,7 @@ public class GUI extends Application
         for(int i = 0; i < 80; i++)
         {
             Button b = new Button("");
-            b.setStyle("-fx-font: 30 Helvetica");
+            b.setStyle("-fx-font: "  + height / 120.0 + " Helvetica");
             b.setMinWidth(500);
             buttons[i] = b;
         }
@@ -235,7 +236,7 @@ public class GUI extends Application
                     ImageView img1 = Terrain.currImage;
                     img1.setFitWidth(width);
                     img1.setFitHeight(height);
-                    LaunchPane masterLaunch1 = new LaunchPane(new GameLogic());
+                    LaunchPane masterLaunch1 = new LaunchPane(height, width, new GameLogic());
                     Scene launchScene1 = new Scene(masterLaunch1.getView(), width, height);
                     stage.setScene(launchScene1);
                     //keyPressed
@@ -284,7 +285,7 @@ public class GUI extends Application
                                     Layout_Score.setAlignment(Pos.TOP_CENTER);
                                     Pane score1 = new StackPane();
                                     score1.getChildren().addAll(Layout_Score, Layout_Back_Score);
-                                    ScorePane scorePane = new ScorePane(score);
+                                    ScorePane scorePane = new ScorePane(height, width, score);
                                     Pane score2 = scorePane.getView();
                                     StackPane masterScore = new StackPane();
                                     masterScore.getChildren().addAll(score2, score1);
@@ -317,7 +318,7 @@ public class GUI extends Application
                     Pane catalog1 = new StackPane();
                     catalog1.getChildren().addAll(Layout_Catalog);
 
-                    CatalogPane catalogPane = new CatalogPane(player, player.getLauncher(), true, false); //Arbitrary Upgrade; will be changed on button click
+                    CatalogPane catalogPane = new CatalogPane(height, width, player, player.getLauncher(), true, false); //Arbitrary Upgrade; will be changed on button click
                     Pane catalog2 = catalogPane.getView();
 
                     StackPane masterCatalog = new StackPane();
@@ -343,7 +344,7 @@ public class GUI extends Application
                     Layout_Records.setAlignment(Pos.TOP_CENTER);
                     Pane records1 = new StackPane();
                     records1.getChildren().addAll(Layout_Records, Layout_Back_Records);
-                    RecordsPane recordsPane = new RecordsPane();
+                    RecordsPane recordsPane = new RecordsPane(height, width);
                     Pane records2 = recordsPane.getView();
                     StackPane masterRecords = new StackPane();
                     masterRecords.getChildren().addAll(records2, records1);
@@ -367,7 +368,7 @@ public class GUI extends Application
                     Layout_Credits.setAlignment(Pos.TOP_CENTER);
                     Pane credits1 = new StackPane();
                     credits1.getChildren().addAll(Layout_Credits, Layout_Back_Credits);
-                    CreditsPane creditsPane = new CreditsPane();
+                    CreditsPane creditsPane = new CreditsPane(height, width);
                     Pane credits2 = creditsPane.getView();
                     StackPane masterCredits = new StackPane();
                     masterCredits.getChildren().addAll(credits2, credits1);
@@ -380,9 +381,9 @@ public class GUI extends Application
                 @Override
                 public void handle(ActionEvent event) 
                 {
-                    buttons[41].setStyle("-fx-font: 15 Helvetica");
-                    buttons[41].setMinWidth(100);
-                    buttons[41].setMinHeight(30);
+                    buttons[41].setStyle("-fx-font: "  + height / 120.0 + " Helvetica");
+                    buttons[41].setMinWidth(height / 80.0);
+                    buttons[41].setMinHeight(height / 40.0);
                     Terrain.setSpace();
                     Terrain.getSpace().setFitWidth(width);
                     Terrain.getSpace().setFitHeight(height);
@@ -399,7 +400,7 @@ public class GUI extends Application
                     Pane equipment1 = new StackPane();
                     equipment1.getChildren().addAll(Layout_Equipment);
 
-                    CatalogPane equipmentPane = new CatalogPane(player, player.getLauncher(), false, false); //Arbitrary Upgrade; will be changed on button click
+                    CatalogPane equipmentPane = new CatalogPane(height, width, player, player.getLauncher(), false, false); //Arbitrary Upgrade; will be changed on button click
                     Pane equipment2 = equipmentPane.getView();
 
                     StackPane masterEquipment = new StackPane();
@@ -426,9 +427,9 @@ public class GUI extends Application
                         Layout_Title.getChildren().addAll(titles[0], buttons[0], buttons[1], buttons[39], buttons[2], buttons[3], buttons[45]);
                         Layout_Title.setAlignment(Pos.CENTER);
                         title1.getChildren().addAll(Layout_Title);
-                        TitlePane titlePane = new TitlePane();
+                        TitlePane titlePane = new TitlePane(height, width);
                         Pane title2 = titlePane.getView();
-                        TitlePane masterTitle = new TitlePane();
+                        TitlePane masterTitle = new TitlePane(height, width);
                         masterTitle.getView().getChildren().addAll(title2, title1);
                         Scene titleScene1 = new Scene(masterTitle.getView(), width, height);
                         stage.setScene(titleScene1);
@@ -440,15 +441,15 @@ public class GUI extends Application
         for(int i = 5; i < 37; i++)
         {
             final int temp = i;
-            buttons[i].setStyle("-fx-font: 15 Helvetica");
-            buttons[i].setMinWidth(100);
-            buttons[i].setMinHeight(500);
-            buttons[40].setStyle("-fx-font: 15 Helvetica");
-            buttons[40].setMinWidth(100);
-            buttons[40].setMinHeight(30);
-            buttons[78].setStyle("-fx-font: 15 Helvetica");
-            buttons[78].setMinWidth(100);
-            buttons[78].setMinHeight(30);
+            buttons[i].setStyle("-fx-font: "  + height / 120.0 + " Helvetica");
+            buttons[i].setMinWidth(height / 80.0);
+            buttons[i].setMinHeight(height / 40.0);
+            buttons[40].setStyle("-fx-font: "  + height / 120.0 + " Helvetica");
+            buttons[40].setMinWidth(height / 80.0);
+            buttons[40].setMinHeight(height / 40.0);
+            buttons[78].setStyle("-fx-font: "  + height / 120.0 + " Helvetica");
+            buttons[78].setMinWidth(height / 80.0);
+            buttons[78].setMinHeight(height / 40.0);
             buttons[i].setOnMouseClicked(new EventHandler<MouseEvent>()
                 { 
                     @Override
@@ -495,7 +496,7 @@ public class GUI extends Application
                                     Pane catalog1 = new StackPane();
                                     catalog1.getChildren().addAll(Layout_Catalog);
 
-                                    CatalogPane catalogPane = new CatalogPane(player, u, true, true); //Arbitrary Upgrade; will be changed on button click
+                                    CatalogPane catalogPane = new CatalogPane(height, width, player, u, true, true); //Arbitrary Upgrade; will be changed on button click
                                     Pane catalog2 = catalogPane.getView();
 
                                     StackPane masterCatalog = new StackPane();
@@ -509,7 +510,7 @@ public class GUI extends Application
                         Pane catalog1 = new StackPane();
                         catalog1.getChildren().addAll(Layout_Catalog);
 
-                        CatalogPane catalogPane = new CatalogPane(player, u, true, false); //Arbitrary Upgrade; will be changed on button click
+                        CatalogPane catalogPane = new CatalogPane(height, width, player, u, true, false); //Arbitrary Upgrade; will be changed on button click
                         Pane catalog2 = catalogPane.getView();
 
                         StackPane masterCatalog = new StackPane();
@@ -526,15 +527,15 @@ public class GUI extends Application
         for(int i = 46; i < 78; i++)
         {
             final int temp = i;
-            buttons[i].setStyle("-fx-font: 15 Helvetica");
-            buttons[i].setMinWidth(100);
-            buttons[i].setMinHeight(500);
+            buttons[i].setStyle("-fx-font: "  + height / 120.0 + " Helvetica");
+            buttons[i].setMinWidth(height / 80.0);
+            buttons[i].setMinHeight(height / 40.0);
             buttons[41].setStyle("-fx-font: 15 Helvetica");
-            buttons[41].setMinWidth(100);
-            buttons[41].setMinHeight(30);
+            buttons[41].setMinWidth(height / 80.0);
+            buttons[41].setMinHeight(height / 40.0);
             buttons[79].setStyle("-fx-font: 15 Helvetica");
-            buttons[79].setMinWidth(100);
-            buttons[79].setMinHeight(30);
+            buttons[79].setMinWidth(height / 80.0);
+            buttons[79].setMinHeight(height / 40.0);
             buttons[i].setOnMouseClicked(new EventHandler<MouseEvent>()
                 { 
                     @Override
@@ -582,7 +583,7 @@ public class GUI extends Application
                                     Pane equipment1 = new StackPane();
                                     equipment1.getChildren().addAll(Layout_Equipment);
 
-                                    CatalogPane equipmentPane = new CatalogPane(player, u, false, true);
+                                    CatalogPane equipmentPane = new CatalogPane(height, width, player, u, false, true);
                                     Pane equipment2 = equipmentPane.getView();
 
                                     StackPane masterEquipment = new StackPane();
@@ -596,7 +597,7 @@ public class GUI extends Application
                         Pane equipment1 = new StackPane();
                         equipment1.getChildren().addAll(Layout_Equipment);
 
-                        CatalogPane equipmentPane = new CatalogPane(player, u, false, false);
+                        CatalogPane equipmentPane = new CatalogPane(height, width, player, u, false, false);
                         Pane equipment2 = equipmentPane.getView();
 
                         StackPane masterEquipment = new StackPane();
@@ -618,8 +619,8 @@ public class GUI extends Application
             });
 
         buttons[78].setStyle("-fx-font: 15 Helvetica");
-        buttons[78].setMinWidth(100);
-        buttons[78].setMinHeight(30);
+        buttons[78].setMinWidth(height / 80.0);
+        buttons[78].setMinHeight(height / 40.0);
         buttons[78].setOnMouseClicked(new EventHandler<MouseEvent>
             () {
 
@@ -641,7 +642,7 @@ public class GUI extends Application
                     Pane catalog1 = new StackPane();
                     catalog1.getChildren().addAll(Layout_Catalog);
 
-                    CatalogPane catalogPane = new CatalogPane(player, player.getLauncher(), true, true); //Arbitrary Upgrade; will be changed on button click
+                    CatalogPane catalogPane = new CatalogPane(height, width, player, player.getLauncher(), true, true); //Arbitrary Upgrade; will be changed on button click
                     Pane catalog2 = catalogPane.getView();
 
                     StackPane masterCatalog = new StackPane();
@@ -652,8 +653,8 @@ public class GUI extends Application
                 }
             });
         buttons[79].setStyle("-fx-font: 15 Helvetica");
-        buttons[79].setMinWidth(100);
-        buttons[79].setMinHeight(30);
+        buttons[79].setMinWidth(height / 80.0);
+        buttons[79].setMinHeight(height / 40.0);
         buttons[79].setOnMouseClicked(new EventHandler<MouseEvent>
             () {
 
@@ -675,7 +676,7 @@ public class GUI extends Application
                     Pane equipment1 = new StackPane();
                     equipment1.getChildren().addAll(Layout_Equipment);
 
-                    CatalogPane equipmentPane = new CatalogPane(player, player.getLauncher(), false, true); //Arbitrary Upgrade; will be changed on button click
+                    CatalogPane equipmentPane = new CatalogPane(height, width, player, player.getLauncher(), false, true); //Arbitrary Upgrade; will be changed on button click
                     Pane equipment2 = equipmentPane.getView();
 
                     StackPane masterEquipment = new StackPane();
@@ -698,11 +699,11 @@ public class GUI extends Application
         title1.getChildren().addAll(Layout_Title);
 
         //Creates PaneBuilder objects
-        TitlePane titlePane = new TitlePane();
+        TitlePane titlePane = new TitlePane(height, width);
         Pane title2 = titlePane.getView();
 
         //Stacks the panes
-        TitlePane masterTitle = new TitlePane();
+        TitlePane masterTitle = new TitlePane(height, width);
         masterTitle.getView().getChildren().addAll(title2, title1);
 
         //Creates Scenes

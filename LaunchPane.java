@@ -28,9 +28,9 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.ImageView;
 public class LaunchPane extends PaneBuilder
 {
-    public LaunchPane(GameLogic logic)
+    public LaunchPane(double height, double width, GameLogic logic)
     {
-        super();
+        super(height, width);
         VBox Layout_Launch = new VBox(50);
         
         //Create Labels and bind them to certain strings
@@ -43,7 +43,7 @@ public class LaunchPane extends PaneBuilder
             Label l = new Label("text");
             l.setMinWidth(300.0);
             l.setTextFill(Color.GOLD);
-            l.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
+            l.setFont(Font.font("Helvetica", FontWeight.BOLD, height / 40.0));
             labels[i] = l;
         }
         labels[0].setText("Distance: " + (int)(logic.get_x()) + " m");

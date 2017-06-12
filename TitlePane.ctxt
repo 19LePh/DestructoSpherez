@@ -1,4 +1,4 @@
 #BlueJ class context
-comment0.params=
-comment0.target=TitlePane()
+comment0.params=height\ width
+comment0.target=TitlePane(double,\ double)
 numComments=1

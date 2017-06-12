@@ -28,9 +28,9 @@ import javafx.scene.image.ImageView;
 public class CatalogPane extends PaneBuilder
 {
     //if isBuying is true, the title will be Catalog. if false, title will be Equipment
-    public CatalogPane(Player player, Upgrades u, boolean isBuying, boolean clicked)
+    public CatalogPane(double height, double width, Player player, Upgrades u, boolean isBuying, boolean clicked)
     {
-        super();
+        super(height, width);
         VBox Layout_Catalog_Balance = new VBox(50);
         VBox Layout_Catalog_Specs = new VBox(50);
 
@@ -42,13 +42,14 @@ public class CatalogPane extends PaneBuilder
             ds.setOffsetY(3.0f);
             ds.setColor(Color.ORANGE);
             Label l = new Label("text");
-            l.setMinWidth(300.0);
+            l.setMinWidth(height / 240.0);
             l.setTextFill(Color.GOLD);
-            l.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
+            l.setFont(Font.font("Helvetica", FontWeight.BOLD, height / 40.0));
             labels[i] = l;
         }
         labels[0].setText("Balance: $" + Shop.getBalance());
         labels[1].setText(u.getSpecs());
+        labels[1].setTextFill(Color.BLACK);
 
         //Create Title
         DropShadow ds = new DropShadow();
@@ -62,27 +63,27 @@ public class CatalogPane extends PaneBuilder
             }
             Text t = new Text("Catalog");
             t.setFill(Color.GOLD);
-            t.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
+            t.setFont(Font.font("Helvetica", FontWeight.BOLD, height / 40.0));
             Layout_Catalog_Balance.getChildren().add(t);
             if(u.getIsPurchased())
             {
                 Label a = new Label("SOLD OUT");
-                a.setMinWidth(300.0);
+                a.setMinWidth(height / 240.0);
                 a.setTextFill(Color.GOLD);
-                a.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
+                a.setFont(Font.font("Helvetica", FontWeight.BOLD, height / 40.0));
                 Layout_Catalog_Balance.getChildren().add(a);
             } else if(u.getCost() > Shop.getBalance())
             {
                 Label b = new Label("INSUFFICIENT FUNDS");
-                b.setMinWidth(300.0);
+                b.setMinWidth(height / 240.0);
                 b.setTextFill(Color.GOLD);
-                b.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
+                b.setFont(Font.font("Helvetica", FontWeight.BOLD, height / 40.0));
                 Layout_Catalog_Balance.getChildren().add(b);
             } else {
                 Label f = new Label("Not Purchased");
-                f.setMinWidth(300.0);
+                f.setMinWidth(height / 240.0);
                 f.setTextFill(Color.GOLD);
-                f.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
+                f.setFont(Font.font("Helvetica", FontWeight.BOLD, height / 40.0));
                 Layout_Catalog_Balance.getChildren().add(f);
             }
             //Add_Labels to VBox and align
@@ -91,13 +92,13 @@ public class CatalogPane extends PaneBuilder
             Layout_Catalog_Balance.setAlignment(Pos.TOP_LEFT);
 
             Layout_Catalog_Specs.getChildren().addAll(labels[1]);
-            Layout_Catalog_Specs.setAlignment(Pos.TOP_RIGHT);
+            Layout_Catalog_Specs.setAlignment(Pos.BOTTOM_CENTER);
 
             view.getChildren().addAll(Terrain.space, Layout_Catalog_Balance, Layout_Catalog_Specs);
         } else {
             Text x = new Text("Equipment");
             x.setFill(Color.GOLD);
-            x.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
+            x.setFont(Font.font("Helvetica", FontWeight.BOLD, height / 40.0));
             Layout_Catalog_Balance.getChildren().add(x);
             if(clicked)
             {
@@ -107,21 +108,21 @@ public class CatalogPane extends PaneBuilder
             if(player.checkIsEquipped(u))
             {
                 Label c = new Label("Equipped!");
-                c.setMinWidth(300.0);
+                c.setMinWidth(height / 240.0);
                 c.setTextFill(Color.GOLD);
-                c.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
+                c.setFont(Font.font("Helvetica", FontWeight.BOLD, height / 40.0));
                 Layout_Catalog_Balance.getChildren().add(c);
             } else if(!(u.getIsPurchased())){
                 Label d = new Label("You do not own this item");
-                d.setMinWidth(300.0);
+                d.setMinWidth(height / 240.0);
                 d.setTextFill(Color.GOLD);
-                d.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
+                d.setFont(Font.font("Helvetica", FontWeight.BOLD, height / 40.0));
                 Layout_Catalog_Balance.getChildren().add(d);
             } else {
                 Label e = new Label("Not Equipped");
-                e.setMinWidth(300.0);
+                e.setMinWidth(height / 240.0);
                 e.setTextFill(Color.GOLD);
-                e.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
+                e.setFont(Font.font("Helvetica", FontWeight.BOLD, height / 40.0));
                 Layout_Catalog_Balance.getChildren().add(e);
             }
 
@@ -130,7 +131,7 @@ public class CatalogPane extends PaneBuilder
             Layout_Catalog_Balance.setAlignment(Pos.TOP_LEFT);
 
             Layout_Catalog_Specs.getChildren().addAll(labels[1]);
-            Layout_Catalog_Specs.setAlignment(Pos.TOP_RIGHT);
+            Layout_Catalog_Specs.setAlignment(Pos.BOTTOM_CENTER);
 
             view.getChildren().addAll(Terrain.space, Layout_Catalog_Balance, Layout_Catalog_Specs);
         }
