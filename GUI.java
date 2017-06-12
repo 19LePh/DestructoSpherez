@@ -32,7 +32,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.StageStyle;
 import javafx.application.Platform;
 import javafx.geometry.HPos;
@@ -265,6 +265,7 @@ public class GUI extends Application
                                     while(!(logic.get_y() <= 0.0001))
                                     {
                                         logic.init(score);
+                                        stage.setScene(launchScene1);
                                     }
                                     //Terrain.updateBackground();
                                     try {
@@ -306,15 +307,15 @@ public class GUI extends Application
                     Terrain.getSpace().setFitWidth(width);
                     Terrain.getSpace().setFitHeight(height);
 
-                    HBox Layout_Catalog = new HBox(1);
+                    VBox Layout_Catalog = new VBox(1);
                     Layout_Catalog.setAlignment(Pos.CENTER);
-                    Layout_Catalog.getChildren().add(buttons[40]);
+                    Layout_Catalog.getChildren().add(buttons[78]);
                     for(int i = 5; i < 37; i++)
                     {
                         Layout_Catalog.getChildren().add(buttons[i]);
                     }
 
-                    Layout_Catalog.getChildren().add(buttons[78]);
+                    Layout_Catalog.getChildren().add(buttons[40]);
                     Pane catalog1 = new StackPane();
                     catalog1.getChildren().addAll(Layout_Catalog);
 
@@ -382,21 +383,20 @@ public class GUI extends Application
                 public void handle(ActionEvent event) 
                 {
                     buttons[41].setStyle("-fx-font: "  + height / 120.0 + " Helvetica");
-                    buttons[41].setMinWidth(height / 80.0);
-                    buttons[41].setMinHeight(height / 40.0);
+                    buttons[41].setMinWidth(height / 10.0);
                     Terrain.setSpace();
                     Terrain.getSpace().setFitWidth(width);
                     Terrain.getSpace().setFitHeight(height);
 
-                    HBox Layout_Equipment = new HBox(1);
+                    VBox Layout_Equipment = new VBox(1);
                     Layout_Equipment.setAlignment(Pos.CENTER);
-                    Layout_Equipment.getChildren().add(buttons[41]);
+                    Layout_Equipment.getChildren().add(buttons[79]);
                     for(int i = 46; i < 78; i++)
                     {
                         Layout_Equipment.getChildren().add(buttons[i]);
                     }
 
-                    Layout_Equipment.getChildren().add(buttons[79]);
+                    Layout_Equipment.getChildren().add(buttons[41]);
                     Pane equipment1 = new StackPane();
                     equipment1.getChildren().addAll(Layout_Equipment);
 
@@ -442,14 +442,11 @@ public class GUI extends Application
         {
             final int temp = i;
             buttons[i].setStyle("-fx-font: "  + height / 120.0 + " Helvetica");
-            buttons[i].setMinWidth(height / 80.0);
-            buttons[i].setMinHeight(height / 40.0);
+            buttons[i].setMinWidth(height / 10.0);
             buttons[40].setStyle("-fx-font: "  + height / 120.0 + " Helvetica");
-            buttons[40].setMinWidth(height / 80.0);
-            buttons[40].setMinHeight(height / 40.0);
+            buttons[40].setMinWidth(height / 10.0);
             buttons[78].setStyle("-fx-font: "  + height / 120.0 + " Helvetica");
-            buttons[78].setMinWidth(height / 80.0);
-            buttons[78].setMinHeight(height / 40.0);
+            buttons[78].setMinWidth(height / 10.0);
             buttons[i].setOnMouseClicked(new EventHandler<MouseEvent>()
                 { 
                     @Override
@@ -463,14 +460,8 @@ public class GUI extends Application
                         Terrain.getSpace().setFitWidth(width);
                         Terrain.getSpace().setFitHeight(height);
 
-                        HBox Layout_Catalog = new HBox(1);
+                        VBox Layout_Catalog = new VBox(1);
                         Layout_Catalog.setAlignment(Pos.CENTER);
-                        Layout_Catalog.getChildren().add(buttons[40]);
-                        for(int i = 5; i < 37; i++)
-                        {
-                            Layout_Catalog.getChildren().add(buttons[i]);
-                        }
-
                         buttons[78].setOnMouseClicked(new EventHandler<MouseEvent>
                             () {
 
@@ -485,7 +476,7 @@ public class GUI extends Application
                                     Terrain.getSpace().setFitWidth(width);
                                     Terrain.getSpace().setFitHeight(height);
 
-                                    HBox Layout_Catalog = new HBox(1);
+                                    VBox Layout_Catalog = new VBox(1);
                                     Layout_Catalog.setAlignment(Pos.CENTER);
                                     Layout_Catalog.getChildren().add(buttons[41]);
                                     for(int i = 5; i < 37; i++)
@@ -507,6 +498,12 @@ public class GUI extends Application
                                 }
                             });
                         Layout_Catalog.getChildren().add(buttons[78]);
+                        for(int i = 5; i < 37; i++)
+                        {
+                            Layout_Catalog.getChildren().add(buttons[i]);
+                        }
+
+                        Layout_Catalog.getChildren().add(buttons[40]);
                         Pane catalog1 = new StackPane();
                         catalog1.getChildren().addAll(Layout_Catalog);
 
@@ -528,14 +525,11 @@ public class GUI extends Application
         {
             final int temp = i;
             buttons[i].setStyle("-fx-font: "  + height / 120.0 + " Helvetica");
-            buttons[i].setMinWidth(height / 80.0);
-            buttons[i].setMinHeight(height / 40.0);
+            buttons[i].setMinWidth(height / 10.0);
             buttons[41].setStyle("-fx-font: 15 Helvetica");
-            buttons[41].setMinWidth(height / 80.0);
-            buttons[41].setMinHeight(height / 40.0);
+            buttons[41].setMinWidth(height / 10.0);
             buttons[79].setStyle("-fx-font: 15 Helvetica");
-            buttons[79].setMinWidth(height / 80.0);
-            buttons[79].setMinHeight(height / 40.0);
+            buttons[79].setMinWidth(height / 10.0);
             buttons[i].setOnMouseClicked(new EventHandler<MouseEvent>()
                 { 
                     @Override
@@ -550,13 +544,8 @@ public class GUI extends Application
                         Terrain.getSpace().setFitWidth(width);
                         Terrain.getSpace().setFitHeight(height);
 
-                        HBox Layout_Equipment = new HBox(1);
+                        VBox Layout_Equipment = new VBox(1);
                         Layout_Equipment.setAlignment(Pos.CENTER);
-                        Layout_Equipment.getChildren().add(buttons[41]);
-                        for(int i = 46; i < 78; i++)
-                        {
-                            Layout_Equipment.getChildren().add(buttons[i]);
-                        }
                         buttons[79].setOnMouseClicked(new EventHandler<MouseEvent>
                             () {
 
@@ -571,7 +560,7 @@ public class GUI extends Application
                                     Terrain.getSpace().setFitWidth(width);
                                     Terrain.getSpace().setFitHeight(height);
 
-                                    HBox Layout_Equipment = new HBox(1);
+                                    VBox Layout_Equipment = new VBox(1);
                                     Layout_Equipment.setAlignment(Pos.CENTER);
                                     Layout_Equipment.getChildren().add(buttons[41]);
                                     for(int i = 46; i < 78; i++)
@@ -594,6 +583,48 @@ public class GUI extends Application
                                 }
                             });
                         Layout_Equipment.getChildren().add(buttons[79]);
+                        for(int i = 46; i < 78; i++)
+                        {
+                            Layout_Equipment.getChildren().add(buttons[i]);
+                        }
+                        buttons[79].setOnMouseClicked(new EventHandler<MouseEvent>
+                            () {
+
+                                @Override
+                                public void handle(MouseEvent t) {
+                                    int num = temp - 46;
+                                    int row = num / 4;
+                                    int col = num % 4;
+                                    Upgrades u = Shop.upgrades[row][col];
+
+                                    Terrain.setSpace();
+                                    Terrain.getSpace().setFitWidth(width);
+                                    Terrain.getSpace().setFitHeight(height);
+
+                                    VBox Layout_Equipment = new VBox(1);
+                                    Layout_Equipment.setAlignment(Pos.CENTER);
+                                    Layout_Equipment.getChildren().add(buttons[41]);
+                                    for(int i = 46; i < 78; i++)
+                                    {
+                                        Layout_Equipment.getChildren().add(buttons[i]);
+                                    }
+
+                                    Layout_Equipment.getChildren().add(buttons[79]);
+                                    Pane equipment1 = new StackPane();
+                                    equipment1.getChildren().addAll(Layout_Equipment);
+
+                                    CatalogPane equipmentPane = new CatalogPane(height, width, player, u, false, true);
+                                    Pane equipment2 = equipmentPane.getView();
+
+                                    StackPane masterEquipment = new StackPane();
+                                    masterEquipment.getChildren().addAll(equipment2, equipment1);
+
+                                    Scene equipmentScene = new Scene(masterEquipment, width, height);
+                                    stage.setScene(equipmentScene);
+                                }
+                            });
+
+                        Layout_Equipment.getChildren().add(buttons[41]);                          
                         Pane equipment1 = new StackPane();
                         equipment1.getChildren().addAll(Layout_Equipment);
 
@@ -619,8 +650,7 @@ public class GUI extends Application
             });
 
         buttons[78].setStyle("-fx-font: 15 Helvetica");
-        buttons[78].setMinWidth(height / 80.0);
-        buttons[78].setMinHeight(height / 40.0);
+        buttons[78].setMinWidth(height / 10.0);
         buttons[78].setOnMouseClicked(new EventHandler<MouseEvent>
             () {
 
@@ -630,7 +660,7 @@ public class GUI extends Application
                     Terrain.getSpace().setFitWidth(width);
                     Terrain.getSpace().setFitHeight(height);
 
-                    HBox Layout_Catalog = new HBox(1);
+                    VBox Layout_Catalog = new VBox(1);
                     Layout_Catalog.setAlignment(Pos.CENTER);
                     Layout_Catalog.getChildren().add(buttons[41]);
                     for(int i = 5; i < 37; i++)
@@ -653,8 +683,7 @@ public class GUI extends Application
                 }
             });
         buttons[79].setStyle("-fx-font: 15 Helvetica");
-        buttons[79].setMinWidth(height / 80.0);
-        buttons[79].setMinHeight(height / 40.0);
+        buttons[79].setMinWidth(height / 10.0);
         buttons[79].setOnMouseClicked(new EventHandler<MouseEvent>
             () {
 
@@ -664,7 +693,7 @@ public class GUI extends Application
                     Terrain.getSpace().setFitWidth(width);
                     Terrain.getSpace().setFitHeight(height);
 
-                    HBox Layout_Equipment = new HBox(1);
+                    VBox Layout_Equipment = new VBox(1);
                     Layout_Equipment.setAlignment(Pos.CENTER);
                     Layout_Equipment.getChildren().add(buttons[41]);
                     for(int i = 46; i < 78; i++)
