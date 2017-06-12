@@ -49,7 +49,7 @@ public class CatalogPane extends PaneBuilder
         }
         labels[0].setText("Balance: $" + Shop.getBalance());
         labels[1].setText(u.getSpecs());
-        labels[1].setTextFill(Color.BLACK);
+        labels[1].setTextFill(Color.GOLD);
 
         //Create Title
         DropShadow ds = new DropShadow();
@@ -92,7 +92,7 @@ public class CatalogPane extends PaneBuilder
             Layout_Catalog_Balance.setAlignment(Pos.TOP_LEFT);
 
             Layout_Catalog_Specs.getChildren().addAll(labels[1]);
-            Layout_Catalog_Specs.setAlignment(Pos.BOTTOM_CENTER);
+            Layout_Catalog_Specs.setAlignment(Pos.TOP_CENTER);
 
             view.getChildren().addAll(Terrain.space, Layout_Catalog_Balance, Layout_Catalog_Specs);
         } else {
@@ -131,7 +131,7 @@ public class CatalogPane extends PaneBuilder
             Layout_Catalog_Balance.setAlignment(Pos.TOP_LEFT);
 
             Layout_Catalog_Specs.getChildren().addAll(labels[1]);
-            Layout_Catalog_Specs.setAlignment(Pos.BOTTOM_CENTER);
+            Layout_Catalog_Specs.setAlignment(Pos.TOP_CENTER);
 
             view.getChildren().addAll(Terrain.space, Layout_Catalog_Balance, Layout_Catalog_Specs);
         }

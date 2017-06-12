@@ -7,9 +7,10 @@ public class Terrain
     public static ImageView space;
     public static ImageView currImage;
     public final static double gravity = 9.80665;
+    public static int time = 0;
     private ArrayList<Powerups> powerups; //There can be a lot of powerups at a time or a few
     private Wall[] walls;
-    
+
     public Terrain(ArrayList<Powerups> powerups, Wall[] walls)
     {
         this.walls = walls;
@@ -21,19 +22,32 @@ public class Terrain
     {
         return true; //Will eventually invoke a walls method to see if it is destroyed or not
     }
-    
+
     //For Title Screen, Launch Screen (Ground)
     public static void getTime()
     {
-        int randomNum = ThreadLocalRandom.current().nextInt(1, 4 + 1);
-        switch(randomNum) {
-            case 1: currImage = new ImageView(new Image("Day.png")); break;
-            case 2: currImage = new ImageView(new Image("Sunset.png")); break;
-            case 3: currImage = new ImageView(new Image("Night.png")); break;
-            case 4: currImage = new ImageView(new Image("Dawn.png")); break;
+        if(time == 0)
+        {
+            currImage = new ImageView(new Image("Dawn.png"));
+            time++;
+        }
+        if(time == 1)
+        {
+            currImage = new ImageView(new Image("Day.png"));
+            time++;
+        }
+        if(time == 2)
+        {
+            currImage = new ImageView(new Image("Sunset.png"));
+            time++;
+        }
+        if(time == 3)
+        {
+            currImage = new ImageView(new Image("Night.png"));
+            time = 0;
         }
     }
-    
+
     //Randomly adds "amount" amount of powerups to the list
     public void randomPowerups(int amount)
     {
@@ -49,12 +63,12 @@ public class Terrain
             }
         }
     }
-    
+
     public static void setSpace()
     {
         space = new ImageView(new Image("Space.png"));
     }
-    
+
     public static ImageView getSpace()
     {
         return space;

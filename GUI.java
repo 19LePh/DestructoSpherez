@@ -236,7 +236,7 @@ public class GUI extends Application
                     ImageView img1 = Terrain.currImage;
                     img1.setFitWidth(width);
                     img1.setFitHeight(height);
-                    LaunchPane masterLaunch1 = new LaunchPane(height, width, new GameLogic());
+                    LaunchPane masterLaunch1 = new LaunchPane(height, width, logic);
                     Scene launchScene1 = new Scene(masterLaunch1.getView(), width, height);
                     stage.setScene(launchScene1);
                     //keyPressed
@@ -264,8 +264,10 @@ public class GUI extends Application
                                     //new Thread(task).start();
                                     while(!(logic.get_y() <= 0.0001))
                                     {
+                                        System.out.println("Is working");
                                         logic.init(score);
                                         stage.setScene(launchScene1);
+                                        stage.show();
                                     }
                                     //Terrain.updateBackground();
                                     try {
