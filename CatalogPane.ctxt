@@ -1,6 +1,4 @@
 #BlueJ class context
-comment0.params=u
-comment0.target=CatalogPane(Upgrades)
-comment1.params=u
-comment1.target=void\ setUpgrade(Upgrades)
-numComments=2
+comment0.params=u\ isBuying
+comment0.target=CatalogPane(Upgrades,\ boolean)
+numComments=1
