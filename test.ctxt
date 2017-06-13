@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=primaryStage
+comment0.target=void\ start(javafx.stage.Stage)
+comment1.params=now
+comment1.target=void\ handle(long)
+comment2.params=args
+comment2.target=void\ main(java.lang.String[])
+numComments=3

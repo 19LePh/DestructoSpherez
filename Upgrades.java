@@ -58,4 +58,9 @@ public abstract class Upgrades
     {
         return mass;
     }
+    
+    public String getName()
+    {
+        return name;
+    }
 }

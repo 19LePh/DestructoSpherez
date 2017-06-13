@@ -39,6 +39,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.geometry.Insets;
 import javafx.scene.input.MouseEvent;
+import javafx.animation.AnimationTimer;
 /**
  * The Graphical User Interface for Destructo-Spherez.
  * 
@@ -87,7 +88,7 @@ public class GUI extends Application
         img.setFitWidth(width);
         img.setFitHeight(height);
 
-        Terrain.setSpace();
+        //Terrain.setSpace();
         Terrain.getSpace().setFitWidth(width);
         Terrain.getSpace().setFitHeight(height);
 
@@ -262,22 +263,32 @@ public class GUI extends Application
                                     }
                                     };*/
                                     //new Thread(task).start();
+
                                     while(!(logic.get_y() <= 0.0001))
                                     {
-                                        System.out.println("Is working");
                                         logic.init(score);
-                                        stage.setScene(launchScene1);
-                                        stage.show();
+                                        new AnimationTimer() {
+                                            @Override
+                                            public void handle(long now) {
+                                                {
+                                                    ImageView img = Terrain.currImage;
+                                                    img.setFitWidth(width);
+                                                    img.setFitHeight(height);
+                                                    LaunchPane masterLaunch = new LaunchPane(height, width, logic);
+                                                    Scene launchScene = new Scene(masterLaunch.getView(), width, height);
+                                                    stage.setScene(launchScene);
+                                                }
+                                            }
+                                        }.start();
                                     }
-                                    //Terrain.updateBackground();
+
                                     try {
                                         Thread.sleep(5000);
                                     } catch(InterruptedException ex) {
                                         Thread.currentThread().interrupt();
                                     }
-
                                     //Initialize Score Scene
-                                    Terrain.setSpace();
+                                    //Terrain.setSpace();
                                     Terrain.getSpace().setFitWidth(width);
                                     Terrain.getSpace().setFitHeight(height);
                                     VBox Layout_Score = new VBox(50);
@@ -305,7 +316,7 @@ public class GUI extends Application
                 @Override
                 public void handle(ActionEvent event) 
                 {
-                    Terrain.setSpace();
+                    //Terrain.setSpace();
                     Terrain.getSpace().setFitWidth(width);
                     Terrain.getSpace().setFitHeight(height);
 
@@ -336,7 +347,7 @@ public class GUI extends Application
                 @Override
                 public void handle(ActionEvent event) 
                 {
-                    Terrain.setSpace();
+                    //Terrain.setSpace();
                     Terrain.getSpace().setFitWidth(width);
                     Terrain.getSpace().setFitHeight(height);
                     VBox Layout_Records = new VBox(50);
@@ -360,7 +371,7 @@ public class GUI extends Application
                 @Override
                 public void handle(ActionEvent event) 
                 {
-                    Terrain.setSpace();
+                    //Terrain.setSpace();
                     Terrain.getSpace().setFitWidth(width);
                     Terrain.getSpace().setFitHeight(height);
                     VBox Layout_Credits = new VBox(50);
@@ -386,7 +397,7 @@ public class GUI extends Application
                 {
                     buttons[41].setStyle("-fx-font: "  + height / 120.0 + " Helvetica");
                     buttons[41].setMinWidth(height / 10.0);
-                    Terrain.setSpace();
+                    //Terrain.setSpace();
                     Terrain.getSpace().setFitWidth(width);
                     Terrain.getSpace().setFitHeight(height);
 
@@ -458,7 +469,7 @@ public class GUI extends Application
                         int row = num / 4;
                         int col = num % 4;
                         Upgrades u = Shop.upgrades[row][col];
-                        Terrain.setSpace();
+                        //Terrain.setSpace();
                         Terrain.getSpace().setFitWidth(width);
                         Terrain.getSpace().setFitHeight(height);
 
@@ -474,7 +485,7 @@ public class GUI extends Application
                                     int col = num % 4;
                                     Upgrades u = Shop.upgrades[row][col];
 
-                                    Terrain.setSpace();
+                                    //Terrain.setSpace();
                                     Terrain.getSpace().setFitWidth(width);
                                     Terrain.getSpace().setFitHeight(height);
 
@@ -542,7 +553,7 @@ public class GUI extends Application
                         int col = num % 4;
                         Upgrades u = Shop.upgrades[row][col];
 
-                        Terrain.setSpace();
+                        //Terrain.setSpace();
                         Terrain.getSpace().setFitWidth(width);
                         Terrain.getSpace().setFitHeight(height);
 
@@ -558,7 +569,7 @@ public class GUI extends Application
                                     int col = num % 4;
                                     Upgrades u = Shop.upgrades[row][col];
 
-                                    Terrain.setSpace();
+                                    //Terrain.setSpace();
                                     Terrain.getSpace().setFitWidth(width);
                                     Terrain.getSpace().setFitHeight(height);
 
@@ -599,7 +610,7 @@ public class GUI extends Application
                                     int col = num % 4;
                                     Upgrades u = Shop.upgrades[row][col];
 
-                                    Terrain.setSpace();
+                                    //Terrain.setSpace();
                                     Terrain.getSpace().setFitWidth(width);
                                     Terrain.getSpace().setFitHeight(height);
 
@@ -658,7 +669,7 @@ public class GUI extends Application
 
                 @Override
                 public void handle(MouseEvent t) {
-                    Terrain.setSpace();
+                    //Terrain.setSpace();
                     Terrain.getSpace().setFitWidth(width);
                     Terrain.getSpace().setFitHeight(height);
 
@@ -691,7 +702,7 @@ public class GUI extends Application
 
                 @Override
                 public void handle(MouseEvent t) {
-                    Terrain.setSpace();
+                    //Terrain.setSpace();
                     Terrain.getSpace().setFitWidth(width);
                     Terrain.getSpace().setFitHeight(height);
 

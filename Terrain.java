@@ -4,8 +4,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import javafx.scene.image.ImageView;
 public class Terrain
 {
-    public static ImageView space;
-    public static ImageView currImage;
+    public static final ImageView space = new ImageView(new Image("Space.png"));
+    public static ImageView currImage = new ImageView(new Image("Dawn.png"));
     public final static double gravity = 9.80665;
     public static int time = 0;
     private ArrayList<Powerups> powerups; //There can be a lot of powerups at a time or a few
@@ -26,25 +26,12 @@ public class Terrain
     //For Title Screen, Launch Screen (Ground)
     public static void getTime()
     {
-        if(time == 0)
+        switch(time)
         {
-            currImage = new ImageView(new Image("Dawn.png"));
-            time++;
-        }
-        if(time == 1)
-        {
-            currImage = new ImageView(new Image("Day.png"));
-            time++;
-        }
-        if(time == 2)
-        {
-            currImage = new ImageView(new Image("Sunset.png"));
-            time++;
-        }
-        if(time == 3)
-        {
-            currImage = new ImageView(new Image("Night.png"));
-            time = 0;
+            case 0: currImage = new ImageView(new Image("Dawn.png")); time++; break;
+            case 1: currImage = new ImageView(new Image("Day.png")); time++; break;
+            case 2: currImage = new ImageView(new Image("Sunset.png")); time++; break;
+            case 3: currImage = new ImageView(new Image("Night.png")); time = 0; break;
         }
     }
 
@@ -64,13 +51,21 @@ public class Terrain
         }
     }
 
-    public static void setSpace()
-    {
-        space = new ImageView(new Image("Space.png"));
-    }
-
     public static ImageView getSpace()
     {
-        return space;
+        return new ImageView(new Image("Space.png"));
+    }
+
+    public static ImageView getCurrCopy()
+    {
+        switch(time)
+        {
+            case 0: return new ImageView(new Image("Dawn.png"));
+            case 1: return new ImageView(new Image("Day.png"));
+            case 2: return new ImageView(new Image("Sunset.png"));
+            case 3: return new ImageView(new Image("Night.png"));
+        }
+        System.out.println("Time check failed");
+        return new ImageView(new Image("Night.png"));
     }
 }
