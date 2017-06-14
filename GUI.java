@@ -40,6 +40,11 @@ import javafx.geometry.VPos;
 import javafx.geometry.Insets;
 import javafx.scene.input.MouseEvent;
 import javafx.animation.AnimationTimer;
+import javafx.scene.Group;
+import javafx.beans.property.SimpleStringProperty;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 /**
  * The Graphical User Interface for Destructo-Spherez.
  * 
@@ -48,179 +53,241 @@ import javafx.animation.AnimationTimer;
  */
 public class GUI extends Application
 {
-    //Player Elements
+    private static boolean isFinished;
+    //Game Elements
     private static final Player player = new Player();
+    private static Terrain t;
+    private static GameLogic logic = new GameLogic();
+    private static final Wall[] walls = {Wall.WALL_1, Wall.WALL_2, Wall.WALL_3, Wall.WALL_4, Wall.WALL_5};
+    private static Score score = new Score(walls);
 
-    //Full Screen Fields
-    private static double minX;
-    private static double minY;
+    //Scenes that can be accessed by clicking a button (everything but the score scene)
+    private static Scene titleScene, launchScene, catalogScene, equipmentScene, recordsScene, creditsScene, scoreScene;
+
     private static double width;
     private static double height;
-    public static void main(String[] args) 
-    {
-        launch(args);
-    }
+    private final Label[] launchStats = new Label[4]; //Distance, Altitude, Air Time, Speed
+    private final Label[] scoreLabels = new Label[7]; //Distance, Altitude, Air Time, Speed, Walls Destroyed, Score, Reward Money
+    private final Label[] recordsLabels = new Label[6]; //Distance, Altitude, Air Time, Speed, Walls Destroyed, Score
+    private final Label[] catalogLabels = new Label[4]; //Title, status, balance
+    private final Label[] equipmentLabels = new Label[4]; //Title, status, balance
 
+    private final Text[] titles = new Text[4]; //Titles for Title, Records, Score, and Credits screens
+
+    //Catalog Buttons
+    private static Button purchase;
+    private static Button equip;
+    private static Upgrades selected;
+
+    private static Stage stage;
+
+    private static SimpleStringProperty balance;
+    private static SimpleStringProperty specs;
+    private static SimpleStringProperty equipStatus;
+    private static SimpleStringProperty catalogStatus;
+
+    //Score per launch
+    private static SimpleStringProperty tempDistance;
+    private static SimpleStringProperty tempAltitude;
+    private static SimpleStringProperty tempAirTime;
+    private static SimpleStringProperty tempVelocity;
+    private static SimpleStringProperty tempWalls;
+    private static SimpleStringProperty tempScore;
+    private static SimpleStringProperty rewardMoney;
+
+    //Top Scores, meant for records scene
+    private static SimpleStringProperty topDistance;
+    private static SimpleStringProperty topAltitude;
+    private static SimpleStringProperty topAirTime;
+    private static SimpleStringProperty topVelocity;
+    private static SimpleStringProperty topWalls;
+    private static SimpleStringProperty topScore;
     @Override
-    public void start(Stage stage) 
+    public void start(Stage stage)
     {
-        stage.initStyle(StageStyle.UNDECORATED);
-        //Purchased default launcher
+        //Purchases the default launcher from shop and equips it
         Shop.buy(Shop.upgrades[0][0]);
         Shop.upgrades[0][0].setIsEquipped(player);
-        //Fullscreen
+        selected = Shop.upgrades[0][0];
+
+        //Sets all stringProperty variables
+        specs = new SimpleStringProperty(selected.getSpecs());
+        balance = new SimpleStringProperty("Balance: $" + Shop.getBalance());
+
+        tempDistance = new SimpleStringProperty("Distance: " + (int)(score.getDistance()) + " m");
+        tempAltitude = new SimpleStringProperty("Altitude: " + (int)(score.getMaxHeight()) + " m");
+        tempAirTime = new SimpleStringProperty("Air Time: " + (int)(score.getAirTime()) + " s");
+        tempVelocity = new SimpleStringProperty("Speed: " + (int)(score.getMaxVelocity()) + " m/s");
+        tempWalls = new SimpleStringProperty(score.tempAchToString());
+        tempScore = new SimpleStringProperty("Total Score: " + (int)(score.getScore()));
+        rewardMoney = new SimpleStringProperty("Reward Money: $" + score.getRewardMoney());
+
+        topDistance = new SimpleStringProperty("Top Distance: " + (int)(Score.getTopDistance()) + " m");
+        topAltitude = new SimpleStringProperty("Top Altitude: " + (int)(Score.getTopHeight()) + " m");
+        topAirTime = new SimpleStringProperty("Top Air Time: " + (int)(Score.getTopAirTime()) + " s");
+        topVelocity = new SimpleStringProperty("Top Speed: " + (int)(Score.getTopVelocity()) + " m/s");
+        topWalls = new SimpleStringProperty(score.permAchToString());
+        topScore = new SimpleStringProperty("Top Score: " + (int)(Score.getHighScore()) + " m/s");
+
+        if(player.checkIsEquipped(selected))
+        {
+            equipStatus = new SimpleStringProperty("Equipped!");
+        } else if(!(selected.getIsPurchased()))
+        {
+            equipStatus = new SimpleStringProperty("You do not own this item");
+        } else {
+            equipStatus = new SimpleStringProperty("Not Equipped");
+        }
+
+        if(selected.getIsPurchased())
+        {
+            catalogStatus = new SimpleStringProperty("SOLD OUT");
+        } else if(selected.getCost() > Shop.getBalance())
+        {
+            catalogStatus = new SimpleStringProperty("INSUFFICIENT FUNDS");
+        } else {
+            catalogStatus = new SimpleStringProperty("Not Purchased");
+        }
+
+        //Removes stage borders
+        stage.initStyle(StageStyle.UNDECORATED);
+
+        //Gets fullscreen dimensions
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
-        minX = bounds.getMinX();
-        minY = bounds.getMinY();
+        double minX = bounds.getMinX();
+        double minY = bounds.getMinY();
         width = bounds.getWidth();
         height = bounds.getHeight();
 
-        //Creates stage
+        //Makes stage Fullscreen
         stage.setTitle("Destructo - Spherez!");
         stage.setX(minX);
         stage.setY(minY);
         stage.setWidth(width);
         stage.setHeight(height);
 
-        Terrain.getTime();
-        ImageView img = Terrain.currImage;
-        img.setFitWidth(width);
-        img.setFitHeight(height);
-
-        //Terrain.setSpace();
-        Terrain.getSpace().setFitWidth(width);
-        Terrain.getSpace().setFitHeight(height);
-
-        ImageView spaceImg = Terrain.space;
-        spaceImg.setFitWidth(width);
-        spaceImg.setFitHeight(height);
-
-        //Creates Titles
-        Text[] titles = new Text[6];
-
-        for(int i = 0; i < 6; i++)
+        //Creates the titles
+        for(int i = 0; i < titles.length; i++)
         {
-            DropShadow ds = new DropShadow();
-            ds.setOffsetY(3.0f);
-            ds.setColor(Color.ORANGE);
-            Text t = new Text("");
+            Text t = new Text();
             t.setFill(Color.GOLD);
             t.setFont(Font.font("Helvetica", FontWeight.BOLD, height / 10.0));
             titles[i] = t;
         }
         titles[0].setText("Destructo - Spherez!");
-        titles[1].setText("Catalog"); //Unused; remove if willing to renumber
-        titles[2].setText("Records");
-        titles[3].setText("Credits");
-        titles[4].setText("Score");
-        titles[5].setText("Equipment");
+        titles[1].setText("Records");
+        titles[2].setText("Credits");
+        titles[3].setText("Score");
 
-        //Creates Buttons
-        Button[] buttons = new Button[80];
-        for(int i = 0; i < 80; i++)
+        //Creates the labels for launchStats
+        for(int i = 0; i < launchStats.length; i++)
+        {
+            Label l = new Label();
+            l.setMinWidth(height / 7.5);
+            l.setTextFill(Color.GOLD);
+            l.setFont(Font.font("Helvetica", FontWeight.BOLD, height / 40.0));
+            launchStats[i] = l;
+        }
+        launchStats[0].textProperty().bind(tempDistance);
+        launchStats[1].textProperty().bind(tempAltitude);
+        launchStats[2].textProperty().bind(tempAirTime);
+        launchStats[3].textProperty().bind(tempVelocity);
+
+        //Creates the labels for catalogLabels
+        for(int i = 0; i < catalogLabels.length; i++)
+        {
+            Label l = new Label();
+            l.setMinWidth(height / 7.5);
+            l.setTextFill(Color.GOLD);
+            l.setFont(Font.font("Helvetica", FontWeight.BOLD, height / 40.0));
+            catalogLabels[i] = l;
+        }
+        catalogLabels[0].setText("Catalog");
+        catalogLabels[1].textProperty().bind(balance);
+        catalogLabels[2].textProperty().bind(specs);
+        catalogLabels[3].textProperty().bind(catalogStatus);
+
+        //Creates the labels for equipmentLabels
+        for(int i = 0; i < equipmentLabels.length; i++)
+        {
+            Label l = new Label();
+            l.setMinWidth(height / 7.5);
+            l.setTextFill(Color.GOLD);
+            l.setFont(Font.font("Helvetica", FontWeight.BOLD, height / 40.0));
+            equipmentLabels[i] = l;
+        }
+        equipmentLabels[0].setText("Equipment");
+        equipmentLabels[1].textProperty().bind(balance);
+        equipmentLabels[2].textProperty().bind(specs);
+        equipmentLabels[3].textProperty().bind(equipStatus);
+
+        //Creates the labels for score
+        for(int i = 0; i < scoreLabels.length; i++)
+        {
+            Label l = new Label();
+            l.setMinWidth(height / 240.0);
+            l.setTextFill(Color.GOLD);
+            l.setFont(Font.font("Helvetica", FontWeight.BOLD, height / 40.0));
+            scoreLabels[i] = l;
+        }    
+        scoreLabels[0].textProperty().bind(tempDistance);
+        scoreLabels[1].textProperty().bind(tempAltitude);
+        scoreLabels[2].textProperty().bind(tempAirTime);
+        scoreLabels[3].textProperty().bind(tempVelocity);
+        scoreLabels[4].textProperty().bind(tempWalls);
+        scoreLabels[5].textProperty().bind(tempScore);
+        scoreLabels[6].textProperty().bind(rewardMoney);
+
+        //Creates the labels for records
+        for(int i = 0; i < recordsLabels.length; i++)
+        {
+            Label l = new Label();
+            l.setMinWidth(height / 240.0);
+            l.setTextFill(Color.GOLD);
+            l.setFont(Font.font("Helvetica", FontWeight.BOLD, height / 40.0));
+            recordsLabels[i] = l;
+        }
+        recordsLabels[0].textProperty().bind(topDistance);
+        recordsLabels[1].textProperty().bind(topAltitude);
+        recordsLabels[2].textProperty().bind(topAirTime);
+        recordsLabels[3].textProperty().bind(topVelocity);
+        recordsLabels[4].textProperty().bind(topWalls);
+        recordsLabels[5].textProperty().bind(topScore);
+
+        //Make buttons for title screen, set text, and add functions to each
+        Button[] titleButtons = new Button[6];
+        for(int i = 0; i < titleButtons.length; i++)
         {
             Button b = new Button("");
-            b.setStyle("-fx-font: "  + height / 120.0 + " Helvetica");
-            b.setMinWidth(500);
-            buttons[i] = b;
+            b.setStyle("-fx-font: "  + height / 100.0 + " Helvetica");
+            b.setMinWidth(height / 10.0);
+            b.setMinHeight(height / 40.0);
+            titleButtons[i] = b;
         }
-        //Title buttons
-        buttons[0].setText("Launch!");
-        buttons[1].setText("Catalog");
-        buttons[2].setText("Records");
-        buttons[3].setText("Credits");
-        buttons[4].setText("Back"); //Unused; remove if willing to renumber all buttons, and change loop
-        //Equipment buttons for catalog
-        buttons[5].setText("Slingshot");
-        buttons[6].setText("Catapult");
-        buttons[7].setText("Cannon");
-        buttons[8].setText("Alien Launch Pad");
-        buttons[9].setText("Dynamite");
-        buttons[10].setText("TNT Tower");
-        buttons[11].setText("Nuke");
-        buttons[12].setText("????");
-        buttons[13].setText("Fireball");
-        buttons[14].setText("Hot Lead");
-        buttons[15].setText("~Radioactive~");
-        buttons[16].setText("The Sun");
-        buttons[17].setText("Iron Spikeball");
-        buttons[18].setText("Steel Spikeball");
-        buttons[19].setText("Titanium Spikeball");
-        buttons[20].setText("Shield of Gods");
-        buttons[21].setText("Multi Bottle Rocket");
-        buttons[22].setText("Capsule Rockets");
-        buttons[23].setText("Bootleg Fireworks");
-        buttons[24].setText("Rechargeable Boosters");
-        buttons[25].setText("Giant Bottle Rocket");
-        buttons[26].setText("Twin Rockets");
-        buttons[27].setText("RBR");
-        buttons[28].setText("The One");
-        buttons[29].setText("Umbrella");
-        buttons[30].setText("Glider"); 
-        buttons[31].setText("Super Glider");
-        buttons[32].setText("One with the Wind");
-        buttons[33].setText("Propeller Hat");
-        buttons[34].setText("Prototype H");
-        buttons[35].setText("The Chopper");
-        buttons[36].setText("Mini UFO");
-        //Misc catalog buttons
-        buttons[37].setText("Buying"); //Unused; remove if willing to renumber
-        buttons[38].setText("Equipping"); //Unused; remove if willing to renumber
-        buttons[39].setText("Equipment");
-        buttons[40].setText("Back"); //Used at Catalog
-        buttons[41].setText("Back"); //Used at Equipment
-        buttons[42].setText("Back"); //Used at Records
-        buttons[43].setText("Back"); //Used at Credits
-        buttons[44].setText("Back"); //Used at Score
-        buttons[45].setText("Exit");
-        //Equipment buttons for equipment
-        buttons[46].setText("Slingshot");
-        buttons[47].setText("Catapult");
-        buttons[48].setText("Cannon");
-        buttons[49].setText("Alien Launch Pad");
-        buttons[50].setText("Dynamite");
-        buttons[51].setText("TNT Tower");
-        buttons[52].setText("Nuke");
-        buttons[53].setText("????");
-        buttons[54].setText("Fireball");
-        buttons[55].setText("Hot Lead");
-        buttons[56].setText("~Radioactive~");
-        buttons[57].setText("The Sun");
-        buttons[58].setText("Iron Spikeball");
-        buttons[59].setText("Steel Spikeball");
-        buttons[60].setText("Titanium Spikeball");
-        buttons[61].setText("Shield of Gods");
-        buttons[62].setText("Multi Bottle Rocket");
-        buttons[63].setText("Capsule Rockets");
-        buttons[64].setText("Bootleg Fireworks");
-        buttons[65].setText("Rechargeable Boosters");
-        buttons[66].setText("Giant Bottle Rocket");
-        buttons[67].setText("Twin Rockets");
-        buttons[68].setText("RBR");
-        buttons[69].setText("The One");
-        buttons[70].setText("Umbrella");
-        buttons[71].setText("Glider"); 
-        buttons[72].setText("Super Glider");
-        buttons[73].setText("One with the Wind");
-        buttons[74].setText("Propeller Hat");
-        buttons[75].setText("Prototype H");
-        buttons[76].setText("The Chopper");
-        buttons[77].setText("Mini UFO");
+        titleButtons[0].setText("Launch!");
+        titleButtons[1].setText("Catalog");
+        titleButtons[2].setText("Equipment");
+        titleButtons[3].setText("Records");
+        titleButtons[4].setText("Credits");
+        titleButtons[5].setText("Exit");
 
-        buttons[78].setText("Purchase");
-        buttons[79].setText("Equip");
-
-        //Action events for title buttons
-        buttons[0].setOnAction(new EventHandler<ActionEvent>()
+        //Launch
+        titleButtons[0].setOnAction(new EventHandler<ActionEvent>()
             { 
                 @Override
                 public void handle(ActionEvent event) 
                 {
-                    Wall[] walls = {Wall.WALL_1, Wall.WALL_2, Wall.WALL_3, Wall.WALL_4, Wall.WALL_5};
-                    Score score = new Score(walls);
+                    //Set up logic
+                    score = new Score(walls);
+                    //Refreshes strings for the launch scene
+                    tempDistance.set("Distance: " + (int)(score.getDistance()) + " m");
+                    tempAltitude.set("Altitude: " + (int)(score.getMaxHeight()) + " m");
+                    tempAirTime.set("Air Time: " + (int)(score.getAirTime()) + " s");
+                    tempVelocity.set("Speed: " + (int)(score.getMaxVelocity()) + " m/s");
+                    
                     ArrayList<Powerups> powerups = new ArrayList<Powerups>();
-                    Terrain t = new Terrain(powerups, walls);
+                    t = new Terrain(powerups, walls);
                     t.randomPowerups(10);
                     double playerMass = player.calculateMass(); //test
                     double playerCrossSectionalArea = player.getCrossSectionalArea();
@@ -232,428 +299,91 @@ public class GUI extends Application
                     }
                     double accelerationY = -Terrain.gravity + (lift / playerMass);
                     double angle = player.getLauncher().getAngle();
-                    GameLogic logic = new GameLogic(initialSpeed, angle, 0.0, 10.0, 1.0, accelerationY, playerMass, playerCrossSectionalArea);
+                    logic = new GameLogic(initialSpeed, angle, 0.0, 10.0, 1.0, accelerationY, playerMass, playerCrossSectionalArea);
+                    stage.setScene(launchScene);
 
-                    ImageView img1 = Terrain.currImage;
-                    img1.setFitWidth(width);
-                    img1.setFitHeight(height);
-                    LaunchPane masterLaunch1 = new LaunchPane(height, width, logic);
-                    Scene launchScene1 = new Scene(masterLaunch1.getView(), width, height);
-                    stage.setScene(launchScene1);
-                    //keyPressed
-                    stage.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
+                    launchScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
                             @Override
                             public void handle(KeyEvent event) {
                                 if(event.getCode() == KeyCode.ENTER)
                                 {
-                                    /*Task<Void> task = new Task<Void>() {
-                                    @Override 
-                                    public Void call() throws Exception {
-                                    for (int i=1; i<=10; i++) {
-                                    //Reinitialize launchScene
-                                    ImageView img = Terrain.currImage;
-                                    img.setFitWidth(width);
-                                    img.setFitHeight(height);
-                                    LaunchPane masterLaunch = new LaunchPane(logic);
-                                    Scene launchScene = new Scene(masterLaunch.getView(), width, height);
-                                    stage.setScene(launchScene);
-                                    Thread.sleep(250);
-                                    }
-                                    return null ;
-                                    }
-                                    };*/
-                                    //new Thread(task).start();
-
+                                    /*isFinished = false;
+                                    launch();*/
                                     while(!(logic.get_y() <= 0.0001))
                                     {
                                         logic.init(score);
-                                        new AnimationTimer() {
-                                            @Override
-                                            public void handle(long now) {
-                                                {
-                                                    ImageView img = Terrain.currImage;
-                                                    img.setFitWidth(width);
-                                                    img.setFitHeight(height);
-                                                    LaunchPane masterLaunch = new LaunchPane(height, width, logic);
-                                                    Scene launchScene = new Scene(masterLaunch.getView(), width, height);
-                                                    stage.setScene(launchScene);
-                                                }
-                                            }
-                                        }.start();
                                     }
 
-                                    try {
-                                        Thread.sleep(5000);
+                                    /*try {
+                                    Thread.sleep(5000);
                                     } catch(InterruptedException ex) {
-                                        Thread.currentThread().interrupt();
-                                    }
-                                    //Initialize Score Scene
-                                    //Terrain.setSpace();
-                                    Terrain.getSpace().setFitWidth(width);
-                                    Terrain.getSpace().setFitHeight(height);
-                                    VBox Layout_Score = new VBox(50);
-                                    VBox Layout_Back_Score = new VBox(50);
-                                    Layout_Back_Score.getChildren().addAll(buttons[44]);
-                                    Layout_Back_Score.setAlignment(Pos.BOTTOM_LEFT);
-                                    Layout_Score.getChildren().addAll(titles[4]);
-                                    Layout_Score.setAlignment(Pos.TOP_CENTER);
-                                    Pane score1 = new StackPane();
-                                    score1.getChildren().addAll(Layout_Score, Layout_Back_Score);
-                                    ScorePane scorePane = new ScorePane(height, width, score);
-                                    Pane score2 = scorePane.getView();
-                                    StackPane masterScore = new StackPane();
-                                    masterScore.getChildren().addAll(score2, score1);
-                                    Scene scoreScene = new Scene(masterScore, width, height);
+                                    Thread.currentThread().interrupt();
+                                    }*/
+
+                                    //Refreshes strings for the score scene
+                                    tempDistance.set("Distance: " + (int)(score.getDistance()) + " m");
+                                    tempAltitude.set("Altitude: " + (int)(score.getMaxHeight()) + " m");
+                                    tempAirTime.set("Air Time: " + (int)(score.getAirTime()) + " s");
+                                    tempVelocity.set("Speed: " + (int)(score.getMaxVelocity()) + " m/s");
+                                    tempWalls.set(score.tempAchToString());
+                                    tempScore.set("Total Score: " + (int)(score.getScore()));
+                                    rewardMoney.set("Reward Money: $" + score.getRewardMoney());
                                     stage.setScene(scoreScene);
-                                    Shop.setBalance(score.getRewardMoney());
                                 }
                             }
                         });
                 }
             });
-        buttons[1].setOnAction(new EventHandler<ActionEvent>()
+
+        //Catalog
+        titleButtons[1].setOnAction(new EventHandler<ActionEvent>()
             { 
                 @Override
                 public void handle(ActionEvent event) 
                 {
-                    //Terrain.setSpace();
-                    Terrain.getSpace().setFitWidth(width);
-                    Terrain.getSpace().setFitHeight(height);
-
-                    VBox Layout_Catalog = new VBox(1);
-                    Layout_Catalog.setAlignment(Pos.CENTER);
-                    Layout_Catalog.getChildren().add(buttons[78]);
-                    for(int i = 5; i < 37; i++)
-                    {
-                        Layout_Catalog.getChildren().add(buttons[i]);
-                    }
-
-                    Layout_Catalog.getChildren().add(buttons[40]);
-                    Pane catalog1 = new StackPane();
-                    catalog1.getChildren().addAll(Layout_Catalog);
-
-                    CatalogPane catalogPane = new CatalogPane(height, width, player, player.getLauncher(), true, false); //Arbitrary Upgrade; will be changed on button click
-                    Pane catalog2 = catalogPane.getView();
-
-                    StackPane masterCatalog = new StackPane();
-                    masterCatalog.getChildren().addAll(catalog2, catalog1);
-
-                    Scene catalogScene = new Scene(masterCatalog, width, height);
                     stage.setScene(catalogScene);
                 }
             });
-        buttons[2].setOnAction(new EventHandler<ActionEvent>()
+
+        //Equipment
+        titleButtons[2].setOnAction(new EventHandler<ActionEvent>()
             { 
                 @Override
                 public void handle(ActionEvent event) 
                 {
-                    //Terrain.setSpace();
-                    Terrain.getSpace().setFitWidth(width);
-                    Terrain.getSpace().setFitHeight(height);
-                    VBox Layout_Records = new VBox(50);
-                    VBox Layout_Back_Records = new VBox(50);
-                    Layout_Back_Records.getChildren().addAll(buttons[42]);
-                    Layout_Back_Records.setAlignment(Pos.BOTTOM_LEFT);
-                    Layout_Records.getChildren().addAll(titles[2]);
-                    Layout_Records.setAlignment(Pos.TOP_CENTER);
-                    Pane records1 = new StackPane();
-                    records1.getChildren().addAll(Layout_Records, Layout_Back_Records);
-                    RecordsPane recordsPane = new RecordsPane(height, width);
-                    Pane records2 = recordsPane.getView();
-                    StackPane masterRecords = new StackPane();
-                    masterRecords.getChildren().addAll(records2, records1);
-                    Scene recordsScene = new Scene(masterRecords, width, height);
-                    stage.setScene(recordsScene);
-                }
-            });
-        buttons[3].setOnAction(new EventHandler<ActionEvent>()
-            { 
-                @Override
-                public void handle(ActionEvent event) 
-                {
-                    //Terrain.setSpace();
-                    Terrain.getSpace().setFitWidth(width);
-                    Terrain.getSpace().setFitHeight(height);
-                    VBox Layout_Credits = new VBox(50);
-                    VBox Layout_Back_Credits = new VBox(50);
-                    Layout_Back_Credits.getChildren().addAll(buttons[43]);
-                    Layout_Back_Credits.setAlignment(Pos.BOTTOM_LEFT);
-                    Layout_Credits.getChildren().addAll(titles[3]);
-                    Layout_Credits.setAlignment(Pos.TOP_CENTER);
-                    Pane credits1 = new StackPane();
-                    credits1.getChildren().addAll(Layout_Credits, Layout_Back_Credits);
-                    CreditsPane creditsPane = new CreditsPane(height, width);
-                    Pane credits2 = creditsPane.getView();
-                    StackPane masterCredits = new StackPane();
-                    masterCredits.getChildren().addAll(credits2, credits1);
-                    Scene creditsScene = new Scene(masterCredits, width, height);
-                    stage.setScene(creditsScene);
-                }
-            });
-        buttons[39].setOnAction(new EventHandler<ActionEvent>()
-            { 
-                @Override
-                public void handle(ActionEvent event) 
-                {
-                    buttons[41].setStyle("-fx-font: "  + height / 120.0 + " Helvetica");
-                    buttons[41].setMinWidth(height / 10.0);
-                    //Terrain.setSpace();
-                    Terrain.getSpace().setFitWidth(width);
-                    Terrain.getSpace().setFitHeight(height);
-
-                    VBox Layout_Equipment = new VBox(1);
-                    Layout_Equipment.setAlignment(Pos.CENTER);
-                    Layout_Equipment.getChildren().add(buttons[79]);
-                    for(int i = 46; i < 78; i++)
-                    {
-                        Layout_Equipment.getChildren().add(buttons[i]);
-                    }
-
-                    Layout_Equipment.getChildren().add(buttons[41]);
-                    Pane equipment1 = new StackPane();
-                    equipment1.getChildren().addAll(Layout_Equipment);
-
-                    CatalogPane equipmentPane = new CatalogPane(height, width, player, player.getLauncher(), false, false); //Arbitrary Upgrade; will be changed on button click
-                    Pane equipment2 = equipmentPane.getView();
-
-                    StackPane masterEquipment = new StackPane();
-                    masterEquipment.getChildren().addAll(equipment2, equipment1);
-
-                    Scene equipmentScene = new Scene(masterEquipment, width, height);
                     stage.setScene(equipmentScene);
                 }
             });
-        //Action Events for all Back buttons
-        for(int i = 40; i < 45; i++)
-        {
-            buttons[i].setOnAction(new EventHandler<ActionEvent>()
-                { 
-                    @Override
-                    public void handle(ActionEvent event) 
-                    {
-                        Terrain.getTime();
-                        ImageView img = Terrain.currImage;
-                        img.setFitWidth(width);
-                        img.setFitHeight(height);
-                        Pane title1 = new StackPane();
-                        VBox Layout_Title = new VBox(50);
-                        Layout_Title.getChildren().addAll(titles[0], buttons[0], buttons[1], buttons[39], buttons[2], buttons[3], buttons[45]);
-                        Layout_Title.setAlignment(Pos.CENTER);
-                        title1.getChildren().addAll(Layout_Title);
-                        TitlePane titlePane = new TitlePane(height, width);
-                        Pane title2 = titlePane.getView();
-                        TitlePane masterTitle = new TitlePane(height, width);
-                        masterTitle.getView().getChildren().addAll(title2, title1);
-                        Scene titleScene1 = new Scene(masterTitle.getView(), width, height);
-                        stage.setScene(titleScene1);
-                    }
-                });
-        }
 
-        //Action events for all Catalog equips
-        for(int i = 5; i < 37; i++)
-        {
-            final int temp = i;
-            buttons[i].setStyle("-fx-font: "  + height / 120.0 + " Helvetica");
-            buttons[i].setMinWidth(height / 10.0);
-            buttons[40].setStyle("-fx-font: "  + height / 120.0 + " Helvetica");
-            buttons[40].setMinWidth(height / 10.0);
-            buttons[78].setStyle("-fx-font: "  + height / 120.0 + " Helvetica");
-            buttons[78].setMinWidth(height / 10.0);
-            buttons[i].setOnMouseClicked(new EventHandler<MouseEvent>()
-                { 
-                    @Override
-                    public void handle(MouseEvent t) 
-                    {
-                        int num = temp - 5;
-                        int row = num / 4;
-                        int col = num % 4;
-                        Upgrades u = Shop.upgrades[row][col];
-                        //Terrain.setSpace();
-                        Terrain.getSpace().setFitWidth(width);
-                        Terrain.getSpace().setFitHeight(height);
+        //Records
+        titleButtons[3].setOnAction(new EventHandler<ActionEvent>()
+            { 
+                @Override
+                public void handle(ActionEvent event) 
+                {
+                    //Refreshes top score stats
+                    topDistance.set("Top Distance: " + (int)(Score.getTopDistance()) + " m");
+                    topAltitude.set("Top Altitude: " + (int)(Score.getTopHeight()) + " m");
+                    topAirTime.set("Top Air Time: " + (int)(Score.getTopAirTime()) + " s");
+                    topVelocity.set("Top Speed: " + (int)(Score.getTopVelocity()) + " m/s");
+                    topWalls.set(score.permAchToString());
+                    topScore.set("Top Score: " + (int)(Score.getHighScore()) + " m/s");
+                    stage.setScene(recordsScene);
+                }
+            });
 
-                        VBox Layout_Catalog = new VBox(1);
-                        Layout_Catalog.setAlignment(Pos.CENTER);
-                        buttons[78].setOnMouseClicked(new EventHandler<MouseEvent>
-                            () {
+        //Credits
+        titleButtons[4].setOnAction(new EventHandler<ActionEvent>()
+            { 
+                @Override
+                public void handle(ActionEvent event) 
+                {
+                    stage.setScene(creditsScene);
+                }
+            });
 
-                                @Override
-                                public void handle(MouseEvent t) {
-                                    int num = temp - 5;
-                                    int row = num / 4;
-                                    int col = num % 4;
-                                    Upgrades u = Shop.upgrades[row][col];
-
-                                    //Terrain.setSpace();
-                                    Terrain.getSpace().setFitWidth(width);
-                                    Terrain.getSpace().setFitHeight(height);
-
-                                    VBox Layout_Catalog = new VBox(1);
-                                    Layout_Catalog.setAlignment(Pos.CENTER);
-                                    Layout_Catalog.getChildren().add(buttons[41]);
-                                    for(int i = 5; i < 37; i++)
-                                    {
-                                        Layout_Catalog.getChildren().add(buttons[i]);
-                                    }
-                                    Layout_Catalog.getChildren().add(buttons[78]);
-                                    Pane catalog1 = new StackPane();
-                                    catalog1.getChildren().addAll(Layout_Catalog);
-
-                                    CatalogPane catalogPane = new CatalogPane(height, width, player, u, true, true); //Arbitrary Upgrade; will be changed on button click
-                                    Pane catalog2 = catalogPane.getView();
-
-                                    StackPane masterCatalog = new StackPane();
-                                    masterCatalog.getChildren().addAll(catalog2, catalog1);
-
-                                    Scene catalogScene = new Scene(masterCatalog, width, height);
-                                    stage.setScene(catalogScene);
-                                }
-                            });
-                        Layout_Catalog.getChildren().add(buttons[78]);
-                        for(int i = 5; i < 37; i++)
-                        {
-                            Layout_Catalog.getChildren().add(buttons[i]);
-                        }
-
-                        Layout_Catalog.getChildren().add(buttons[40]);
-                        Pane catalog1 = new StackPane();
-                        catalog1.getChildren().addAll(Layout_Catalog);
-
-                        CatalogPane catalogPane = new CatalogPane(height, width, player, u, true, false); //Arbitrary Upgrade; will be changed on button click
-                        Pane catalog2 = catalogPane.getView();
-
-                        StackPane masterCatalog = new StackPane();
-                        masterCatalog.getChildren().addAll(catalog2, catalog1);
-
-                        Scene catalogScene = new Scene(masterCatalog, width, height);
-                        stage.setScene(catalogScene);
-                    }
-                });
-
-        }
-
-        //Action events for all equipment equips
-        for(int i = 46; i < 78; i++)
-        {
-            final int temp = i;
-            buttons[i].setStyle("-fx-font: "  + height / 120.0 + " Helvetica");
-            buttons[i].setMinWidth(height / 10.0);
-            buttons[41].setStyle("-fx-font: 15 Helvetica");
-            buttons[41].setMinWidth(height / 10.0);
-            buttons[79].setStyle("-fx-font: 15 Helvetica");
-            buttons[79].setMinWidth(height / 10.0);
-            buttons[i].setOnMouseClicked(new EventHandler<MouseEvent>()
-                { 
-                    @Override
-                    public void handle(MouseEvent t) 
-                    {
-                        int num = temp - 46;
-                        int row = num / 4;
-                        int col = num % 4;
-                        Upgrades u = Shop.upgrades[row][col];
-
-                        //Terrain.setSpace();
-                        Terrain.getSpace().setFitWidth(width);
-                        Terrain.getSpace().setFitHeight(height);
-
-                        VBox Layout_Equipment = new VBox(1);
-                        Layout_Equipment.setAlignment(Pos.CENTER);
-                        buttons[79].setOnMouseClicked(new EventHandler<MouseEvent>
-                            () {
-
-                                @Override
-                                public void handle(MouseEvent t) {
-                                    int num = temp - 46;
-                                    int row = num / 4;
-                                    int col = num % 4;
-                                    Upgrades u = Shop.upgrades[row][col];
-
-                                    //Terrain.setSpace();
-                                    Terrain.getSpace().setFitWidth(width);
-                                    Terrain.getSpace().setFitHeight(height);
-
-                                    VBox Layout_Equipment = new VBox(1);
-                                    Layout_Equipment.setAlignment(Pos.CENTER);
-                                    Layout_Equipment.getChildren().add(buttons[41]);
-                                    for(int i = 46; i < 78; i++)
-                                    {
-                                        Layout_Equipment.getChildren().add(buttons[i]);
-                                    }
-
-                                    Layout_Equipment.getChildren().add(buttons[79]);
-                                    Pane equipment1 = new StackPane();
-                                    equipment1.getChildren().addAll(Layout_Equipment);
-
-                                    CatalogPane equipmentPane = new CatalogPane(height, width, player, u, false, true);
-                                    Pane equipment2 = equipmentPane.getView();
-
-                                    StackPane masterEquipment = new StackPane();
-                                    masterEquipment.getChildren().addAll(equipment2, equipment1);
-
-                                    Scene equipmentScene = new Scene(masterEquipment, width, height);
-                                    stage.setScene(equipmentScene);
-                                }
-                            });
-                        Layout_Equipment.getChildren().add(buttons[79]);
-                        for(int i = 46; i < 78; i++)
-                        {
-                            Layout_Equipment.getChildren().add(buttons[i]);
-                        }
-                        buttons[79].setOnMouseClicked(new EventHandler<MouseEvent>
-                            () {
-
-                                @Override
-                                public void handle(MouseEvent t) {
-                                    int num = temp - 46;
-                                    int row = num / 4;
-                                    int col = num % 4;
-                                    Upgrades u = Shop.upgrades[row][col];
-
-                                    //Terrain.setSpace();
-                                    Terrain.getSpace().setFitWidth(width);
-                                    Terrain.getSpace().setFitHeight(height);
-
-                                    VBox Layout_Equipment = new VBox(1);
-                                    Layout_Equipment.setAlignment(Pos.CENTER);
-                                    Layout_Equipment.getChildren().add(buttons[41]);
-                                    for(int i = 46; i < 78; i++)
-                                    {
-                                        Layout_Equipment.getChildren().add(buttons[i]);
-                                    }
-
-                                    Layout_Equipment.getChildren().add(buttons[79]);
-                                    Pane equipment1 = new StackPane();
-                                    equipment1.getChildren().addAll(Layout_Equipment);
-
-                                    CatalogPane equipmentPane = new CatalogPane(height, width, player, u, false, true);
-                                    Pane equipment2 = equipmentPane.getView();
-
-                                    StackPane masterEquipment = new StackPane();
-                                    masterEquipment.getChildren().addAll(equipment2, equipment1);
-
-                                    Scene equipmentScene = new Scene(masterEquipment, width, height);
-                                    stage.setScene(equipmentScene);
-                                }
-                            });
-
-                        Layout_Equipment.getChildren().add(buttons[41]);                          
-                        Pane equipment1 = new StackPane();
-                        equipment1.getChildren().addAll(Layout_Equipment);
-
-                        CatalogPane equipmentPane = new CatalogPane(height, width, player, u, false, false);
-                        Pane equipment2 = equipmentPane.getView();
-
-                        StackPane masterEquipment = new StackPane();
-                        masterEquipment.getChildren().addAll(equipment2, equipment1);
-
-                        Scene equipmentScene = new Scene(masterEquipment, width, height);
-                        stage.setScene(equipmentScene);
-                    }
-                });
-        }
-
-        buttons[45].setOnAction(new EventHandler<ActionEvent>()
+        //Exit
+        titleButtons[5].setOnAction(new EventHandler<ActionEvent>()
             { 
                 @Override
                 public void handle(ActionEvent event) 
@@ -662,95 +392,323 @@ public class GUI extends Application
                 }
             });
 
-        buttons[78].setStyle("-fx-font: 15 Helvetica");
-        buttons[78].setMinWidth(height / 10.0);
-        buttons[78].setOnMouseClicked(new EventHandler<MouseEvent>
-            () {
-
+        //Make purchase and equip button
+        Button purchase = new Button();
+        purchase.setText("Purchase");
+        purchase.setStyle("-fx-font: "  + height / 50.0 + " Helvetica");
+        purchase.setMinWidth(height / 7.5);
+        purchase.setMinHeight(height / 20.0);
+        purchase.setOnAction(new EventHandler<ActionEvent>()
+            { 
                 @Override
-                public void handle(MouseEvent t) {
-                    //Terrain.setSpace();
-                    Terrain.getSpace().setFitWidth(width);
-                    Terrain.getSpace().setFitHeight(height);
-
-                    VBox Layout_Catalog = new VBox(1);
-                    Layout_Catalog.setAlignment(Pos.CENTER);
-                    Layout_Catalog.getChildren().add(buttons[41]);
-                    for(int i = 5; i < 37; i++)
+                public void handle(ActionEvent event) 
+                {
+                    Shop.buy(selected);
+                    if(selected.getIsPurchased())
                     {
-                        Layout_Catalog.getChildren().add(buttons[i]);
-                    }
-
-                    Layout_Catalog.getChildren().add(buttons[78]);
-                    Pane catalog1 = new StackPane();
-                    catalog1.getChildren().addAll(Layout_Catalog);
-
-                    CatalogPane catalogPane = new CatalogPane(height, width, player, player.getLauncher(), true, true); //Arbitrary Upgrade; will be changed on button click
-                    Pane catalog2 = catalogPane.getView();
-
-                    StackPane masterCatalog = new StackPane();
-                    masterCatalog.getChildren().addAll(catalog2, catalog1);
-
-                    Scene catalogScene = new Scene(masterCatalog, width, height);
-                    stage.setScene(catalogScene);
-                }
-            });
-        buttons[79].setStyle("-fx-font: 15 Helvetica");
-        buttons[79].setMinWidth(height / 10.0);
-        buttons[79].setOnMouseClicked(new EventHandler<MouseEvent>
-            () {
-
-                @Override
-                public void handle(MouseEvent t) {
-                    //Terrain.setSpace();
-                    Terrain.getSpace().setFitWidth(width);
-                    Terrain.getSpace().setFitHeight(height);
-
-                    VBox Layout_Equipment = new VBox(1);
-                    Layout_Equipment.setAlignment(Pos.CENTER);
-                    Layout_Equipment.getChildren().add(buttons[41]);
-                    for(int i = 46; i < 78; i++)
+                        catalogStatus.set("SOLD OUT");
+                    } else if(selected.getCost() > Shop.getBalance())
                     {
-                        Layout_Equipment.getChildren().add(buttons[i]);
+                        catalogStatus.set("INSUFFICIENT FUNDS");
+                    } else {
+                        catalogStatus.set("Not Purchased");
                     }
-
-                    Layout_Equipment.getChildren().add(buttons[79]);
-                    Pane equipment1 = new StackPane();
-                    equipment1.getChildren().addAll(Layout_Equipment);
-
-                    CatalogPane equipmentPane = new CatalogPane(height, width, player, player.getLauncher(), false, true); //Arbitrary Upgrade; will be changed on button click
-                    Pane equipment2 = equipmentPane.getView();
-
-                    StackPane masterEquipment = new StackPane();
-                    masterEquipment.getChildren().addAll(equipment2, equipment1);
-
-                    Scene equipmentScene = new Scene(masterEquipment, width, height);
-                    stage.setScene(equipmentScene);
+                    balance.set("Balance: $" + Shop.getBalance());
                 }
             });
 
-        //Create title Scene
+        Button equip = new Button();
+        equip.setText("Equip");
+        equip.setStyle("-fx-font: "  + height / 50.0 + " Helvetica");
+        equip.setMinWidth(height / 7.5);
+        equip.setMinHeight(height / 20.0);
+        equip.setOnAction(new EventHandler<ActionEvent>()
+            { 
+                @Override
+                public void handle(ActionEvent event) 
+                {
+                    player.equip(selected);
+                    if(player.checkIsEquipped(selected))
+                    {
+                        equipStatus.set("Equipped!");
+                    } else if(!(selected.getIsPurchased()))
+                    {
+                        equipStatus.set("You do not own this item");
+                    } else {
+                        equipStatus.set("Not Equipped");
+                    }
+                }
+            });
+
+        //Make upgrades buttons for catalog scene and equipment scene
+        Button[] catalogButtons = equipButtons(stage);
+        Button[] equipmentButtons = equipButtons(stage);
+
+        //Makes the title scene
         VBox Layout_Title = new VBox(50);
-
-        //Adds Buttons, Text; aligns layout
-        Layout_Title.getChildren().addAll(titles[0], buttons[0], buttons[1], buttons[39], buttons[2], buttons[3], buttons[45]);
+        Layout_Title.getChildren().add(titles[0]);
+        for(int i = 0; i < titleButtons.length; i++)
+        {
+            Layout_Title.getChildren().add(titleButtons[i]);
+        }
         Layout_Title.setAlignment(Pos.CENTER);
+        ImageView a = Terrain.getCurrCopy();
+        a.setFitWidth(width);
+        a.setFitHeight(height);
+        titleScene = new Scene(new StackPane(a, Layout_Title), width, height);
 
-        //Creates StackPanes
-        Pane title1 = new StackPane();
-        title1.getChildren().addAll(Layout_Title);
+        //Makes the launch scene
+        VBox Layout_Launch = new VBox(50);
+        for(int i = 0; i < launchStats.length; i++)
+        {
+            Layout_Launch.getChildren().add(launchStats[i]);
+        }
+        Layout_Launch.setAlignment(Pos.TOP_LEFT);
+        ImageView b = Terrain.getCurrCopy();
+        b.setFitWidth(width);
+        b.setFitHeight(height);
+        launchScene = new Scene(new StackPane(b, Layout_Launch), width, height);
 
-        //Creates PaneBuilder objects
-        TitlePane titlePane = new TitlePane(height, width);
-        Pane title2 = titlePane.getView();
+        //Makes the catalog scene
+        VBox Layout_Catalog = new VBox();
+        VBox Layout_Catalog_Status = new VBox(50);
+        for(int i = 0; i < catalogLabels.length; i++)
+        {
+            Layout_Catalog_Status.getChildren().add(catalogLabels[i]);
+        }
+        Layout_Catalog_Status.setAlignment(Pos.TOP_LEFT);
 
-        //Stacks the panes
-        TitlePane masterTitle = new TitlePane(height, width);
-        masterTitle.getView().getChildren().addAll(title2, title1);
+        Layout_Catalog.getChildren().add(purchase);
+        for(int i = 0; i < catalogButtons.length; i++)
+        {
+            Layout_Catalog.getChildren().add(catalogButtons[i]);
+        }
+        Button back_Catalog = backButton(stage, Layout_Title);
+        back_Catalog.setStyle("-fx-font: "  + height / 50.0 + " Helvetica");
+        back_Catalog.setMinWidth(height / 7.5);
+        back_Catalog.setMinHeight(height / 20.0);
+        Layout_Catalog.getChildren().add(back_Catalog);
+        Layout_Catalog.setAlignment(Pos.CENTER_RIGHT);
+        ImageView c = Terrain.getSpace();
+        c.setFitWidth(width);
+        c.setFitHeight(height);
+        catalogScene = new Scene(new StackPane(c, Layout_Catalog_Status, Layout_Catalog), width, height);
 
-        //Creates Scenes
-        Scene titleScene = new Scene(masterTitle.getView(), width, height);
+        //Makes the equipment scene
+        VBox Layout_Equipment = new VBox();
+        VBox Layout_Equipment_Status = new VBox(50);
+        for(int i = 0; i < catalogLabels.length; i++)
+        {
+            Layout_Equipment_Status.getChildren().add(equipmentLabels[i]);
+        }
+        Layout_Equipment_Status.setAlignment(Pos.TOP_LEFT);
+
+        Layout_Equipment.getChildren().add(equip);
+        for(int i = 0; i < equipmentButtons.length; i++)
+        {
+            Layout_Equipment.getChildren().add(equipmentButtons[i]);
+        }
+        Button back_Equipment = backButton(stage, Layout_Title);
+        back_Equipment.setStyle("-fx-font: "  + height / 50.0 + " Helvetica");
+        back_Equipment.setMinWidth(height / 7.5);
+        back_Equipment.setMinHeight(height / 20.0);
+        Layout_Equipment.getChildren().add(back_Equipment);
+        Layout_Equipment.setAlignment(Pos.CENTER_RIGHT);
+        ImageView d = Terrain.getSpace();
+        d.setFitWidth(width);
+        d.setFitHeight(height);
+        equipmentScene = new Scene(new StackPane(d, Layout_Equipment_Status, Layout_Equipment), width, height);
+
+        //Makes the records scene
+        VBox Layout_Records = new VBox(50);
+        Layout_Records.getChildren().add(titles[1]);
+        for(int i = 0; i < recordsLabels.length; i++)
+        {
+            Layout_Records.getChildren().add(recordsLabels[i]);
+        }
+        Layout_Records.setAlignment(Pos.CENTER);
+        ImageView e = Terrain.getSpace();
+        e.setFitWidth(width);
+        e.setFitHeight(height);
+        VBox Back_Records = new VBox(1);
+        Back_Records.getChildren().add(backButton(stage, Layout_Title));
+        Back_Records.setAlignment(Pos.BOTTOM_LEFT);
+        recordsScene = new Scene(new StackPane(e, Layout_Records, Back_Records), width, height);
+
+        //Makes the Score scene
+        VBox Layout_Score = new VBox(50);
+        Layout_Score.getChildren().add(titles[3]);
+        for(int i = 0; i < scoreLabels.length; i++)
+        {
+            Layout_Score.getChildren().add(scoreLabels[i]);
+        }
+        Layout_Score.setAlignment(Pos.CENTER);
+        ImageView f = Terrain.getSpace();
+        f.setFitWidth(width);
+        f.setFitHeight(height);
+        VBox Back_Score = new VBox(1);
+        Back_Score.getChildren().add(backButton(stage, Layout_Title));
+        Back_Score.setAlignment(Pos.BOTTOM_LEFT);
+        scoreScene = new Scene(new StackPane(f, Layout_Score, Back_Score), width, height);
+
+        //Makes the credits scene
+        VBox Layout_Credits = new VBox(50);
+        Layout_Credits.getChildren().add(titles[2]);
+        Label[] creditsLabels = new Label[2];
+        for(int i = 0; i < creditsLabels.length; i++)
+        {
+            Label l = new Label();
+            l.setMinWidth(height / 240.0);
+            l.setTextFill(Color.GOLD);
+            l.setFont(Font.font("Helvetica", FontWeight.BOLD, height / 40.0));
+            creditsLabels[i] = l;
+        }
+        creditsLabels[0].setText("APCS Final Project 2017");
+        creditsLabels[1].setText("Creators: Phillip Le & Matt Carosielli");
+        for(int i = 0; i < creditsLabels.length; i++)
+        {
+            Layout_Credits.getChildren().add(creditsLabels[i]);
+        }
+        Layout_Credits.setAlignment(Pos.CENTER);
+        ImageView g = Terrain.getSpace();
+        g.setFitWidth(width);
+        g.setFitHeight(height);        
+        VBox Back_Credits = new VBox(1);
+        Back_Credits.getChildren().add(backButton(stage, Layout_Title));
+        Back_Credits.setAlignment(Pos.BOTTOM_LEFT);
+        creditsScene = new Scene(new StackPane(g, Layout_Credits, Back_Credits), width, height);
+
+        //Create back button here
         stage.setScene(titleScene);
         stage.show();
+    }
+
+    public static Button[] equipButtons(Stage stage)
+    {
+        //Gets the total amount of upgrades in the Shop.upgrades 2D array
+        int count = 0;
+        for(Upgrades[] a : Shop.upgrades)
+        {
+            for(Upgrades b : a)
+            {
+                count++;
+            }
+        }
+        Button[] buttons = new Button[count];
+        for(int i = 0; i < buttons.length; i++)
+        {
+            buttons[i] = new Button();
+            buttons[i].setStyle("-fx-font: "  + height / 100.0 + " Helvetica");
+            buttons[i].setMinWidth(height / 7.5);
+
+            //Gets the upgrade that the button will be assigned to
+            int row = i / 4;
+            int col = i % 4;
+            Upgrades u = Shop.upgrades[row][col];
+
+            //Names the button after its upgrade
+            buttons[i].setText(u.getName());
+
+            buttons[i].setOnMouseClicked(new EventHandler<MouseEvent>
+                () {
+
+                    @Override
+                    public void handle(MouseEvent t) {
+                        selected = u;
+                        specs.set(u.getSpecs());
+
+                        if(stage.getScene() == catalogScene)
+                        {
+                            if(selected.getIsPurchased())
+                            {
+                                catalogStatus.set("SOLD OUT");
+                            } else if(selected.getCost() > Shop.getBalance())
+                            {
+                                catalogStatus.set("INSUFFICIENT FUNDS");
+                            } else {
+                                catalogStatus.set("Not Purchased");
+                            }
+                        } else {
+                            if(player.checkIsEquipped(selected))
+                            {
+                                equipStatus.set("Equipped!");
+                            } else if(!(selected.getIsPurchased()))
+                            {
+                                equipStatus.set("You do not own this item");
+                            } else {
+                                equipStatus.set("Not Equipped");
+                            }
+                        }
+                    }
+                });
+        }
+        return buttons;
+    }
+
+    public static Button backButton(Stage stage, VBox layout)
+    {
+        Button b = new Button();
+        b.setStyle("-fx-font: " + height / 120.0 + " Helvetica");
+        b.setMinWidth(height / 10.0);
+        b.setText("Back");
+        b.setOnAction(new EventHandler<ActionEvent>()
+            { 
+                @Override
+                public void handle(ActionEvent event) 
+                {
+                    Terrain.getTime();
+                    ImageView a = Terrain.getCurrCopy();
+                    a.setFitWidth(width);
+                    a.setFitHeight(height);
+                    titleScene = new Scene(new StackPane(a, layout), width, height);
+
+                    stage.setScene(titleScene);
+                }
+            });
+        return b;
+    }
+
+    public static void main(String[] args) 
+    {
+        launch(args);
+    }
+
+    private void launch(){
+
+        final ScheduledExecutorService scheduler 
+        = Executors.newScheduledThreadPool(1);
+
+        scheduler.scheduleAtFixedRate(
+            new Runnable(){
+
+                @Override
+                public void run() {
+                    if(!(logic.get_y() <= 0.0001)){
+
+                        Platform.runLater(new Runnable(){
+                                @Override
+                                public void run() {
+                                    tempDistance.set("Distance: " + (int)(logic.get_x()) + " m");
+                                    tempAltitude.set("Altitude: " + (int)(logic.get_y()) + " m");
+                                    tempAirTime.set("Air Time: " + (int)(logic.getTime()) + " s");
+                                    tempVelocity.set("Speed: " + (int)(logic.get_vx()) + " m/s");
+                                }
+                            });
+
+                    }else{
+                        scheduler.shutdown();
+                        Platform.runLater(new Runnable(){
+                                @Override
+                                public void run() {
+                                    isFinished = true;
+                                }
+                            });
+                    }
+
+                }
+            }, 
+            1, 
+            1, 
+            TimeUnit.SECONDS);   
     }
 }
