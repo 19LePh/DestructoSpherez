@@ -45,6 +45,7 @@ import javafx.beans.property.SimpleStringProperty;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import javafx.beans.property.SimpleObjectProperty;
 /**
  * The Graphical User Interface for Destructo-Spherez.
  * 
@@ -102,6 +103,11 @@ public class GUI extends Application
     private static SimpleStringProperty topVelocity;
     private static SimpleStringProperty topWalls;
     private static SimpleStringProperty topScore;
+
+    //Title screen background
+    private static SimpleObjectProperty<Image> currBack = new SimpleObjectProperty<Image>();
+    private static ImageView titleBack = new ImageView();
+    private static ImageView launchBack = new ImageView();
     @Override
     public void start(Stage stage)
     {
@@ -166,6 +172,16 @@ public class GUI extends Application
         stage.setY(minY);
         stage.setWidth(width);
         stage.setHeight(height);
+
+        currBack.set(Terrain.getCurrCopy().getImage());
+        
+        titleBack.imageProperty().bind(currBack);
+        titleBack.setFitWidth(width);
+        titleBack.setFitHeight(height);
+        
+        launchBack.imageProperty().bind(currBack);
+        launchBack.setFitWidth(width);
+        launchBack.setFitHeight(height);
 
         //Creates the titles
         for(int i = 0; i < titles.length; i++)
@@ -285,7 +301,7 @@ public class GUI extends Application
                     tempAltitude.set("Altitude: " + (int)(score.getMaxHeight()) + " m");
                     tempAirTime.set("Air Time: " + (int)(score.getAirTime()) + " s");
                     tempVelocity.set("Speed: " + (int)(score.getMaxVelocity()) + " m/s");
-                    
+
                     ArrayList<Powerups> powerups = new ArrayList<Powerups>();
                     t = new Terrain(powerups, walls);
                     t.randomPowerups(10);
@@ -452,10 +468,7 @@ public class GUI extends Application
             Layout_Title.getChildren().add(titleButtons[i]);
         }
         Layout_Title.setAlignment(Pos.CENTER);
-        ImageView a = Terrain.getCurrCopy();
-        a.setFitWidth(width);
-        a.setFitHeight(height);
-        titleScene = new Scene(new StackPane(a, Layout_Title), width, height);
+        titleScene = new Scene(new StackPane(titleBack, Layout_Title), width, height);
 
         //Makes the launch scene
         VBox Layout_Launch = new VBox(50);
@@ -464,10 +477,7 @@ public class GUI extends Application
             Layout_Launch.getChildren().add(launchStats[i]);
         }
         Layout_Launch.setAlignment(Pos.TOP_LEFT);
-        ImageView b = Terrain.getCurrCopy();
-        b.setFitWidth(width);
-        b.setFitHeight(height);
-        launchScene = new Scene(new StackPane(b, Layout_Launch), width, height);
+        launchScene = new Scene(new StackPane(launchBack, Layout_Launch), width, height);
 
         //Makes the catalog scene
         VBox Layout_Catalog = new VBox();
@@ -657,10 +667,7 @@ public class GUI extends Application
                 public void handle(ActionEvent event) 
                 {
                     Terrain.getTime();
-                    ImageView a = Terrain.getCurrCopy();
-                    a.setFitWidth(width);
-                    a.setFitHeight(height);
-                    titleScene = new Scene(new StackPane(a, layout), width, height);
+                    currBack.set(Terrain.getCurrCopy().getImage());
 
                     stage.setScene(titleScene);
                 }
