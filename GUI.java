@@ -174,11 +174,11 @@ public class GUI extends Application
         stage.setHeight(height);
 
         currBack.set(Terrain.getCurrCopy().getImage());
-        
+
         titleBack.imageProperty().bind(currBack);
         titleBack.setFitWidth(width);
         titleBack.setFitHeight(height);
-        
+
         launchBack.imageProperty().bind(currBack);
         launchBack.setFitWidth(width);
         launchBack.setFitHeight(height);
@@ -328,6 +328,10 @@ public class GUI extends Application
                                     while(!(logic.get_y() <= 0.0001))
                                     {
                                         logic.init(score);
+                                        tempDistance.set("Distance: " + (int)(score.getDistance()) + " m");
+                                        tempAltitude.set("Altitude: " + (int)(score.getMaxHeight()) + " m");
+                                        tempAirTime.set("Air Time: " + (int)(score.getAirTime()) + " s");
+                                        tempVelocity.set("Speed: " + (int)(score.getMaxVelocity()) + " m/s");
                                     }
 
                                     /*try {
@@ -337,6 +341,7 @@ public class GUI extends Application
                                     }*/
 
                                     //Refreshes strings for the score scene
+                                    Shop.setBalance(score.getRewardMoney());
                                     tempDistance.set("Distance: " + (int)(score.getDistance()) + " m");
                                     tempAltitude.set("Altitude: " + (int)(score.getMaxHeight()) + " m");
                                     tempAirTime.set("Air Time: " + (int)(score.getAirTime()) + " s");
@@ -357,6 +362,7 @@ public class GUI extends Application
                 @Override
                 public void handle(ActionEvent event) 
                 {
+                    balance.set("Balance: $" + Shop.getBalance());
                     stage.setScene(catalogScene);
                 }
             });
@@ -367,6 +373,7 @@ public class GUI extends Application
                 @Override
                 public void handle(ActionEvent event) 
                 {
+                    balance.set("Balance: $" + Shop.getBalance());
                     stage.setScene(equipmentScene);
                 }
             });
@@ -593,7 +600,7 @@ public class GUI extends Application
         stage.show();
     }
 
-    public static Button[] equipButtons(Stage stage)
+    private static Button[] equipButtons(Stage stage)
     {
         //Gets the total amount of upgrades in the Shop.upgrades 2D array
         int count = 0;
@@ -655,7 +662,7 @@ public class GUI extends Application
         return buttons;
     }
 
-    public static Button backButton(Stage stage, VBox layout)
+    private static Button backButton(Stage stage, VBox layout)
     {
         Button b = new Button();
         b.setStyle("-fx-font: " + height / 120.0 + " Helvetica");
