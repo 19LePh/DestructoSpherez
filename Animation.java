@@ -1,3 +1,5 @@
+//Unused, from 
+//https://gamedev.stackexchange.com/questions/53705/how-can-i-make-a-sprite-sheet-based-animation-system
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;

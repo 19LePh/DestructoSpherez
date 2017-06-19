@@ -1,6 +1,6 @@
 public class Shop
 {
-    private static double balance = 110.01;
+    private static double balance = 0.01;
     public static final Upgrades[][] upgrades = 
         {{Launchers.TIER_1_PATH_1, Launchers.TIER_2_PATH_1, Launchers.TIER_3_PATH_1, Launchers.TIER_4_PATH_1},
             {Launchers.TIER_1_PATH_2, Launchers.TIER_2_PATH_2, Launchers.TIER_3_PATH_2,Launchers.TIER_4_PATH_2}, 
